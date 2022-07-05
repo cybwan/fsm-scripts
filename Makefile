@@ -102,8 +102,14 @@ enable-port-forward-addr:
 disable-test-e2e-build:
 	scripts/disable-test-e2e-build.sh ${OSM_HOME}
 
+enable-test-e2e-build:
+	scripts/enable-test-e2e-build.sh ${OSM_HOME}
+
 disable-test-demo-build:
 	scripts/disable-test-demo-build.sh ${OSM_HOME}
+
+enable-test-demo-build:
+	scripts/enable-test-demo-build.sh ${OSM_HOME}
 
 clean-docker:
 	scripts/clean-docker.sh
@@ -124,7 +130,7 @@ once: .env secret adapter-os-arch
 
 cache: cache-images
 
-cancel-cache: cancel-cache-images
+cancel-cache: cancel-cache-images enable-test-e2e-build enable-test-demo-build
 
 pipy: switch-sidecar-to-pipy
 
