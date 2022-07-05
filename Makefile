@@ -92,14 +92,20 @@ build-osm-cli:
 enable-port-forward-addr:
 	scripts/enable-port-forward-addr.sh ${OSM_HOME}
 
-disable-test-e2e-docker-build:
-	scripts/disable-test-e2e-docker-build.sh ${OSM_HOME}
+disable-test-e2e-build:
+	scripts/disable-test-e2e-build.sh ${OSM_HOME}
+
+disable-test-demo-build:
+	scripts/disable-test-demo-build.sh ${OSM_HOME}
 
 clean-docker:
 	scripts/clean-docker.sh
 
 clean-local-registry:
 	scripts/clean-local-registry.sh
+
+clean-osm:
+	scripts/clean-osm.sh
 
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
@@ -116,5 +122,7 @@ cancel-cache: cancel-cache-osm-images cancel-cache-demo-images cancel-cache-test
 pipy: switch-sidecar-to-pipy
 
 envoy: switch-sidecar-to-envoy
+
+dev: cache goproxy disable-test-demo-build disable-test-e2e-build
 
 build: build-osm-images build-osm-cli
