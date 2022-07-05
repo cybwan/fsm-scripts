@@ -55,23 +55,30 @@ enable-wasm-stats:
 
 pull-images:
 	scripts/pull-images.sh ${OSM_HOME} ${BUILDARCH}
+	#scripts/pull-osm-images.sh ${OSM_HOME} ${BUILDARCH}
+	#scripts/pull-demo-images.sh ${OSM_HOME} ${BUILDARCH}
+	#scripts/pull-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 
-cache-osm-images:
+tag-images:
+	scripts/tag-osm-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/tag-demo-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/tag-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
+
+push-images:
+	scripts/push-osm-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/push-demo-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/push-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
+
+cache-images:
 	scripts/cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
-
-cancel-cache-osm-images:
-	scripts/cancel-cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
-
-cache-demo-images:
 	scripts/cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
-
-cancel-cache-demo-images:
-	scripts/cancel-cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
-
-cache-test-e2e-images:
 	scripts/cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 
-cancel-cache-test-e2e-images:
+reload-images: pull-images tag-images push-images
+
+cancel-cache-images:
+	scripts/cancel-cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 
 switch-sidecar-to-pipy: disable-wasm-stats
@@ -115,9 +122,9 @@ once: .env secret adapter-os-arch
 	@echo "Please execute \"\033[1;32;40msource ~/.bashrc\033[0m\""
 	@echo
 
-cache: cache-osm-images cache-demo-images cache-test-e2e-images
+cache: cache-images
 
-cancel-cache: cancel-cache-osm-images cancel-cache-demo-images cancel-cache-test-e2e-images
+cancel-cache: cancel-cache-images
 
 pipy: switch-sidecar-to-pipy
 
