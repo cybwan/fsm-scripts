@@ -117,4 +117,4 @@ pipy: switch-sidecar-to-pipy
 
 envoy: switch-sidecar-to-envoy
 
-build: build-osm-images digest-charts-osm-images build-osm-cli
+build: build-osm-images build-osm-cli
