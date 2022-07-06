@@ -150,4 +150,4 @@ envoy: switch-sidecar-to-envoy
 
 dev: cache goproxy disable-test-demo-build disable-test-e2e-build
 
-build: build-osm-images build-osm-cli
+build: build-osm-cli build-osm-images
