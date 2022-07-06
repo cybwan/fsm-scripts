@@ -30,6 +30,7 @@ docker pull prom/prometheus:v2.18.1
 docker pull flomesh/pipy:latest
 docker pull flomesh/pipy-nightly:latest
 docker pull flomesh/pipy-repo:latest
+docker pull flomesh/pipy-repo-nightly:latest
 docker pull flomesh/grpcurl:latest
 docker pull flomesh/grpcbin:latest
 docker pull flomesh/httpbin:latest

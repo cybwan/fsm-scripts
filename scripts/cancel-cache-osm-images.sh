@@ -23,6 +23,7 @@ find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/flomesh/p
 
 sed -i 's#sidecarImage: localhost:5000/envoyproxy/envoy#sidecarImage: envoyproxy/envoy#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#sidecarImage: localhost:5000/flomesh/pipy#sidecarImage: flomesh/pipy#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i 's#sidecarImage: localhost:5000/flomesh/pipy-nightly#sidecarImage: flomesh/pipy-nightly#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#curlImage: localhost:5000/curlimages/curl#curlImage: curlimages/curl#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#image: localhost:5000/prom/prometheus:v2.18.1#image: prom/prometheus:v2.18.1#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#image: localhost:5000/grafana/grafana:8.2.2#image: grafana/grafana:8.2.2#g' "${OSM_HOME}"/charts/osm/values.yaml
@@ -30,3 +31,4 @@ sed -i 's#rendererImage: localhost:5000/grafana/grafana-image-renderer:3.2.1#ren
 sed -i 's#image: localhost:5000/jaegertracing/all-in-one#image: jaegertracing/all-in-one#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#localhost:5000#docker.io#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#"localhost:5000/flomesh/pipy-repo:latest"#"flomesh/pipy-repo:latest"#g' "${OSM_HOME}"/charts/osm/templates/osm-deployment.yaml
+sed -i 's#"localhost:5000/flomesh/pipy-repo-nightly:latest"#"flomesh/pipy-repo-nightly:latest"#g' "${OSM_HOME}"/charts/osm/templates/osm-deployment.yaml
