@@ -10,7 +10,7 @@ BUILDOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 TARGETS := $(BUILDOS)/$(BUILDARCH)
 DOCKER_BUILDX_PLATFORM := $(BUILDOS)/$(BUILDARCH)
 
-OSM_HOME ?= ../osm-edge
+OSM_HOME ?= $(abspath ../osm-edge)
 
 default: build
 
@@ -127,6 +127,18 @@ once: .env secret adapter-os-arch
 	@echo
 	@echo "Please execute \"\033[1;32;40msource ~/.bashrc\033[0m\""
 	@echo
+
+.PHONY: go-checks
+go-checks:
+	cd ${OSM_HOME};make embed-files-test
+	cd ${OSM_HOME};make codegen
+	cd ${OSM_HOME};go run github.com/norwoodj/helm-docs/cmd/helm-docs -c charts -t charts/osm/README.md.gotmpl
+	cd ${OSM_HOME};go run ./mockspec/generate.go
+	cd ${OSM_HOME};make helm-lint
+
+.PHONY: go-lint
+go-lint: go-checks
+	docker run --rm -v ${OSM_HOME}:/app -w /app -e GOPROXY="https://goproxy.cn" -e GOSUMDB="sum.golang.google.cn" golangci/golangci-lint:latest golangci-lint run --config .golangci.yml
 
 cache: cache-images
 
