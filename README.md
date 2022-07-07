@@ -44,4 +44,15 @@
 
 安装golang 1.17.9
 
-**其他的任务请参阅**Makefile**文件**
+## Quick Start
+
+```
+make .env
+make load-images
+make dev
+make build
+make kind-up
+make demo-up
+```
+
+**其他的任务请参阅Makefile文件**
