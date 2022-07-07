@@ -162,7 +162,7 @@ demo-reset:
 
 cache: cache-images
 
-cancel-cache: cancel-cache-images enable-test-e2e-build enable-test-demo-build
+cancel-cache: cancel-cache-images enable-autobuild
 
 pipy: switch-sidecar-to-pipy
 
