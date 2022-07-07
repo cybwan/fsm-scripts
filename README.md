@@ -4,7 +4,7 @@
 
 默认将**osm-edge-scripts**同级的**osm-edge**目录作为**OSM_HOME**；或者手动设置**OSM_HOME**
 
-## make reload-images
+## make load-images
 
 自动拉取osm-edge、例子、测试用例编译及运行所依赖的镜像，并转存到本地**kind-registry**(http://localhost:5000)
 
@@ -31,3 +31,15 @@
 ## make build
 
 编译osm-edge的cli和镜像
+
+## make install-docker
+
+安装**docker**环境
+
+## make install-k8s-tools
+
+安装**docker**环境及**k8s**相关工具
+
+## make install-golang
+
+安装golang 1.17.9

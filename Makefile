@@ -17,10 +17,10 @@ default: build
 install-docker:
 	scripts/install-docker.sh
 
-k8s-tools: install-docker
+install-k8s-tools: install-docker
 	scripts/install-k8s-tools.sh ${BUILDARCH} ${BUILDOS}
 
-golang:
+install-golang:
 	make -f scripts/Makefile.golang
 
 kind-node-images:
@@ -74,7 +74,7 @@ cache-images:
 	scripts/cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 
-reload-images: clean-docker clean-local-registry pull-images tag-images push-images
+load-images: clean-docker clean-local-registry pull-images tag-images push-images
 	scripts/clean-docker.sh
 
 reload-flomesh-images:
