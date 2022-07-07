@@ -162,12 +162,14 @@ demo-reset:
 
 cache: cache-images
 
-cancel-cache: cancel-cache-images enable-autobuild
+cancel-cache: cancel-cache-images
 
 pipy: switch-sidecar-to-pipy
 
 envoy: switch-sidecar-to-envoy
 
 dev: cache goproxy disable-autobuild
+
+dev-reset: cancel-cache disable-goproxy enable-autobuild
 
 build: build-osm-cli build-osm-images
