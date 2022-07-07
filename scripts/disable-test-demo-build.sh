@@ -9,7 +9,6 @@ fi
 
 OSM_HOME=$1
 
-sed -i 's/osm.controllerLogLevel="trace"/osm.controllerLogLevel="warn"/g' "${OSM_HOME}"/demo/run-osm-demo.sh
 sed -i 's/^make build-osm/#make build-osm/g' "${OSM_HOME}"/demo/run-osm-demo.sh
 sed -i 's/^kind-demo: .env kind-up clean-osm/kind-demo: .env kind-up/g' "${OSM_HOME}"/Makefile
 sed -i 's/#export PUBLISH_IMAGES=true/export PUBLISH_IMAGES=false/g' "${OSM_HOME}"/.env

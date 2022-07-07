@@ -23,7 +23,7 @@ install-k8s-tools: install-docker
 install-golang:
 	make -f scripts/Makefile.golang
 
-kind-node-images:
+kind-k8s-version:
 	scripts/kind-node-images.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
 
 .env:
@@ -112,6 +112,12 @@ enable-autobuild:
 	scripts/enable-test-e2e-build.sh ${OSM_HOME}
 	scripts/enable-test-demo-build.sh ${OSM_HOME}
 
+gcr-io:
+	scripts/gcr-io-images.sh ${OSM_HOME}
+
+gcr-io-reset:
+	scripts/gcr-io-images-reset.sh ${OSM_HOME}
+
 clean-docker:
 	scripts/clean-docker.sh
 
@@ -168,8 +174,10 @@ pipy: switch-sidecar-to-pipy
 
 envoy: switch-sidecar-to-envoy
 
-dev: cache goproxy disable-autobuild
+speed: goproxy disable-autobuild gcr-io
 
-dev-reset: cancel-cache disable-goproxy enable-autobuild
+dev: cache speed
+
+dev-reset: cancel-cache disable-goproxy enable-autobuild gcr-io-reset
 
 build: build-osm-cli build-osm-images
