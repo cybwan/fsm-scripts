@@ -74,7 +74,12 @@ cache-images:
 	scripts/cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 
-reload-images: pull-images tag-images push-images
+reload-images: clean-docker clean-local-registry pull-images tag-images push-images
+	scripts/clean-docker.sh
+
+reload-flomesh-images:
+	scripts/reload-flomesh-images.sh
+	scripts/list-local-registry.sh
 
 cancel-cache-images:
 	scripts/cancel-cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
@@ -116,6 +121,9 @@ clean-docker:
 
 clean-local-registry:
 	scripts/clean-local-registry.sh
+
+list-local-registry:
+	scripts/list-local-registry.sh
 
 clean-osm:
 	scripts/clean-osm.sh
