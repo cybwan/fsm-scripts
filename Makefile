@@ -104,16 +104,12 @@ build-osm-cli:
 enable-port-forward-addr:
 	scripts/enable-port-forward-addr.sh ${OSM_HOME}
 
-disable-test-e2e-build:
+disable-autobuild:
 	scripts/disable-test-e2e-build.sh ${OSM_HOME}
-
-enable-test-e2e-build:
-	scripts/enable-test-e2e-build.sh ${OSM_HOME}
-
-disable-test-demo-build:
 	scripts/disable-test-demo-build.sh ${OSM_HOME}
 
-enable-test-demo-build:
+enable-autobuild:
+	scripts/enable-test-e2e-build.sh ${OSM_HOME}
 	scripts/enable-test-demo-build.sh ${OSM_HOME}
 
 clean-docker:
@@ -148,6 +144,22 @@ go-checks:
 go-lint: go-checks
 	docker run --rm -v ${OSM_HOME}:/app -w /app -e GOPROXY="https://goproxy.cn" -e GOSUMDB="sum.golang.google.cn" golangci/golangci-lint:latest golangci-lint run --config .golangci.yml
 
+.PHONY: kind-up
+kind-up:
+	cd ${OSM_HOME};make kind-up
+
+.PHONY: kind-reset
+kind-reset:
+	cd ${OSM_HOME};make kind-reset
+
+.PHONY: demo-up
+demo-up:
+	cd ${OSM_HOME};./demo/run-osm-demo.sh
+
+.PHONY: demo-reset
+demo-reset:
+	cd ${OSM_HOME};./demo/clean-kubernetes.sh
+
 cache: cache-images
 
 cancel-cache: cancel-cache-images enable-test-e2e-build enable-test-demo-build
@@ -156,6 +168,6 @@ pipy: switch-sidecar-to-pipy
 
 envoy: switch-sidecar-to-envoy
 
-dev: cache goproxy disable-test-demo-build disable-test-e2e-build
+dev: cache goproxy disable-autobuild
 
 build: build-osm-cli build-osm-images
