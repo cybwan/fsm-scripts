@@ -6,7 +6,7 @@
 
 ## make load-images
 
-自动拉取osm-edge、例子、测试用例编译及运行所依赖的镜像，并转存到本地**kind-registry**(http://localhost:5000)
+自动拉取**osm-edge**、**例子**、**测试用例**编译及运行所依赖的镜像，并转存到本地**kind-registry**(http://localhost:5000)
 
 ## make reload-flomesh-images
 
@@ -43,3 +43,5 @@
 ## make install-golang
 
 安装golang 1.17.9
+
+**其他的任务请参阅**Makefile**文件**

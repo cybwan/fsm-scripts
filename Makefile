@@ -121,13 +121,13 @@ clean-local-registry:
 list-local-registry:
 	scripts/list-local-registry.sh
 
-clean-osm:
+osm-reset:
 	scripts/clean-osm.sh
 
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
 
-once: .env secret adapter-os-arch
+once: .env secret
 	@echo
 	@echo "Please execute \"\033[1;32;40msource ~/.bashrc\033[0m\""
 	@echo
