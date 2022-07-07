@@ -28,7 +28,7 @@ docker push localhost:5000/prom/prometheus:v2.18.1
 docker push localhost:5000/grafana/grafana:8.2.2
 docker push localhost:5000/grafana/grafana-image-renderer:3.2.1
 docker push localhost:5000/jaegertracing/all-in-one
-#docker push localhost:5000/distroless/base:latest
-#docker push localhost:5000/distroless/static:latest
+docker push localhost:5000/distroless/static:latest
+docker push localhost:5000/distroless/base:latest
 docker push localhost:5000/cybwan/gcr.io.distroless.static:latest
 docker push localhost:5000/cybwan/gcr.io.distroless.base:latest
