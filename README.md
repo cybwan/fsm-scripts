@@ -12,15 +12,15 @@
 
 自动拉取**flomesh**的**pipy**的镜像，一般用于刷新**flomesh**的**pipy**的镜像
 
-## make cache/cancel-cache
+## make cache/cache-reset
 
 替换**osm-edge**项目所依赖的镜像为本地**kind-registry**的镜像，以便加快编译及启动速度
 
-## make goproxy/disable-goproxy
+## make goproxy/goproxy-reset
 
 编译**osm-edge**镜像时启用国内的**golang**代理，以避免额外启动科学上网
 
-## make disable-autobuild/enable-autobuild
+## make autobuild-disable/autobuild-reset
 
 禁止例子及测试用例运行前自动编译，相应的，运行前需要手动编译
 

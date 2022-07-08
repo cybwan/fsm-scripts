@@ -38,7 +38,7 @@ goproxy:
 	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ../dockerfiles/Dockerfile.osm-injector
 	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ../dockerfiles/Dockerfile.osm-controller
 
-disable-goproxy:
+goproxy-reset:
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ../dockerfiles/Dockerfile.demo
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ../dockerfiles/Dockerfile.osm-bootstrap
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ../dockerfiles/Dockerfile.osm-injector
@@ -104,11 +104,11 @@ build-osm-cli:
 enable-port-forward-addr:
 	scripts/enable-port-forward-addr.sh ${OSM_HOME}
 
-disable-autobuild:
+autobuild-disable:
 	scripts/disable-test-e2e-build.sh ${OSM_HOME}
 	scripts/disable-test-demo-build.sh ${OSM_HOME}
 
-enable-autobuild:
+autobuild-reset:
 	scripts/enable-test-e2e-build.sh ${OSM_HOME}
 	scripts/enable-test-demo-build.sh ${OSM_HOME}
 
@@ -168,16 +168,16 @@ demo-reset:
 
 cache: cache-images
 
-cancel-cache: cancel-cache-images
+cache-reset: cancel-cache-images
 
 pipy: switch-sidecar-to-pipy
 
 envoy: switch-sidecar-to-envoy
 
-speed: goproxy disable-autobuild gcr-io
+speed: goproxy autobuild-disable gcr-io
 
 dev: cache speed
 
-dev-reset: cancel-cache disable-goproxy enable-autobuild gcr-io-reset
+dev-reset: cache-reset goproxy-reset autobuild-reset gcr-io-reset
 
 build: build-osm-cli build-osm-images
