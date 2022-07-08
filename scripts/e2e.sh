@@ -30,14 +30,14 @@ allCases=(
 "Test health probes can succeed"
 "Helm install using default values"
 "Ignore Label"
-"HTTP ingress with IngressBackend"
+#"HTTP ingress with IngressBackend"
 "When OSM is Installed"
 "Test IP range exclusion"
-"Version v1.23.6"
-"Version v1.22.9"
-"Version v1.21.12"
-"Version v1.20.15"
-"Version v1.19.16"
+#"Version v1.23.6"
+#"Version v1.22.9"
+#"Version v1.21.12"
+#"Version v1.20.15"
+#"Version v1.19.16"
 "Custom WASM metrics between one client pod and one server"
 "Multiple service ports"
 "Multiple services matching same pod"
@@ -53,10 +53,10 @@ allCases=(
 "Enable Reconciler"
 "SMI TrafficTarget is set up properly"
 "SMI Traffic Target is not in the same namespace as the destination"
-"SimpleClientServer TCP with SMI policies"
-"SimpleClientServer TCP in permissive mode"
+#"SimpleClientServer TCP with SMI policies"
+#"SimpleClientServer TCP in permissive mode"
 "SimpleClientServer egress TCP"
-"TCP server-first traffic"
+#"TCP server-first traffic"
 "HTTP recursive traffic splitting with SMI"
 "TCP recursive traffic splitting with SMI"
 "ClientServerTrafficSplitSameSA"
@@ -64,15 +64,28 @@ allCases=(
 "HTTP traffic splitting with SMI"
 "TCP traffic splitting with SMI"
 "HTTP traffic splitting with Permissive mode"
-"Tests upgrading the control plane"
+#"Tests upgrading the control plane"
 "With SMI Traffic Target validation enabled"
 "With SMI validation disabled"
 )
 
+CNT=${#allCases[*]}
 No=1
 # shellcheck disable=SC2068
 for item in "${allCases[@]}"; do
-  echo -e "$(date '+%Y-%m-%d %H:%M:%S') Testing[${No}] $item ..."
-  E2E_FLAGS="-ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
+  echo -e "$(date '+%Y-%m-%d %H:%M:%S') Testing[${No}/${CNT}] $item ..."
+  if [[ $item == Version* ]]
+  then
+    kind delete cluster --name osm-e2e
+    CTR_REGISTRY=cybwan TIMEOUT=0 E2E_FLAGS="-installType=KindCluster -ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
+  else
+    kubectl cluster-info >> /dev/null
+    if [[ $? == 1 ]]
+    then
+      make kind-up
+    fi
+    E2E_FLAGS="-ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
+  fi
+
   ((No=No+1))
 done
