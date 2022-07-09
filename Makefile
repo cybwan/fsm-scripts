@@ -33,16 +33,16 @@ secret:
 	scripts/secret.sh ${OSM_HOME}
 
 goproxy:
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ../dockerfiles/Dockerfile.demo
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ../dockerfiles/Dockerfile.osm-bootstrap
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ../dockerfiles/Dockerfile.osm-injector
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ../dockerfiles/Dockerfile.osm-controller
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.demo
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-bootstrap
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-injector
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-controller
 
 goproxy-reset:
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ../dockerfiles/Dockerfile.demo
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ../dockerfiles/Dockerfile.osm-bootstrap
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ../dockerfiles/Dockerfile.osm-injector
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ../dockerfiles/Dockerfile.osm-controller
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.demo
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-bootstrap
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-injector
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-controller
 
 adapter-os-arch:
 	scripts/adapter-os-arch.sh ${OSM_HOME} ${BUILDARCH}
