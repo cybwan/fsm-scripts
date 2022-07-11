@@ -1,48 +1,16 @@
 # osm-edge-scripts
 
-## OSM_HOME
+Set of helper scripts and `Makefile` targets to make life of [osm-edge](https://github.com/flomesh-io/osm-edge) developer easier. Bundled with dozens of shell scripts and Makefile targets.
 
-默认将**osm-edge-scripts**同级的**osm-edge**目录作为**OSM_HOME**；或者手动设置**OSM_HOME**
+## Usage Guide
 
-## make load-images
+> Assume you already have [osm-edge](https://github.com/flomesh-io/osm-edge) repository cloned or downloaded
 
-自动拉取**osm-edge**、**例子**、**测试用例**编译及运行所依赖的镜像，并转存到本地**kind-registry**(http://localhost:5000)
-
-## make reload-flomesh-images
-
-自动拉取**flomesh**的**pipy**的镜像，一般用于刷新**flomesh**的**pipy**的镜像
-
-## make cache/cache-reset
-
-替换**osm-edge**项目所依赖的镜像为本地**kind-registry**的镜像，以便加快编译及启动速度
-
-## make goproxy/goproxy-reset
-
-编译**osm-edge**镜像时启用国内的**golang**代理，以避免额外启动科学上网
-
-## make autobuild-disable/autobuild-reset
-
-禁止例子及测试用例运行前自动编译，相应的，运行前需要手动编译
-
-## make dev
-
-任务**cache**、**goproxy**、**disable-autobuild**的合集任务
-
-## make build
-
-编译osm-edge的cli和镜像
-
-## make install-docker
-
-安装**docker**环境
-
-## make install-k8s-tools
-
-安装**docker**环境及**k8s**相关工具
-
-## make install-golang
-
-安装golang 1.17.9
+1. Clone or zip download this repository
+2. Place this repo at same level with [osm-edge](https://github.com/flomesh-io/osm-edge) cloned repository or set `OSM_HOME` environment variable to point to the location of `osm-edge` folder.
+3. Run `make .env` to create `dot env` file and configure the contents to your specific needs
+4. Run required `make target` (refer to below guide for make `targets` and description)
+5. Sit back and relax 
 
 ## Quick Start
 
@@ -55,4 +23,58 @@ make kind-up
 make demo-up
 ```
 
-**其他的任务请参阅Makefile文件**
+## Makefile Targets
+
+Below is a non-exhaustive list of Makefile targets which can be used to automate the workload. 
+
+> Note: For more targets please refer to [Makefile](Makefile)
+
+## OSM_HOME
+
+Environment variable to represent the location of [osm-edge](https://github.com/flomesh-io/osm-edge). When unset, scripts will try to find the `osm-edge` at same folder level with this repository folder.
+
+## make load-images
+
+Target to automatic download of
+* [osm-edge](https://github.com/flomesh-io/osm-edge)
+* [osm-edge demos](https://github.com/flomesh-io/osm-edge-demo)
+* Docker images used for runing **e2e** test suits
+
+Build containers (when required) and load them to local **kind-registry** running/listenong on `http://localhost:5000`
+
+## make reload-flomesh-images
+
+Target to automatic download `flomesh/pipy` image from [https://hub.docker.com/u/flomesh](https://hub.docker.com/u/flomesh). Useful when there is a change in the `pipy` image.
+
+## make cache/cache-reset
+
+Target to replace/reset [osm-edge](https://github.com/flomesh-io/osm-edge)  dependency docker images to point to local **kind-registry** registry for quicker compilation and initialization.
+
+## make goproxy/goproxy-reset
+
+Target to use China proxy for **golang** to accelerate the download speed of go packages and avoid GFW blockage issues.
+**Note::** Suitable for developers located in China. But useful for developers who have **golang** proxy available in their region and/or offices to change the golang proxy settings to their specific urls.
+
+## make autobuild-disable/autobuild-reset
+
+Target to disable automatic building of images prior to running test case(s). Once disabled, developers are required to build images before running individual test case or whole test suite.
+
+## make dev
+
+Compositse target and combines **cache**、**goproxy**、**disable-autobuild** tasks.
+
+## make build
+
+Target to build **osm-edge** CLI and required docker images.
+
+## make install-docker
+
+Target to install **docker** 
+
+## make install-k8s-tools
+
+Target to install **docker** and **Kubernetes** required tools like `kubectl` etc.
+
+## make install-golang
+
+Target to install **golang** version `1.17.9`
