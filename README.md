@@ -25,7 +25,9 @@ make demo-up
 
 ## Makefile Targets
 
-Below is a non-exhaustive list of Makefile targets which can be used to automate the workload
+Below is a non-exhaustive list of Makefile targets which can be used to automate the workload. 
+
+> Note: For more targets please refer to [Makefile](Makefile)
 
 ## OSM_HOME
 
@@ -76,5 +78,3 @@ Target to install **docker** and **Kubernetes** required tools like `kubectl` et
 ## make install-golang
 
 Target to install **golang** version `1.17.9`
-
-> Note: For more targets please refer to [Makefile](Makefile)
