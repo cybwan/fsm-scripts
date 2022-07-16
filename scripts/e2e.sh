@@ -33,6 +33,7 @@ allCases=(
 #"HTTP ingress with IngressBackend"
 "When OSM is Installed"
 "Test IP range exclusion"
+#"Version v1.24.2"
 #"Version v1.23.6"
 #"Version v1.22.9"
 #"Version v1.21.12"
