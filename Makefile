@@ -148,7 +148,7 @@ go-checks:
 
 .PHONY: go-lint
 go-lint: go-checks
-	docker run --rm -v ${OSM_HOME}:/app -w /app -e GOPROXY="https://goproxy.cn" -e GOSUMDB="sum.golang.google.cn" golangci/golangci-lint:latest golangci-lint run --config .golangci.yml
+	docker run --rm -v ${OSM_HOME}:/app -w /app -e GOPROXY="https://goproxy.cn" -e GOSUMDB="sum.golang.google.cn" golangci/golangci-lint:latest golangci-lint run --timeout 900s --config .golangci.yml
 
 .PHONY: kind-up
 kind-up:
