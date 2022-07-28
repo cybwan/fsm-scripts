@@ -13,6 +13,7 @@ IMG="flomesh/osm-edge-sidecar-init"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 
 IMG="alpine:3"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="busybox:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
+IMG="fortio/fortio:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="curlimages/curl:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="curlimages/curl:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="devilbox/mysql:mysql-8.0"; docker rmi "${IMG}" "localhost:5000/${IMG}"

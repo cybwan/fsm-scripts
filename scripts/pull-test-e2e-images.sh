@@ -17,6 +17,7 @@ OSM_HOME=$1
 docker pull flomesh/httpbin:latest
 docker pull flomesh/httpbin:ken
 docker pull busybox:latest
+docker pull fortio/fortio:latest
 docker pull curlimages/curl:latest
 docker pull flomesh/alpine-debug:latest
 docker pull nginx:1.19-alpine

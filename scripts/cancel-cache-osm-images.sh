@@ -17,8 +17,8 @@ OSM_HOME=$1
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/alpine:3$# alpine:3#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/library/busybox:1.33# busybox:1.33#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# localhost:5000/library/golang:\$GO_VERSION # golang:\$GO_VERSION #g" {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/gcr.io/distroless/base# gcr.io/distroless/base#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/gcr.io/distroless/static# gcr.io/distroless/static#g' {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/distroless/base# gcr.io/distroless/base#g' {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/distroless/static# gcr.io/distroless/static#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/cybwan/gcr.io.distroless.base# cybwan/gcr.io.distroless.base#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/cybwan/gcr.io.distroless.static# cybwan/gcr.io.distroless.static#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/flomesh/proxy-wasm-cpp-sdk:v2 AS# flomesh/proxy-wasm-cpp-sdk:v2 AS#g' {} +

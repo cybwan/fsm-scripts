@@ -14,6 +14,7 @@ fi
 
 docker pull alpine:3
 docker pull busybox:latest
+docker pull fortio/fortio:latest
 docker pull curlimages/curl:latest
 docker pull curlimages/curl:latest
 docker pull devilbox/mysql:mysql-8.0

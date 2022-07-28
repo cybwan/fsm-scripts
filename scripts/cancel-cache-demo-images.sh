@@ -15,4 +15,3 @@ fi
 OSM_HOME=$1
 
 sed -i 's# localhost:5000/devilbox/mysql:mysql-8.0# devilbox/mysql:mysql-8.0#g' "${OSM_HOME}"/demo/deploy-mysql.sh
-sed -i 's# localhost:5000/curlimages/curl# curlimages/curl#g' "${OSM_HOME}"/demo/multicluster-fault-injection.sh

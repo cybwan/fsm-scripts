@@ -17,6 +17,7 @@ OSM_HOME=$1
 docker push localhost:5000/flomesh/httpbin:latest
 docker push localhost:5000/flomesh/httpbin:ken
 docker push localhost:5000/busybox:latest
+docker push localhost:5000/fortio/fortio:latest
 docker push localhost:5000/curlimages/curl:latest
 docker push localhost:5000/flomesh/alpine-debug:latest
 docker push localhost:5000/nginx:1.19-alpine
