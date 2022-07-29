@@ -5,7 +5,7 @@ RELEASEDIR ?= $(CURDIR)/release
 SBINDIR ?= usr/sbin/
 ETCDIR ?= etc/
 DESTDIR ?= /
-GOVERSION ?= 1.17.9
+GOVERSION ?= 1.17.12
 
 GO_ARCH_MAP_x86 := 386
 GO_ARCH_MAP_x86_64 := amd64

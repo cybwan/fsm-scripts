@@ -30,4 +30,7 @@ sudo apt install -y kubelet=1.23.4-00 kubeadm=1.23.4-00 kubectl=1.23.4-00
 sudo curl -Lo /usr/local/sbin/kind https://kind.sigs.k8s.io/dl/latest/kind-"${BUILD_OS}"-"${BUILD_ARCH}"
 sudo chmod a+x /usr/local/sbin/kind
 
-sudo snap install helm --classic
+sudo curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
+sudo chmod +x get_helm.sh
+sudo ./get_helm.sh
+sudo rm -rf ./get_helm.sh
