@@ -10,4 +10,4 @@ fi
 OSM_HOME=$1
 
 cd "${OSM_HOME}"
-make docker-build
+make docker-build-osm-edge
