@@ -33,11 +33,9 @@ allCases=(
 "Test health probes can succeed"
 "Helm install using default values"
 "Ignore Label"
-"HTTP ingress with IngressBackend"
 "When OSM is Installed"
 "Test IP range exclusion"
 "HTTP request rate limiting"
-"Custom WASM metrics between one client pod and one server"
 "Multiple service ports"
 "Multiple services matching same pod"
 "Test reinstalling OSM in the same namespace with the same mesh name"
@@ -63,9 +61,11 @@ allCases=(
 "HTTP traffic splitting with Permissive mode"
 "HTTP traffic splitting with SMI"
 "TCP traffic splitting with SMI"
-"Upgrade from latest"
 "With SMI Traffic Target validation enabled"
 "With SMI validation disabled"
+#"Upgrade from latest"
+#"HTTP ingress with IngressBackend"
+#"Custom WASM metrics between one client pod and one server"
 )
 
 CNT=${#allCases[*]}
