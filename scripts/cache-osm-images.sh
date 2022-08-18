@@ -32,5 +32,5 @@ sed -i 's#image: prom/prometheus:v2.18.1#image: localhost:5000/prom/prometheus:v
 sed -i 's#image: grafana/grafana:8.2.2#image: localhost:5000/grafana/grafana:8.2.2#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#rendererImage: grafana/grafana-image-renderer:3.2.1#rendererImage: localhost:5000/grafana/grafana-image-renderer:3.2.1#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#image: jaegertracing/all-in-one#image: localhost:5000/jaegertracing/all-in-one#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#"flomesh/pipy-repo:latest"#"localhost:5000/flomesh/pipy-repo:latest"#g' "${OSM_HOME}"/charts/osm/templates/osm-deployment.yaml
-sed -i 's#"flomesh/pipy-repo-nightly:latest"#"localhost:5000/flomesh/pipy-repo-nightly:latest"#g' "${OSM_HOME}"/charts/osm/templates/osm-deployment.yaml
+sed -i 's#"flomesh/pipy-repo:latest"#"localhost:5000/flomesh/pipy-repo:latest"#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i 's#"flomesh/pipy-repo-nightly:latest"#"localhost:5000/flomesh/pipy-repo-nightly:latest"#g' "${OSM_HOME}"/charts/osm/values.yaml
