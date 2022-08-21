@@ -11,6 +11,13 @@ OSM_HOME=$1
 
 cd "${OSM_HOME}" || exit 1
 
+kubectl cluster-info >> /dev/null
+if [[ $? == 1 ]]
+then
+  make kind-up
+fi
+source .env
+
 allCases=(
 "CertManagerSimpleClientServer"
 "Test traffic flowing from client to a server with a podIP bind"
@@ -73,19 +80,6 @@ No=1
 # shellcheck disable=SC2068
 for item in "${allCases[@]}"; do
   echo -e "$(date '+%Y-%m-%d %H:%M:%S') Testing[${No}/${CNT}] $item ..."
-  if [[ $item == Version* ]]
-  then
-    kind delete cluster --name osm-e2e
-    CTR_REGISTRY=cybwan TIMEOUT=0 E2E_FLAGS="-installType=KindCluster -ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
-  else
-    kubectl cluster-info >> /dev/null
-    if [[ $? == 1 ]]
-    then
-      make kind-up
-    fi
-    source .env
-    E2E_FLAGS="-ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
-  fi
-
+  E2E_FLAGS="-ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
   ((No=No+1))
 done
