@@ -77,4 +77,4 @@ Target to install **docker** and **Kubernetes** required tools like `kubectl` et
 
 ## make install-golang
 
-Target to install **golang** version `1.17.9`
+Target to install **golang** version `1.17.12`
