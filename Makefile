@@ -74,8 +74,10 @@ cache-images:
 	scripts/cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/cache-cert-manager-chart.sh ${OSM_HOME} ${BUILDARCH}
 
-load-images: clean-local-registry pull-images tag-images push-images
+load-images: clean-tag-docker clean-local-registry pull-images tag-images push-images
+	scripts/clean-tag-docker.sh
 
 reload-flomesh-images:
 	scripts/reload-flomesh-images.sh
@@ -86,6 +88,7 @@ cancel-cache-images:
 	scripts/cancel-cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-cert-manager-chart.sh ${OSM_HOME} ${BUILDARCH}
 
 switch-sidecar-to-pipy: disable-wasm-stats
 	scripts/switch-sidecar.sh ${OSM_HOME} ${BUILDARCH} pipy
@@ -121,6 +124,9 @@ gcr-io-reset:
 
 clean-docker:
 	scripts/clean-docker.sh
+
+clean-tag-docker:
+	scripts/clean-tag-docker.sh
 
 clean-local-registry:
 	scripts/clean-local-registry.sh

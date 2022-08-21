@@ -25,3 +25,6 @@ docker tag bitnami/zookeeper:3.8.0-debian-10-r11 localhost:5000/bitnami/zookeepe
 docker tag bitnami/bitnami-shell:10-debian-10-r378 localhost:5000/bitnami/bitnami-shell:10-debian-10-r378
 docker tag flomesh/grpcurl:latest localhost:5000/flomesh/grpcurl:latest
 docker tag flomesh/grpcbin:latest localhost:5000/flomesh/grpcbin:latest
+docker tag quay.io/jetstack/cert-manager-controller:v1.3.1 localhost:5000/jetstack/cert-manager-controller:v1.3.1
+docker tag quay.io/jetstack/cert-manager-cainjector:v1.3.1 localhost:5000/jetstack/cert-manager-cainjector:v1.3.1
+docker tag quay.io/jetstack/cert-manager-webhook:v1.3.1 localhost:5000/jetstack/cert-manager-webhook:v1.3.1

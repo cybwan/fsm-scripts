@@ -25,3 +25,6 @@ docker push localhost:5000/bitnami/zookeeper:3.8.0-debian-10-r11
 docker push localhost:5000/bitnami/bitnami-shell:10-debian-10-r378
 docker push localhost:5000/flomesh/grpcurl:latest
 docker push localhost:5000/flomesh/grpcbin:latest
+docker push localhost:5000/jetstack/cert-manager-controller:v1.3.1
+docker push localhost:5000/jetstack/cert-manager-cainjector:v1.3.1
+docker push localhost:5000/jetstack/cert-manager-webhook:v1.3.1
