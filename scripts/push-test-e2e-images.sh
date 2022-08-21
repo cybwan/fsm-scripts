@@ -21,5 +21,7 @@ docker push localhost:5000/fortio/fortio:latest
 docker push localhost:5000/curlimages/curl:latest
 docker push localhost:5000/flomesh/alpine-debug:latest
 docker push localhost:5000/nginx:1.19-alpine
+docker push localhost:5000/bitnami/zookeeper:3.8.0-debian-10-r11
+docker push localhost:5000/bitnami/bitnami-shell:10-debian-10-r378
 docker push localhost:5000/flomesh/grpcurl:latest
 docker push localhost:5000/flomesh/grpcbin:latest

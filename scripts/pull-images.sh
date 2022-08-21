@@ -39,6 +39,8 @@ docker pull flomesh/httpbin:latest
 docker pull flomesh/httpbin:ken
 docker pull flomesh/alpine-debug:latest
 docker pull flomesh/proxy-wasm-cpp-sdk:v2
+docker pull bitnami/zookeeper:3.8.0-debian-10-r11
+docker pull bitnami/bitnami-shell:10-debian-10-r378
 
 docker pull quay.io/jetstack/cert-manager-controller:v1.3.1
 docker pull quay.io/jetstack/cert-manager-cainjector:v1.3.1

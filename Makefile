@@ -73,6 +73,7 @@ cache-images:
 	scripts/cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
 
 load-images: clean-local-registry pull-images tag-images push-images
 
@@ -84,6 +85,7 @@ cancel-cache-images:
 	scripts/cancel-cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
 
 switch-sidecar-to-pipy: disable-wasm-stats
 	scripts/switch-sidecar.sh ${OSM_HOME} ${BUILDARCH} pipy
