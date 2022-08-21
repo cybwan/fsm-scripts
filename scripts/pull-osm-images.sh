@@ -28,6 +28,7 @@ docker pull docker.io/prom/prometheus:v2.18.1
 docker pull docker.io/grafana/grafana:8.2.2
 docker pull docker.io/grafana/grafana-image-renderer:3.2.1
 docker pull docker.io/jaegertracing/all-in-one
+docker pull docker.io/fluent/fluent-bit:1.6.4
 #docker pull gcr.io/distroless/base:latest
 #docker pull gcr.io/distroless/static:latest
 docker pull docker.io/cybwan/gcr.io.distroless.static:latest

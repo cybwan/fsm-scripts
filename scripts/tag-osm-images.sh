@@ -28,6 +28,7 @@ docker tag docker.io/prom/prometheus:v2.18.1 localhost:5000/prom/prometheus:v2.1
 docker tag docker.io/grafana/grafana:8.2.2 localhost:5000/grafana/grafana:8.2.2
 docker tag docker.io/grafana/grafana-image-renderer:3.2.1 localhost:5000/grafana/grafana-image-renderer:3.2.1
 docker tag docker.io/jaegertracing/all-in-one localhost:5000/jaegertracing/all-in-one
+docker tag docker.io/fluent/fluent-bit:1.6.4 localhost:5000/fluent/fluent-bit:1.6.4
 docker tag docker.io/cybwan/gcr.io.distroless.base:latest localhost:5000/distroless/base:latest
 docker tag docker.io/cybwan/gcr.io.distroless.static:latest localhost:5000/cybwan/gcr.io.distroless.static:latest
 docker tag docker.io/cybwan/gcr.io.distroless.base:latest localhost:5000/cybwan/gcr.io.distroless.base:latest
