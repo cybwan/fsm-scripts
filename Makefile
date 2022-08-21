@@ -74,8 +74,7 @@ cache-images:
 	scripts/cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 
-load-images: clean-docker clean-local-registry pull-images tag-images push-images
-	scripts/clean-docker.sh
+load-images: clean-local-registry pull-images tag-images push-images
 
 reload-flomesh-images:
 	scripts/reload-flomesh-images.sh
