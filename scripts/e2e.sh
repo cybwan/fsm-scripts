@@ -83,6 +83,7 @@ for item in "${allCases[@]}"; do
     then
       make kind-up
     fi
+    source .env
     E2E_FLAGS="-ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
   fi
 
