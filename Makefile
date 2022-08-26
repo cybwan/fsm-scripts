@@ -188,3 +188,12 @@ dev: cache speed
 dev-reset: cache-reset goproxy-reset autobuild-reset gcr-io-reset
 
 build: build-osm-cli build-osm-images
+
+restart-osm-bootstrap:
+	@kubectl rollout restart deployment -n osm-system osm-bootstrap
+
+restart-osm-controller:
+	@kubectl rollout restart deployment -n osm-system osm-controller
+
+restart-osm-injector:
+	@kubectl rollout restart deployment -n osm-system osm-injector
