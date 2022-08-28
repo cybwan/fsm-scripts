@@ -197,3 +197,12 @@ restart-osm-controller:
 
 restart-osm-injector:
 	@kubectl rollout restart deployment -n osm-system osm-injector
+
+rebuild-osm-controller:
+	scripts/build-osm-images.sh ${OSM_HOME} controller
+
+rebuild-osm-injector:
+	scripts/build-osm-images.sh ${OSM_HOME} injector
+
+rebuild-osm-bootstrap:
+	scripts/build-osm-images.sh ${OSM_HOME} bootstrap
