@@ -11,4 +11,4 @@ OSM_HOME=$1
 
 cd "${OSM_HOME}"
 source .env
-make docker-build-osm
+make docker-build-osm-edge-"$2"
