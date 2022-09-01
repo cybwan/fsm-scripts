@@ -15,6 +15,7 @@ fi
 OSM_HOME=$1
 
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# alpine:3$# localhost:5000/alpine:3#g' {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# flomesh/alpine:3$# localhost:5000/flomesh/alpine:3#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# busybox:1.33# localhost:5000/library/busybox:1.33#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# golang:\$GO_VERSION # localhost:5000/library/golang:\$GO_VERSION #g" {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# gcr.io/distroless/base# localhost:5000/distroless/base#g' {} +
