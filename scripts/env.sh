@@ -29,14 +29,16 @@ sed -i 's/localhost:5000$/localhost:5000\/flomesh/g' .env
 sed -i 's/^# export CTR_TAG=.*/export CTR_TAG=latest/g' .env
 sed -i 's/^#export USE_PRIVATE_REGISTRY=.*/export USE_PRIVATE_REGISTRY=true/g' .env
 
-sed -i '/^export TARGETS=/d' ~/.bashrc
-sed -i '/^export DOCKER_BUILDX_PLATFORM=/d' ~/.bashrc
-sed -i '/^export CTR_REGISTRY=/d' ~/.bashrc
-sed -i '/^export CTR_TAG=/d' ~/.bashrc
+if [ -f ~/.bashrc ]; then
+  sed -i '/^export TARGETS=/d' ~/.bashrc
+  sed -i '/^export DOCKER_BUILDX_PLATFORM=/d' ~/.bashrc
+  sed -i '/^export CTR_REGISTRY=/d' ~/.bashrc
+  sed -i '/^export CTR_TAG=/d' ~/.bashrc
 
-cat >> ~/.bashrc <<EOF
+  cat >> ~/.bashrc <<EOF
 export TARGETS=${TARGETS}
 export DOCKER_BUILDX_PLATFORM=${DOCKER_BUILDX_PLATFORM}
 export CTR_REGISTRY=localhost:5000/flomesh
 export CTR_TAG=latest
 EOF
+fi
