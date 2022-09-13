@@ -70,7 +70,7 @@ allCases=(
 "TCP traffic splitting with SMI"
 "With SMI Traffic Target validation enabled"
 "With SMI validation disabled"
-#"Upgrade from latest"
+"Upgrade from latest"
 #"HTTP ingress with IngressBackend"
 #"Custom WASM metrics between one client pod and one server"
 )
