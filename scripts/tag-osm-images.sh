@@ -16,7 +16,7 @@ OSM_HOME=$1
 
 docker tag docker.io/alpine:3 localhost:5000/alpine:3
 docker tag docker.io/library/busybox:1.33 localhost:5000/library/busybox:1.33
-docker tag docker.io/library/golang:1.17 localhost:5000/library/golang:1.17
+docker tag docker.io/library/golang:1.19 localhost:5000/library/golang:1.19
 docker tag docker.io/envoyproxy/envoy:v1.19.3 localhost:5000/envoyproxy/envoy:v1.19.3
 docker tag docker.io/projectcontour/contour:v1.18.0 localhost:5000/projectcontour/contour:v1.18.0
 docker tag docker.io/flomesh/pipy:latest localhost:5000/flomesh/pipy:latest

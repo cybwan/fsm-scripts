@@ -16,7 +16,7 @@ OSM_HOME=$1
 
 docker pull docker.io/alpine:3
 docker pull docker.io/library/busybox:1.33
-docker pull docker.io/library/golang:1.17
+docker pull docker.io/library/golang:1.19
 docker pull docker.io/envoyproxy/envoy:v1.19.3
 docker pull docker.io/projectcontour/contour:v1.18.0
 docker pull docker.io/flomesh/pipy:latest

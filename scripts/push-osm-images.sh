@@ -16,7 +16,7 @@ OSM_HOME=$1
 
 docker push localhost:5000/alpine:3
 docker push localhost:5000/library/busybox:1.33
-docker push localhost:5000/library/golang:1.17
+docker push localhost:5000/library/golang:1.19
 docker push localhost:5000/envoyproxy/envoy:v1.19.3
 docker push localhost:5000/projectcontour/contour:v1.18.0
 docker push localhost:5000/flomesh/pipy:latest
