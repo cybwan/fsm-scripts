@@ -76,8 +76,10 @@ cache-images:
 	scripts/cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cache-cert-manager-chart.sh ${OSM_HOME} ${BUILDARCH}
 
-load-images: clean-tag-docker clean-local-registry pull-images tag-images push-images
+load-images-without-clean: pull-images tag-images push-images
 	scripts/clean-tag-docker.sh
+
+load-images: clean-tag-docker clean-local-registry load-images-without-clean
 
 reload-flomesh-images:
 	scripts/reload-flomesh-images.sh
