@@ -19,4 +19,9 @@ fi
 
 BUILD_ARCH=$2
 
-wget -q https://registry.hub.docker.com/v1/repositories/kindest/node-"${BUILD_ARCH}"/tags -O - | jq -r '.[].name' | sort -u
+wget -q https://registry.hub.docker.com/v2/repositories/kindest/node-"${BUILD_ARCH}"/tags?page=1\&ordering=name -O - | jq -r '.results[].name'
+wget -q https://registry.hub.docker.com/v2/repositories/kindest/node-"${BUILD_ARCH}"/tags?page=2\&ordering=name -O - | jq -r '.results[].name'
+wget -q https://registry.hub.docker.com/v2/repositories/kindest/node-"${BUILD_ARCH}"/tags?page=3\&ordering=name -O - | jq -r '.results[].name'
+wget -q https://registry.hub.docker.com/v2/repositories/kindest/node-"${BUILD_ARCH}"/tags?page=4\&ordering=name -O - | jq -r '.results[].name'
+wget -q https://registry.hub.docker.com/v2/repositories/kindest/node-"${BUILD_ARCH}"/tags?page=5\&ordering=name -O - | jq -r '.results[].name'
+wget -q https://registry.hub.docker.com/v2/repositories/kindest/node-"${BUILD_ARCH}"/tags?page=6\&ordering=name -O - | jq -r '.results[].name'
