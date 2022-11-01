@@ -208,3 +208,12 @@ rebuild-osm-injector:
 
 rebuild-osm-bootstrap:
 	scripts/build-osm-image.sh ${OSM_HOME} bootstrap
+
+port-forward-osm-repo:
+	cd ${OSM_HOME};./scripts/port-forward-osm-repo.sh
+
+tail-osm-controller-logs:
+	cd ${OSM_HOME};./demo/tail-osm-controller-logs.sh
+
+tail-osm-injector-logs:
+	cd ${OSM_HOME};./demo/tail-osm-injector-logs.sh
