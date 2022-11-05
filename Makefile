@@ -81,8 +81,12 @@ load-images-without-clean: pull-images tag-images push-images
 
 load-images: clean-tag-docker clean-local-registry load-images-without-clean
 
-reload-flomesh-images:
-	scripts/reload-flomesh-images.sh
+reload-flomesh-pipy-images:
+	scripts/reload-flomesh-pipy-images.sh
+	scripts/list-local-registry.sh
+
+reload-flomesh-fsm-images:
+	scripts/reload-flomesh-fsm-images.sh
 	scripts/list-local-registry.sh
 
 cancel-cache-images:
