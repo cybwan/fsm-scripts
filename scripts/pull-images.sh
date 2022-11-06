@@ -32,6 +32,7 @@ docker pull fluent/fluent-bit:1.6.4
 docker pull flomesh/pipy:latest
 docker pull flomesh/pipy-nightly:latest
 docker pull flomesh/pipy-repo:latest
+docker pull flomesh/pipy:0.70.0-2
 docker pull flomesh/pipy-repo:0.70.0-2
 docker pull flomesh/pipy-repo-nightly:latest
 docker pull flomesh/grpcurl:latest

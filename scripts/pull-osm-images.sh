@@ -21,6 +21,7 @@ docker pull docker.io/envoyproxy/envoy:v1.19.3
 docker pull docker.io/projectcontour/contour:v1.18.0
 docker pull docker.io/flomesh/pipy:latest
 docker pull docker.io/flomesh/pipy-nightly:latest
+docker pull docker.io/flomesh/pipy:0.70.0-2
 docker pull docker.io/flomesh/pipy-repo:latest
 docker pull docker.io/flomesh/pipy-repo:0.70.0-2
 docker pull docker.io/flomesh/pipy-repo-nightly:latest
