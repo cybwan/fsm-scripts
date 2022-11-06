@@ -34,5 +34,6 @@ sed -i 's#rendererImage: localhost:5000/grafana/grafana-image-renderer:3.2.1#ren
 sed -i 's#image: localhost:5000/jaegertracing/all-in-one#image: jaegertracing/all-in-one#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#localhost:5000$#docker.io#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#pipyRepoImage: localhost:5000/flomesh/pipy-repo:latest#pipyRepoImage: flomesh/pipy-repo:latest#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i 's#pipyRepoImage: localhost:5000/flomesh/pipy-repo:0.70.0-2#pipyRepoImage: flomesh/pipy-repo:0.70.0-2#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#pipyRepoImage: localhost:5000/flomesh/pipy-repo-nightly:latest#pipyRepoImage: flomesh/pipy-repo-nightly:latest#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#registry: localhost:5000/fluent#registry: fluent#g' "${OSM_HOME}"/charts/osm/values.yaml
