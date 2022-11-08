@@ -10,6 +10,9 @@ IMG="flomesh/pipy-repo-nightly:latest"; docker rmi "${IMG}" "localhost:5000/${IM
 IMG="flomesh/pipy:0.70.0-2"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="flomesh/pipy-repo:0.70.0-2"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 
+IMG="flomesh/pipy:0.70.0-24"; docker rmi "${IMG}" "localhost:5000/${IMG}"
+IMG="flomesh/pipy-repo:0.70.0-24"; docker rmi "${IMG}" "localhost:5000/${IMG}"
+
 docker container prune -f
 docker volume prune -f
 docker image prune -f
@@ -33,6 +36,9 @@ docker pull docker.io/flomesh/pipy-repo-nightly:latest
 docker pull docker.io/flomesh/pipy:0.70.0-2
 docker pull docker.io/flomesh/pipy-repo:0.70.0-2
 
+docker pull docker.io/flomesh/pipy:0.70.0-24
+docker pull docker.io/flomesh/pipy-repo:0.70.0-24
+
 docker tag docker.io/flomesh/pipy:latest localhost:5000/flomesh/pipy:latest
 docker tag docker.io/flomesh/pipy-nightly:latest localhost:5000/flomesh/pipy-nightly:latest
 docker tag docker.io/flomesh/pipy-repo:latest localhost:5000/flomesh/pipy-repo:latest
@@ -40,6 +46,9 @@ docker tag docker.io/flomesh/pipy-repo-nightly:latest localhost:5000/flomesh/pip
 
 docker tag docker.io/flomesh/pipy-repo:0.70.0-2 localhost:5000/flomesh/pipy-repo:0.70.0-2
 docker tag docker.io/flomesh/pipy:0.70.0-2 localhost:5000/flomesh/pipy:0.70.0-2
+
+docker tag docker.io/flomesh/pipy-repo:0.70.0-24 localhost:5000/flomesh/pipy-repo:0.70.0-24
+docker tag docker.io/flomesh/pipy:0.70.0-24 localhost:5000/flomesh/pipy:0.70.0-24
 
 docker push localhost:5000/flomesh/pipy:latest
 docker push localhost:5000/flomesh/pipy-nightly:latest
@@ -49,6 +58,9 @@ docker push localhost:5000/flomesh/pipy-repo-nightly:latest
 docker push localhost:5000/flomesh/pipy:0.70.0-2
 docker push localhost:5000/flomesh/pipy-repo:0.70.0-2
 
+docker push localhost:5000/flomesh/pipy:0.70.0-24
+docker push localhost:5000/flomesh/pipy-repo:0.70.0-24
+
 IMG="flomesh/pipy:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="flomesh/pipy-nightly:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="flomesh/pipy-repo:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
@@ -56,6 +68,9 @@ IMG="flomesh/pipy-repo-nightly:latest"; docker rmi "${IMG}" "localhost:5000/${IM
 
 IMG="flomesh/pipy:0.70.0-2"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="flomesh/pipy-repo:0.70.0-2"; docker rmi "${IMG}" "localhost:5000/${IMG}"
+
+IMG="flomesh/pipy:0.70.0-24"; docker rmi "${IMG}" "localhost:5000/${IMG}"
+IMG="flomesh/pipy-repo:0.70.0-24"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 
 docker container prune -f
 docker volume prune -f
