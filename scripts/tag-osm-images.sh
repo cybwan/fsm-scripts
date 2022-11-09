@@ -22,7 +22,6 @@ docker tag docker.io/projectcontour/contour:v1.18.0 localhost:5000/projectcontou
 docker tag docker.io/flomesh/pipy:latest localhost:5000/flomesh/pipy:latest
 docker tag docker.io/flomesh/pipy-nightly:latest localhost:5000/flomesh/pipy-nightly:latest
 docker tag docker.io/flomesh/pipy-repo:latest localhost:5000/flomesh/pipy-repo:latest
-docker tag docker.io/flomesh/pipy-repo-nightly:latest localhost:5000/flomesh/pipy-repo-nightly:latest
 docker tag docker.io/flomesh/alpine:3 localhost:5000/flomesh/alpine:3
 docker tag docker.io/flomesh/proxy-wasm-cpp-sdk:v2 localhost:5000/flomesh/proxy-wasm-cpp-sdk:v2
 docker tag docker.io/prom/prometheus:v2.18.1 localhost:5000/prom/prometheus:v2.18.1

@@ -22,7 +22,6 @@ docker push localhost:5000/projectcontour/contour:v1.18.0
 docker push localhost:5000/flomesh/pipy:latest
 docker push localhost:5000/flomesh/pipy-nightly:latest
 docker push localhost:5000/flomesh/pipy-repo:latest
-docker push localhost:5000/flomesh/pipy-repo-nightly:latest
 docker push localhost:5000/flomesh/alpine:3
 docker push localhost:5000/flomesh/proxy-wasm-cpp-sdk:v2
 docker push localhost:5000/prom/prometheus:v2.18.1
