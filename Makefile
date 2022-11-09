@@ -167,6 +167,10 @@ go-lint: go-checks
 kind-up:
 	cd ${OSM_HOME};make kind-up
 
+.PHONY: kind-ingress-up
+kind-ingress-up:
+	export KIND_INGRESS_ENABLE=true;cd ${OSM_HOME};make kind-up
+
 .PHONY: kind-reset
 kind-reset:
 	cd ${OSM_HOME};make kind-reset
