@@ -21,8 +21,6 @@ docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flo
 docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/toolbox:1.2.0
 docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/curl:7.84.0
 docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/mirrored-klipper-lb:v0.3.5
-docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/fsm-ingress-pipy:0.2.0-alpha.1-dev
-docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/fsm-manager:0.2.0-alpha.1-dev
 docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/fsm-ingress-pipy:0.2.0-alpha.2-dev
 docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/fsm-manager:0.2.0-alpha.2-dev
 docker restart $REGPOD
