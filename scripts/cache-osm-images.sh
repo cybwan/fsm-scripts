@@ -26,15 +26,13 @@ find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# flomesh/proxy-wasm-cpp-s
 
 sed -i 's#docker.io#localhost:5000#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#sidecarImage: envoyproxy/envoy#sidecarImage: localhost:5000/envoyproxy/envoy#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#sidecarImage: flomesh/pipy:latest#sidecarImage: localhost:5000/flomesh/pipy:latest#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#sidecarImage: flomesh/pipy-nightly:latest#sidecarImage: localhost:5000/flomesh/pipy-nightly:latest#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i 's#sidecarImage: flomesh/pipy-nightly#sidecarImage: localhost:5000/flomesh/pipy-nightly#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i 's#sidecarImage: flomesh/pipy#sidecarImage: localhost:5000/flomesh/pipy#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#curlImage: curlimages/curl#curlImage: localhost:5000/curlimages/curl#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#image: prom/prometheus:v2.18.1#image: localhost:5000/prom/prometheus:v2.18.1#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#image: grafana/grafana:8.2.2#image: localhost:5000/grafana/grafana:8.2.2#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#rendererImage: grafana/grafana-image-renderer:3.2.1#rendererImage: localhost:5000/grafana/grafana-image-renderer:3.2.1#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#image: jaegertracing/all-in-one#image: localhost:5000/jaegertracing/all-in-one#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#pipyRepoImage: flomesh/pipy-repo:latest#pipyRepoImage: localhost:5000/flomesh/pipy-repo:latest#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#pipyRepoImage: flomesh/pipy-repo:0.70.0-2#pipyRepoImage: localhost:5000/flomesh/pipy-repo:0.70.0-2#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#pipyRepoImage: flomesh/pipy:0.70.0-2#pipyRepoImage: localhost:5000/flomesh/pipy:0.70.0-2#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#pipyRepoImage: flomesh/pipy-repo-nightly:latest#pipyRepoImage: localhost:5000/flomesh/pipy-repo-nightly:latest#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i 's#pipyRepoImage: flomesh/pipy-repo-nightly#pipyRepoImage: localhost:5000/flomesh/pipy-repo-nightly#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i 's#pipyRepoImage: flomesh/pipy-repo#pipyRepoImage: localhost:5000/flomesh/pipy-repo#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#registry: fluent#registry: localhost:5000/fluent#g' "${OSM_HOME}"/charts/osm/values.yaml
