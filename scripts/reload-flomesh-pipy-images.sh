@@ -25,6 +25,9 @@ docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flo
 
 docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/pipy:0.70.0-2
 docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/pipy-repo:0.70.0-2
+
+docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/pipy:0.70.0-24
+docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/flomesh/pipy-repo:0.70.0-24
 docker restart $REGPOD
 
 docker pull docker.io/flomesh/pipy:latest
