@@ -245,3 +245,11 @@ tail-osm-controller-logs:
 
 tail-osm-injector-logs:
 	cd ${OSM_HOME};./demo/tail-osm-injector-logs.sh
+
+retag:
+	IMG="${IMAGE}" docker rmi "${IMG}" "localhost:5000/${IMG}"
+	IMG="${IMAGE}" REGPOD="$(docker ps --filter 'name=kind-registry' |tail -n 1| awk 'NR==1{print $1}')" docker exec $REGPOD rm -rf /var/lib/registry/docker/registry/v2/repositories/${IMG};docker restart $REGPOD
+	IMG="${IMAGE}" docker pull ${IMG}
+	IMG="${IMAGE}" docker tag ${IMG} localhost:5000/${IMG}
+	IMG="${IMAGE}" docker push localhost:5000/${IMG}
+	IMG="${IMAGE}" docker rmi "${IMG}" "localhost:5000/${IMG}"
