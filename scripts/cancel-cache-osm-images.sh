@@ -35,3 +35,7 @@ sed -i 's#image: localhost:5000/jaegertracing/all-in-one#image: jaegertracing/al
 sed -i 's#localhost:5000$#docker.io#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#pipyRepoImage: localhost:5000/flomesh/pipy-repo#pipyRepoImage: flomesh/pipy-repo#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#registry: localhost:5000/fluent#registry: fluent#g' "${OSM_HOME}"/charts/osm/values.yaml
+
+sed -i 's!^#RUN /build_wasm.sh!RUN /build_wasm.sh!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-controller
+sed -i 's!cybwan/alpine:3-iptables!flomesh/alpine:3!g' "${OSM_HOME}"/Dockerfile.osm-edge-sidecar-init
+sed -i 's!^#RUN apk add --no-cache iptables!RUN apk add --no-cache iptables!g' "${OSM_HOME}"/Dockerfile.osm-edge-sidecar-init

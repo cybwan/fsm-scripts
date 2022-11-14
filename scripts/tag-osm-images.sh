@@ -33,3 +33,4 @@ docker tag docker.io/cybwan/gcr.io.distroless.base:latest localhost:5000/distrol
 docker tag docker.io/cybwan/gcr.io.distroless.static:latest localhost:5000/cybwan/gcr.io.distroless.static:latest
 docker tag docker.io/cybwan/gcr.io.distroless.base:latest localhost:5000/cybwan/gcr.io.distroless.base:latest
 docker tag docker.io/cybwan/gcr.io.distroless.static:latest localhost:5000/distroless/static:latest
+docker tag docker.io/cybwan/alpine:3-iptables localhost:5000/cybwan/alpine:3-iptables

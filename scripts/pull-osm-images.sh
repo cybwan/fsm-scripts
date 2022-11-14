@@ -33,3 +33,4 @@ docker pull docker.io/fluent/fluent-bit:1.6.4
 #docker pull gcr.io/distroless/static:latest
 docker pull docker.io/cybwan/gcr.io.distroless.static:latest
 docker pull docker.io/cybwan/gcr.io.distroless.base:latest
+docker pull docker.io/cybwan/alpine:3-iptables

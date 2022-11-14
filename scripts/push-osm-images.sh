@@ -33,3 +33,4 @@ docker push localhost:5000/distroless/static:latest
 docker push localhost:5000/distroless/base:latest
 docker push localhost:5000/cybwan/gcr.io.distroless.static:latest
 docker push localhost:5000/cybwan/gcr.io.distroless.base:latest
+docker push localhost:5000/cybwan/alpine:3-iptables

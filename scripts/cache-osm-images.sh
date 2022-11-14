@@ -35,3 +35,7 @@ sed -i 's#rendererImage: grafana/grafana-image-renderer:3.2.1#rendererImage: loc
 sed -i 's#image: jaegertracing/all-in-one#image: localhost:5000/jaegertracing/all-in-one#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#pipyRepoImage: flomesh/pipy-repo#pipyRepoImage: localhost:5000/flomesh/pipy-repo#g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's#registry: fluent#registry: localhost:5000/fluent#g' "${OSM_HOME}"/charts/osm/values.yaml
+
+sed -i 's!^RUN /build_wasm.sh!#RUN /build_wasm.sh!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-controller
+sed -i 's!flomesh/alpine:3!cybwan/alpine:3-iptables!g' "${OSM_HOME}"/Dockerfile.osm-edge-sidecar-init
+sed -i 's!^RUN apk add --no-cache iptables!#RUN apk add --no-cache iptables!g' "${OSM_HOME}"/Dockerfile.osm-edge-sidecar-init
