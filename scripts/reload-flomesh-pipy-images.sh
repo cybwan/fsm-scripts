@@ -5,7 +5,6 @@ set -uo pipefail
 IMG="flomesh/pipy:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="flomesh/pipy-nightly:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="flomesh/pipy-repo:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
-IMG="flomesh/pipy-repo-nightly:latest"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 
 IMG="flomesh/pipy:0.70.0-2"; docker rmi "${IMG}" "localhost:5000/${IMG}"
 IMG="flomesh/pipy-repo:0.70.0-2"; docker rmi "${IMG}" "localhost:5000/${IMG}"
