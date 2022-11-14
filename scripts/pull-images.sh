@@ -29,9 +29,6 @@ docker pull projectcontour/contour:v1.18.0
 docker pull prom/prometheus:v2.18.1
 docker pull fluent/fluent-bit:1.6.4
 
-docker pull flomesh/pipy:latest
-docker pull flomesh/pipy-nightly:latest
-docker pull flomesh/pipy-repo:latest
 docker pull flomesh/grpcurl:latest
 docker pull flomesh/grpcbin:latest
 docker pull flomesh/httpbin:latest
