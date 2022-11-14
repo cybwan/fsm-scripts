@@ -16,6 +16,7 @@ OSM_HOME=$1
 
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/alpine:3$# alpine:3#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/flomesh/alpine:3$# flomesh/alpine:3#g' {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/cybwan/alpine:3# cybwan/alpine:3#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/library/busybox:1.33# busybox:1.33#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# localhost:5000/library/golang:\$GO_VERSION # golang:\$GO_VERSION #g" {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/distroless/base# gcr.io/distroless/base#g' {} +
@@ -37,5 +38,5 @@ sed -i 's#pipyRepoImage: localhost:5000/flomesh/pipy-repo#pipyRepoImage: flomesh
 sed -i 's#registry: localhost:5000/fluent#registry: fluent#g' "${OSM_HOME}"/charts/osm/values.yaml
 
 sed -i 's!^#RUN /build_wasm.sh!RUN /build_wasm.sh!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-controller
-sed -i 's!cybwan/alpine:3-iptables!flomesh/alpine:3!g' "${OSM_HOME}"/Dockerfile.osm-edge-sidecar-init
-sed -i 's!^#RUN apk add --no-cache iptables!RUN apk add --no-cache iptables!g' "${OSM_HOME}"/Dockerfile.osm-edge-sidecar-init
+sed -i 's!cybwan/alpine:3-iptables!flomesh/alpine:3!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init
+sed -i 's!^#RUN apk add --no-cache iptables!RUN apk add --no-cache iptables!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init
