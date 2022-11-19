@@ -45,4 +45,4 @@ docker pull quay.io/jetstack/cert-manager-webhook:v1.3.1
 
 docker pull cybwan/gcr.io.distroless.static:latest
 docker pull cybwan/gcr.io.distroless.base:latest
-docker pull docker.io/cybwan/alpine:3-iptables
+docker pull cybwan/alpine:3-iptables
