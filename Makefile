@@ -218,9 +218,9 @@ envoy: switch-sidecar-to-envoy
 
 speed: goproxy autobuild-disable gcr-io
 
-dev: cache speed
+dev: cache speed disable-wasm-stats
 
-dev-reset: cache-reset goproxy-reset autobuild-reset gcr-io-reset
+dev-reset: cache-reset goproxy-reset autobuild-reset gcr-io-reset enable-wasm-stats
 
 build: build-osm-cli build-osm-images
 
