@@ -181,6 +181,10 @@ mcs-up:
 	BIZNESS_PLANE_CLUSTER=cluster3 scripts/mcs-deploy-osm-control-plane.sh
 	echo "DONE"
 
+.PHONY: mcs-pods
+mcs-pods:
+	scripts/mcs-deploy-osm-biz-pods.sh
+
 .PHONY: mcs-reset
 mcs-reset:
 	kind delete cluster --name control-plane
