@@ -5,7 +5,6 @@ set -uo pipefail
 source ./scripts/funcs.sh
 
 images=(
-"flomesh/pipy:0.50.0-146"
 "flomesh/wait-for-it:1.2.0"
 "flomesh/toolbox:1.2.0"
 "flomesh/curl:7.84.0"
