@@ -63,7 +63,19 @@ rm -rf artifacts;./preflight check container quay.io/flomesh/osm-edge-demo-tcp-e
 rm -rf artifacts;./preflight check container quay.io/flomesh/osm-edge-demo-tcp-client-ubi8:1.2.1 --certification-project-id=63875c63b841574ebfee2c4a --pyxis-api-token=nkfal7e1eyl2l0dicol2r7uiobpipws3
 ```
 
-### 1.4 Refs
+### 1.4 chart-verifier
+
+```bash
+docker run --rm                               \
+-e KUBECONFIG=/.kube/config                   \
+-v "${HOME}/.kube":/.kube                     \
+-v $(pwd):/charts                             \
+"quay.io/redhat-certification/chart-verifier" \
+verify                                        \
+/charts/osm
+```
+
+### 1.5 Refs
 
 ```
 https://quay.io/user/flomesh

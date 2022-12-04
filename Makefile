@@ -14,6 +14,9 @@ OSM_HOME ?= $(abspath ../osm-edge)
 
 default: build
 
+install-k3s:
+	scripts/install-k3s.sh
+
 install-docker:
 	scripts/install-docker.sh
 
@@ -139,6 +142,12 @@ clean-local-registry:
 
 list-local-registry:
 	scripts/list-local-registry.sh
+
+osm-up:
+	scripts/osm-up.sh
+
+osm-pods:
+	scripts/osm-pod.curl.sh
 
 osm-reset:
 	scripts/clean-osm.sh
