@@ -150,6 +150,9 @@ osm-pods:
 	scripts/osm-pod.curl.curl.sh
 	scripts/osm-pod.pipy-ok.pipy.sh
 
+osm-demo-plugin:
+	scripts/osm-demo-plugin.sh
+
 osm-reset:
 	scripts/clean-osm.sh
 
