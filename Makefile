@@ -143,6 +143,9 @@ clean-local-registry:
 list-local-registry:
 	scripts/list-local-registry.sh
 
+pipy-up:
+	scripts/pipy-up.sh /Users/baili/pipy
+
 osm-up:
 	scripts/osm-up.sh
 
