@@ -90,16 +90,16 @@ spec:
           values: ["curl"]
     namespaceSelector:
       matchExpressions:
-        - key: openservicemesh.io/sidecar-injection
+        - key: openservicemesh.io/monitored-by
           operator: In
-          values: ["enabled", "true"]
+          values: ["osm"]
 EOF
 
 kubectl apply -n curl -f - <<EOF
 kind: PluginConfig
 apiVersion: plugin.flomesh.io/v1alpha1
 metadata:
-  name: httpbin-ratelimit
+  name: curl-logs-demo-1
   namespace: curl
 spec:
   config:
@@ -111,8 +111,12 @@ spec:
       request: 3
       unit: minute
       burst: 10
-  plugin: ratelimit-http
-  targetRef:
-    kind: Service
-    name: httpbin
+  plugin: logs-demo-1
+  destinationRefs:
+    - kind: Service
+      name: pipy-ok
+      namespace: pipy
+    - kind: Service
+      name: curl
+      namespace: curl
 EOF
