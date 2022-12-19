@@ -146,6 +146,9 @@ list-local-registry:
 pipy-up:
 	scripts/pipy-up.sh
 
+pipy-reset:
+	scripts/pipy-reset.sh
+
 osm-up:
 	scripts/osm-up.sh
 

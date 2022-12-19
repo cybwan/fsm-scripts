@@ -23,6 +23,7 @@ apiVersion: plugin.flomesh.io/v1alpha1
 metadata:
   name: logs-demo-1
 spec:
+  priority: 1
   pipyscript: |+
     pipy({})
       .pipeline()
@@ -47,6 +48,7 @@ apiVersion: plugin.flomesh.io/v1alpha1
 metadata:
   name: logs-demo-2
 spec:
+  priority: 2
   pipyscript: |+
     pipy({})
       .pipeline()
