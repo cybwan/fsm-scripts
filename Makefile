@@ -144,7 +144,7 @@ list-local-registry:
 	scripts/list-local-registry.sh
 
 pipy-up:
-	scripts/pipy-up.sh /Users/baili/pipy
+	scripts/pipy-up.sh
 
 osm-up:
 	scripts/osm-up.sh
