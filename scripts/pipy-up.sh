@@ -11,4 +11,4 @@ set -euo pipefail
 #
 #cd "${PIPY_HOME}"
 #bin/pipy --admin-port=:6060
-docker run --rm -p 6060:6060 -d --name pipy flomesh/pipy-repo:0.70.0-46 pipy --admin-port=:6060
+docker run --rm -p 6060:6060 -d --name pipy flomesh/pipy-repo-nightly:latest pipy --admin-port=:6060
