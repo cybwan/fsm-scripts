@@ -156,6 +156,9 @@ osm-pods:
 	scripts/osm-pod.curl.curl.sh
 	scripts/osm-pod.pipy-ok.pipy.sh
 
+osm-pods-test:
+	scripts/osm-pod.test.sh
+
 osm-err-pods:
 	scripts/osm-pod.err.sh
 
