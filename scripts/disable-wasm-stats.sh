@@ -14,7 +14,6 @@ fi
 
 OSM_HOME=$1
 
-sed -i 's/enableWASMStats: true$/enableWASMStats: false/g' "${OSM_HOME}"/charts/osm/values.yaml
 sed -i 's/^FROM \(.*\) AS wasm$/#FROM \1 AS wasm/g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-controller
 sed -i 's/^WORKDIR \/wasm/#WORKDIR \/wasm/g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-controller
 sed -i 's/^COPY \.\/wasm \./#COPY \.\/wasm \./g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-controller
