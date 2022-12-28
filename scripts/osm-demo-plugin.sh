@@ -27,35 +27,33 @@ spec:
   pipyscript: |+
     (
     pipy({
-      _pluginName: '',
-      _pluginConfig: null,
-      _accessToken: null,
-      _valid: false,
+        _pluginName: '',
+        _pluginConfig: null,
+        _accessToken: null,
+        _valid: false,
     })
-
     .import({
-        __port: 'inbound-main',
+        __plugins: 'inbound',
     })
-
     .pipeline()
     .onStart(
-    () => void (
-        _pluginName = __filename.slice(9, -3),
-        _pluginConfig = __port?.Plugins?.[_pluginName],
-        _accessToken = _pluginConfig?.AccessToken
-    )
-    )
-    .handleMessageStart(
-        msg => (msg.head.headers['accesstoken'] === _accessToken) && (_valid = true)
-    )
-    .branch(
-      () => _valid, (
-        $ => $.chain()
-    ), (
-        $ => $.replaceMessage(
-        new Message({ status: 403 }, 'token verify failed')
+        () => void (
+            _pluginName = __filename.slice(9, -3),
+            _pluginConfig = __plugins?.[_pluginName],
+            _accessToken = _pluginConfig?.AccessToken
         )
     )
+    .handleMessageStart(
+        msg => _valid = (_accessToken && msg.head.headers['accesstoken'] === _accessToken)
+    )
+    .branch(
+        () => _valid, (
+            $ => $.chain()
+        ), (
+            $ => $.replaceMessage(
+            new Message({ status: 403 }, 'token verify failed')
+            )
+        )
     )
     )
 EOF
@@ -76,14 +74,14 @@ spec:
     })
 
     .import({
-        __port: 'outbound-main',
+        __plugins: 'outbound',
     })
 
     .pipeline()
     .onStart(
         () => void (
             _pluginName = __filename.slice(9, -3),
-            _pluginConfig = __port?.Plugins?.[_pluginName],
+            _pluginConfig = __plugins?.[_pluginName],
             _accessToken = _pluginConfig?.AccessToken
         )
     )
