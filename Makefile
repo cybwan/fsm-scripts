@@ -190,20 +190,22 @@ go-lint: go-checks
 
 .PHONY: mcs-up
 mcs-up:
+	helm repo add fsm https://charts.flomesh.io
+	helm repo update
 	KIND_CLUSTER_NAME=control-plane MAPPING_HOST_PORT=8090 API_SERVER_PORT=6445 scripts/mcs-kind-with-registry.sh
 	KIND_CLUSTER_NAME=cluster1 MAPPING_HOST_PORT=8091 API_SERVER_PORT=6446 scripts/mcs-kind-with-registry.sh
 	KIND_CLUSTER_NAME=cluster2 MAPPING_HOST_PORT=8092 API_SERVER_PORT=6447 scripts/mcs-kind-with-registry.sh
 	KIND_CLUSTER_NAME=cluster3 MAPPING_HOST_PORT=8093 API_SERVER_PORT=6448 scripts/mcs-kind-with-registry.sh
-	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=${FSM}/charts/fsm KIND_CLUSTER_NAME=control-plane scripts/mcs-deploy-fsm-control-plane.sh
-	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=${FSM}/charts/fsm KIND_CLUSTER_NAME=cluster1 scripts/mcs-deploy-fsm-control-plane.sh
-	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=${FSM}/charts/fsm KIND_CLUSTER_NAME=cluster2 scripts/mcs-deploy-fsm-control-plane.sh
-	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=${FSM}/charts/fsm KIND_CLUSTER_NAME=cluster3 scripts/mcs-deploy-fsm-control-plane.sh
-	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster1 PORT=8091 scripts/mcs-join-fsm-control-plane.sh
-	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster2 PORT=8092 scripts/mcs-join-fsm-control-plane.sh
-	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster3 PORT=8093 scripts/mcs-join-fsm-control-plane.sh
+	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=fsm/fsm KIND_CLUSTER_NAME=control-plane scripts/mcs-deploy-fsm-control-plane.sh
+	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=fsm/fsm KIND_CLUSTER_NAME=cluster1 scripts/mcs-deploy-fsm-control-plane.sh
+	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=fsm/fsm KIND_CLUSTER_NAME=cluster2 scripts/mcs-deploy-fsm-control-plane.sh
+	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=fsm/fsm KIND_CLUSTER_NAME=cluster3 scripts/mcs-deploy-fsm-control-plane.sh
 	BIZNESS_PLANE_CLUSTER=cluster1 scripts/mcs-deploy-osm-control-plane.sh
 	BIZNESS_PLANE_CLUSTER=cluster2 scripts/mcs-deploy-osm-control-plane.sh
 	BIZNESS_PLANE_CLUSTER=cluster3 scripts/mcs-deploy-osm-control-plane.sh
+	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster1 PORT=8091 scripts/mcs-join-fsm-control-plane.sh
+	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster2 PORT=8092 scripts/mcs-join-fsm-control-plane.sh
+	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster3 PORT=8093 scripts/mcs-join-fsm-control-plane.sh
 	echo "DONE"
 
 .PHONY: mcs-pods

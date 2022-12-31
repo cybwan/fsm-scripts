@@ -22,6 +22,7 @@ osm install \
     --set=osm.image.pullPolicy=Always \
     --set=osm.sidecarLogLevel=error \
     --set=osm.controllerLogLevel=warn \
+    --set=osm.repoServer.image=${CTR_REGISTRY}/pipy-repo:${CTR_TAG} \
     --timeout=900s \
     --set=osm.localDNSProxy.enable=true \
     --set=osm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${dns_svc_ip}"
