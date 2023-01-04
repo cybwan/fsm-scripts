@@ -5,7 +5,7 @@ RELEASEDIR ?= $(CURDIR)/release
 SBINDIR ?= usr/sbin/
 ETCDIR ?= etc/
 DESTDIR ?= /
-GOVERSION ?= 1.19.2
+GOVERSION ?= 1.19.4
 
 GO_ARCH_MAP_x86 := 386
 GO_ARCH_MAP_x86_64 := amd64
@@ -37,8 +37,8 @@ $(GOROOT)/bin/go:
 	curl "$(GOBUILDTARBALL)" | tar -C "$(GOROOT)" --strip-components=1 -xzf - || { rm -rf "$(GOROOT)"; exit 1; }
 
 install: $(GOROOT)/bin/go
-	go env -w GOPROXY=https://goproxy.cn
-	go env -w GOSUMDB=sum.golang.google.cn
+	#go env -w GOPROXY=https://goproxy.cn
+	#go env -w GOSUMDB=sum.golang.google.cn
 	go env -w GO111MODULE=on
 	go env -w GOROOT=$(BUILDDIR)/$(GOVERSION)/goroot
 	go env -w GOPATH=$(BUILDDIR)/$(GOVERSION)/gopath
