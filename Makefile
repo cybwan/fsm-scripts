@@ -288,3 +288,6 @@ retag:
 	docker tag ${IMAGE} localhost:5000/${IMAGE}
 	docker push localhost:5000/${IMAGE}
 	docker rmi "${IMAGE}" "localhost:5000/${IMAGE}" | true
+
+bpf_trace_printk:
+	scripts/bpf_trace_printk.sh
