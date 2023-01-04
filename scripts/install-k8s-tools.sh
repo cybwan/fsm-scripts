@@ -15,17 +15,15 @@ fi
 BUILD_ARCH=$1
 BUILD_OS=$2
 
-sudo apt install -y apt-transport-https
+sudo apt -y update
+sudo apt -y install ca-certificates curl
+sudo apt -y install apt-transport-https
+sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
-sudo tee /etc/apt/sources.list.d/kubernetes.list <<-'EOF'
-deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
-EOF
-
-curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt -y update
-
-sudo apt install -y kubelet=1.23.4-00 kubeadm=1.23.4-00 kubectl=1.23.4-00
+sudo apt -y install kubectl kubeadm kubelet
 
 sudo curl -Lo /usr/local/sbin/kind https://kind.sigs.k8s.io/dl/latest/kind-"${BUILD_OS}"-"${BUILD_ARCH}"
 sudo chmod a+x /usr/local/sbin/kind
