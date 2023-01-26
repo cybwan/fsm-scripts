@@ -58,6 +58,11 @@ EOF
 sudo systemctl disable --now swap.img.swap
 sudo systemctl mask swap.target
 
+sudo tee /etc/modprobe.d/nf_conntrack.conf <<-'EOF'
+#hashsize=nf_conntrack_max/8
+options nf_conntrack hashsize=16384
+EOF
+
 sudo tee /etc/modules-load.d/containerd.conf <<EOF
 overlay
 br_netfilter
@@ -69,7 +74,11 @@ sudo tee /etc/sysctl.d/kubernetes.conf <<EOF
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
+fs.file-max=655360
+fs.inotify.max_user_watches = 655350
+fs.inotify.max_user_instances = 1024
 EOF
+
 sudo sysctl --system
 
 sudo apt -y update
@@ -83,7 +92,12 @@ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmo
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 sudo apt -y update
-sudo apt install -y containerd.io
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+
+sudo groupadd docker
+sudo gpasswd -a "$USER" docker
+sudo systemctl restart docker
+sudo newgrp docker &
 
 containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
