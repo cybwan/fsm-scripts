@@ -24,6 +24,7 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://a
 
 sudo apt -y update
 sudo apt -y install kubectl kubeadm kubelet
+sudo apt-mark hold kubelet kubeadm kubectl
 
 sudo curl -Lo /usr/local/sbin/kind https://kind.sigs.k8s.io/dl/latest/kind-"${BUILD_OS}"-"${BUILD_ARCH}"
 sudo chmod a+x /usr/local/sbin/kind
