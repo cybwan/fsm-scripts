@@ -18,11 +18,16 @@ if [ -z "$3" ]; then
 fi
 
 if [ -z "$4" ]; then
-  echo "Error: expected one argument STATIC IP"
+  echo "Error: expected one argument Net Device"
   exit 1
 fi
 
 if [ -z "$5" ]; then
+  echo "Error: expected one argument STATIC IP"
+  exit 1
+fi
+
+if [ -z "$6" ]; then
   echo "Error: expected one argument Default Route"
   exit 1
 fi
@@ -30,15 +35,16 @@ fi
 NODE_ARCH=$1
 NODE_OS=$2
 NODE_HOSTNAME=$3
-NODE_STATIC_IPv4=$4
-NODE_DEFAULT_ROUTE=$5
+NODE_NET_DEVICE=$4
+NODE_STATIC_IPv4=$5
+NODE_DEFAULT_ROUTE=$6
 
 sudo hostnamectl set-hostname ${NODE_HOSTNAME}
 
 sudo tee /etc/netplan/00-installer-config.yaml <<EOF
 network:
   ethernets:
-    ens32:
+    ${NODE_NET_DEVICE}:
       dhcp4: false
       addresses: [${NODE_STATIC_IPv4}]
       nameservers:
