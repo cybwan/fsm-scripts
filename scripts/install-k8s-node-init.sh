@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -uo pipefail
 
 if [ -z "$1" ]; then
   echo "Error: expected one argument OS_ARCH"
