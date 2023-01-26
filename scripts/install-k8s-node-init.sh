@@ -12,48 +12,8 @@ if [ -z "$2" ]; then
   exit 1
 fi
 
-if [ -z "$3" ]; then
-  echo "Error: expected one argument HOSTNAME"
-  exit 1
-fi
-
-if [ -z "$4" ]; then
-  echo "Error: expected one argument Net Device"
-  exit 1
-fi
-
-if [ -z "$5" ]; then
-  echo "Error: expected one argument STATIC IP"
-  exit 1
-fi
-
-if [ -z "$6" ]; then
-  echo "Error: expected one argument Default Route"
-  exit 1
-fi
-
 NODE_ARCH=$1
 NODE_OS=$2
-NODE_HOSTNAME=$3
-NODE_NET_DEVICE=$4
-NODE_STATIC_IPv4=$5
-NODE_DEFAULT_ROUTE=$6
-
-sudo hostnamectl set-hostname ${NODE_HOSTNAME}
-
-sudo tee /etc/netplan/00-installer-config.yaml <<EOF
-network:
-  ethernets:
-    ${NODE_NET_DEVICE}:
-      dhcp4: false
-      addresses: [${NODE_STATIC_IPv4}]
-      nameservers:
-        addresses: [${NODE_DEFAULT_ROUTE}]
-      routes:
-      - to: default
-        via: ${NODE_DEFAULT_ROUTE}
-  version: 2
-EOF
 
 sudo systemctl disable --now swap.img.swap
 sudo systemctl mask swap.target
@@ -83,8 +43,6 @@ sudo sysctl --system
 
 sudo apt -y update
 sudo apt -y upgrade
-sudo apt -y autoclean
-sudo apt -y autoremove
 
 sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
 
@@ -104,10 +62,6 @@ sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/c
 
 sudo systemctl restart containerd
 sudo systemctl enable containerd
-
-sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo systemctl reboot
 
