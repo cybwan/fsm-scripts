@@ -63,3 +63,5 @@ cat >> /etc/hosts <<EOF
 192.168.127.51 worker1
 192.168.127.52 worker2
 EOF
+
+netplan apply

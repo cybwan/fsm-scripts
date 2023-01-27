@@ -44,6 +44,10 @@ sudo sysctl --system
 sudo apt -y update
 sudo apt -y upgrade
 
+sudo apt install -y chrony
+sudo chronyc sources -v
+sudo timedatectl set-timezone Asia/Shanghai
+
 sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
 
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
