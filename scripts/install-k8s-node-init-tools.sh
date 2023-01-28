@@ -46,6 +46,8 @@ fi
 complete -cf sudo
 complete -cf man
 source <(kubectl completion bash)
+source <(kubeadm completion bash)
+source <(crictl completion bash)
 alias wk="watch -n 2 kubectl get pods -A -o wide"
 alias k=kubectl
 EOF
