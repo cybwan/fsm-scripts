@@ -54,12 +54,7 @@ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmo
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 sudo apt -y update
-sudo apt install -y docker-ce docker-ce-cli containerd.io
-
-sudo groupadd docker
-sudo gpasswd -a "$USER" docker
-sudo systemctl restart docker
-sudo newgrp docker &
+sudo apt install -y containerd.io
 
 containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml

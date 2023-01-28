@@ -32,12 +32,18 @@ if [ -z "$6" ]; then
   exit 1
 fi
 
+if [ -z "$7" ]; then
+  echo "Error: expected one argument Default DNS Server"
+  exit 1
+fi
+
 NODE_ARCH=$1
 NODE_OS=$2
 NODE_HOSTNAME=$3
 NODE_NET_DEVICE=$4
 NODE_STATIC_IPv4=$5
 NODE_DEFAULT_ROUTE=$6
+NODE_DEFAULT_DNS=$7
 
 sudo apt -y autoclean
 sudo apt -y autoremove
@@ -51,7 +57,7 @@ network:
       dhcp4: false
       addresses: [${NODE_STATIC_IPv4}]
       nameservers:
-        addresses: [${NODE_DEFAULT_ROUTE}]
+        addresses: [${NODE_DEFAULT_DNS}]
       routes:
       - to: default
         via: ${NODE_DEFAULT_ROUTE}

@@ -22,3 +22,16 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://a
 sudo apt -y update
 sudo apt install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+
+system=$(uname -s | tr [:upper:] [:lower:])
+arch=$(dpkg --print-architecture)
+release=v1.26.0
+curl -L https://github.com/kubernetes-sigs/cri-tools/releases/download/${release}/crictl-${release}-${system}-${arch}.tar.gz | tar -vxzf -
+cp crictl /usr/local/bin/
+
+cat > /etc/crictl.yaml << EOF
+runtime-endpoint: unix:///var/run/containerd/containerd.sock
+image-endpoint: unix:///var/run/containerd/containerd.sock
+timeout: 10
+debug: false
+EOF
