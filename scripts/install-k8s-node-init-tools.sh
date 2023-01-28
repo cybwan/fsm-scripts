@@ -20,7 +20,9 @@ sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packag
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt -y update
-sudo apt install -y kubelet kubeadm kubectl
+# 查看版本
+#sudo apt-cache madison kubeadm|head
+sudo apt install -y kubelet=1.24.10-00 kubeadm=1.24.10-00 kubectl=1.24.10-00
 sudo apt-mark hold kubelet kubeadm kubectl
 
 system=$(uname -s | tr [:upper:] [:lower:])
