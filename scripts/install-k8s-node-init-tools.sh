@@ -37,3 +37,25 @@ image-endpoint: unix:///var/run/containerd/containerd.sock
 timeout: 10
 debug: false
 EOF
+
+cat >> ~/.bashrc <<EOF
+if [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
+#Enabling tab-completion
+complete -cf sudo
+complete -cf man
+source <(kubectl completion bash)
+alias wk="watch -n 2 kubectl get pods -A -o wide"
+alias k=kubectl
+EOF
+
+cat >> /etc/inputrc <<EOF
+# do not show hidden files in the list
+set match-hidden-files off
+# auto complete ignoring case
+set show-all-if-ambiguous on
+set completion-ignore-case on
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+EOF
