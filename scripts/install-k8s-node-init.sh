@@ -42,7 +42,6 @@ EOF
 sudo sysctl --system
 
 sudo apt -y update
-sudo apt -y upgrade
 
 sudo apt install -y chrony
 sudo chronyc sources -v
@@ -61,6 +60,8 @@ sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/c
 
 sudo systemctl restart containerd
 sudo systemctl enable containerd
+
+sudo apt -y upgrade
 
 sudo systemctl reboot
 
