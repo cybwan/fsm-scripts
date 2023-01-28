@@ -44,6 +44,9 @@ init-k8s-node-worker2:
 	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} worker2 ens33 192.168.127.52/24 192.168.127.101 8.8.8.8
 	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
+init-k8s-node-local-registry:
+	scripts/install-k8s-node-init-local-registry.sh
+
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
 
