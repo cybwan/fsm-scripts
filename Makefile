@@ -33,16 +33,16 @@ init-k8s-node:
 	scripts/install-k8s-node-init.sh ${BUILDARCH} ${BUILDOS}
 
 init-k8s-node-master:
-	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} master  ens33 192.168.127.50/24 192.168.127.101 8.8.8.8
+	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
 init-k8s-node-worker1:
-	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} worker1 ens33 192.168.127.51/24 192.168.127.101 8.8.8.8
+	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
 init-k8s-node-worker2:
-	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} worker2 ens33 192.168.127.52/24 192.168.127.101 8.8.8.8
+	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
