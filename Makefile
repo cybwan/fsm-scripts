@@ -11,6 +11,7 @@ TARGETS := $(BUILDOS)/$(BUILDARCH)
 DOCKER_BUILDX_PLATFORM := $(BUILDOS)/$(BUILDARCH)
 
 OSM_HOME ?= $(abspath ../osm-edge)
+LOCAL_REGISTRY ?= localhost:5000
 
 default: build
 
@@ -304,11 +305,11 @@ tail-osm-injector-logs:
 	cd ${OSM_HOME};./demo/tail-osm-injector-logs.sh
 
 retag:
-	docker rmi "${IMAGE}" "localhost:5000/${IMAGE}" | true
+	docker rmi "${IMAGE}" "${LOCAL_REGISTRY}/${IMAGE}" | true
 	docker pull ${IMAGE}
-	docker tag ${IMAGE} localhost:5000/${IMAGE}
-	docker push localhost:5000/${IMAGE}
-	docker rmi "${IMAGE}" "localhost:5000/${IMAGE}" | true
+	docker tag ${IMAGE} ${LOCAL_REGISTRY}/${IMAGE}
+	docker push ${LOCAL_REGISTRY}/${IMAGE}
+	docker rmi "${IMAGE}" "${LOCAL_REGISTRY}/${IMAGE}" | true
 
 bpf_trace_printk:
 	scripts/bpf_trace_printk.sh
