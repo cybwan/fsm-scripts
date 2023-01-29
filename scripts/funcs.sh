@@ -1,11 +1,13 @@
 #!/bin/bash
 
+LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
+
 function docker_io_images_to_local_registry() {
   typeset -a imgs=("$@")
   HUB="docker.io"
 
   for img in "${imgs[@]}"; do
-    docker rmi "${img}" "localhost:5000/${img}"
+    docker rmi "${img}" "${LOCAL_REGISTRY}/${img}"
   done
 
   docker container prune -f
@@ -25,15 +27,15 @@ function docker_io_images_to_local_registry() {
   done
 
   for img in "${imgs[@]}"; do
-    docker tag ${HUB}/${img} localhost:5000/${img}
+    docker tag ${HUB}/${img} ${LOCAL_REGISTRY}/${img}
   done
 
   for img in "${imgs[@]}"; do
-    docker push localhost:5000/${img}
+    docker push ${LOCAL_REGISTRY}/${img}
   done
 
   for img in "${imgs[@]}"; do
-    docker rmi "${img}" "localhost:5000/${img}"
+    docker rmi "${img}" "${LOCAL_REGISTRY}/${img}"
   done
 
   docker container prune -f
@@ -46,7 +48,7 @@ function quay_io_images_to_local_registry() {
   HUB="quay.io"
 
   for img in "${imgs[@]}"; do
-    docker rmi "${img}" "localhost:5000/${img}"
+    docker rmi "${img}" "${LOCAL_REGISTRY}/${img}"
   done
 
   docker container prune -f
@@ -66,15 +68,15 @@ function quay_io_images_to_local_registry() {
   done
 
   for img in "${imgs[@]}"; do
-    docker tag ${HUB}/${img} localhost:5000/${img}
+    docker tag ${HUB}/${img} ${LOCAL_REGISTRY}/${img}
   done
 
   for img in "${imgs[@]}"; do
-    docker push localhost:5000/${img}
+    docker push ${LOCAL_REGISTRY}/${img}
   done
 
   for img in "${imgs[@]}"; do
-    docker rmi "${img}" "localhost:5000/${img}"
+    docker rmi "${img}" "${LOCAL_REGISTRY}/${img}"
   done
 
   docker container prune -f
@@ -87,7 +89,7 @@ function gcr_io_images_to_local_registry() {
   HUB="gcr.io"
 
   for img in "${imgs[@]}"; do
-    docker rmi "${img}" "localhost:5000/${img}"
+    docker rmi "${img}" "${LOCAL_REGISTRY}/${img}"
   done
 
   docker container prune -f
@@ -107,15 +109,15 @@ function gcr_io_images_to_local_registry() {
   done
 
   for img in "${imgs[@]}"; do
-    docker tag ${HUB}/${img} localhost:5000/${img}
+    docker tag ${HUB}/${img} ${LOCAL_REGISTRY}/${img}
   done
 
   for img in "${imgs[@]}"; do
-    docker push localhost:5000/${img}
+    docker push ${LOCAL_REGISTRY}/${img}
   done
 
   for img in "${imgs[@]}"; do
-    docker rmi "${img}" "localhost:5000/${img}"
+    docker rmi "${img}" "${LOCAL_REGISTRY}/${img}"
   done
 
   docker container prune -f

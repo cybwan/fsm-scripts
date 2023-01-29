@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
+
 if [ -z "$1" ]; then
   echo "Error: expected one argument OSM_HOME"
   exit 1
@@ -14,7 +16,7 @@ make kind-up
 kubectl get namespace osm-system || kubectl create namespace osm-system
 kubectl get secret acr-creds --namespace=osm-system || kubectl --namespace=osm-system \
 create secret docker-registry acr-creds \
---docker-server=localhost:5000 \
+--docker-server=${LOCAL_REGISTRY} \
 --docker-username=flomesh \
 --docker-password=flomesh
 sed -i '/^export CTR_REGISTRY_USERNAME=/d' "${OSM_HOME}"/.env

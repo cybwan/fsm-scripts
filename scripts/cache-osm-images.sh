@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
+
 if [ -z "$1" ]; then
   echo "Error: expected one argument OSM_HOME"
   exit 1
@@ -24,17 +26,17 @@ find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# cybwan/gcr.io.distroless
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# cybwan/gcr.io.distroless.static# localhost:5000/cybwan/gcr.io.distroless.static#g' {} +
 find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# flomesh/proxy-wasm-cpp-sdk:v2 AS# localhost:5000/flomesh/proxy-wasm-cpp-sdk:v2 AS#g' {} +
 
-sed -i 's#docker.io#localhost:5000#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#sidecarImage: envoyproxy/envoy#sidecarImage: localhost:5000/envoyproxy/envoy#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#sidecarImage: flomesh/pipy-nightly#sidecarImage: localhost:5000/flomesh/pipy-nightly#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#sidecarImage: flomesh/pipy#sidecarImage: localhost:5000/flomesh/pipy#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#curlImage: curlimages/curl#curlImage: localhost:5000/curlimages/curl#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#image: prom/prometheus:v2.18.1#image: localhost:5000/prom/prometheus:v2.18.1#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#image: grafana/grafana:8.2.2#image: localhost:5000/grafana/grafana:8.2.2#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#rendererImage: grafana/grafana-image-renderer:3.2.1#rendererImage: localhost:5000/grafana/grafana-image-renderer:3.2.1#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#image: jaegertracing/all-in-one#image: localhost:5000/jaegertracing/all-in-one#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#pipyRepoImage: flomesh/pipy-repo#pipyRepoImage: localhost:5000/flomesh/pipy-repo#g' "${OSM_HOME}"/charts/osm/values.yaml
-sed -i 's#registry: fluent#registry: localhost:5000/fluent#g' "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#docker.io#${LOCAL_REGISTRY}#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#sidecarImage: envoyproxy/envoy#sidecarImage: ${LOCAL_REGISTRY}/envoyproxy/envoy#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#sidecarImage: flomesh/pipy-nightly#sidecarImage: ${LOCAL_REGISTRY}/flomesh/pipy-nightly#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#sidecarImage: flomesh/pipy#sidecarImage: ${LOCAL_REGISTRY}/flomesh/pipy#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#curlImage: curlimages/curl#curlImage: ${LOCAL_REGISTRY}/curlimages/curl#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#image: prom/prometheus:v2.18.1#image: ${LOCAL_REGISTRY}/prom/prometheus:v2.18.1#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#image: grafana/grafana:8.2.2#image: ${LOCAL_REGISTRY}/grafana/grafana:8.2.2#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#rendererImage: grafana/grafana-image-renderer:3.2.1#rendererImage: ${LOCAL_REGISTRY}/grafana/grafana-image-renderer:3.2.1#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#image: jaegertracing/all-in-one#image: ${LOCAL_REGISTRY}/jaegertracing/all-in-one#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#image: flomesh/pipy-repo#image: ${LOCAL_REGISTRY}/flomesh/pipy-repo#g" "${OSM_HOME}"/charts/osm/values.yaml
+sed -i "s#registry: fluent#registry: ${LOCAL_REGISTRY}/fluent#g" "${OSM_HOME}"/charts/osm/values.yaml
 
 sed -i 's!flomesh/alpine:3!cybwan/alpine:3-iptables!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init
 sed -i 's!^RUN apk add --no-cache iptables!#RUN apk add --no-cache iptables!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init

@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
+
 if [ -z "$1" ]; then
   echo "Error: expected one argument OSM_HOME"
   exit 1
@@ -14,4 +16,4 @@ fi
 
 OSM_HOME=$1
 
-sed -i 's# localhost:5000/devilbox/mysql:mysql-8.0# devilbox/mysql:mysql-8.0#g' "${OSM_HOME}"/demo/deploy-mysql.sh
+sed -i "s# ${LOCAL_REGISTRY}/devilbox/mysql:mysql-8.0# devilbox/mysql:mysql-8.0#g" "${OSM_HOME}"/demo/deploy-mysql.sh

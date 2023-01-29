@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
+
 if [ -z "$1" ]; then
   echo "Error: expected one argument OSM_HOME"
   exit 1
@@ -14,5 +16,5 @@ fi
 
 OSM_HOME=$1
 
-docker push localhost:5000/devilbox/mysql:mysql-8.0
-docker push localhost:5000/curlimages/curl:latest
+docker push ${LOCAL_REGISTRY}/devilbox/mysql:mysql-8.0
+docker push ${LOCAL_REGISTRY}/curlimages/curl:latest

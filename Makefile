@@ -47,6 +47,9 @@ init-k8s-node-worker2:
 init-k8s-node-local-registry:
 	scripts/install-k8s-node-init-local-registry.sh
 
+init-k8s-node-pull-images:
+	scripts/install-k8s-node-init-pull-images.sh
+
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
 

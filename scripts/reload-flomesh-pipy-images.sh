@@ -9,8 +9,8 @@ images=(
 "flomesh/pipy-nightly:latest"
 "flomesh/pipy-repo:latest"
 "flomesh/pipy-repo-nightly:latest"
-"flomesh/pipy:0.70.0-46"
-"flomesh/pipy-repo:0.70.0-46"
+"flomesh/pipy:0.90.0-18"
+"flomesh/pipy-repo:0.90.0-18"
 )
 
 docker_io_images_to_local_registry "${images[@]}"
