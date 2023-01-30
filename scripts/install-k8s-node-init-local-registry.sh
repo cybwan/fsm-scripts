@@ -3,7 +3,7 @@
 set -uo pipefail
 
 cat >> /etc/hosts <<EOF
-192.168.127.101 local.registry
+192.168.226.101 local.registry
 EOF
 
 sudo sed -i '/\[plugins."io.containerd.grpc.v1.cri".registry.mirrors\]/a\ \ \ \ \ \ \ \ \ \ endpoint = ["https://local.registry"]' /etc/containerd/config.toml
