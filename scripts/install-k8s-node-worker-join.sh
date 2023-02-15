@@ -12,6 +12,7 @@ ADVERTISE_ADDRESS=$1
 system=$(uname -s | tr [:upper:] [:lower:])
 arch=$(dpkg --print-architecture)
 if [ ! -f /opt/cni/bin/loopback ]; then
+  mkdir -p /opt/cni/bin
   tar zxf /opt/cni-plugins-${system}-${arch}-v1.2.0.tgz -C /opt/cni/bin
 fi
 
