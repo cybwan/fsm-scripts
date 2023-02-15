@@ -55,7 +55,7 @@ init-k8s-node-pull-images:
 	scripts/install-k8s-node-init-pull-images.sh
 
 init-k8s-node-start-master:
-	scripts/install-k8s-node-master-start.sh 192.168.226.50
+	scripts/install-k8s-node-master-start.sh 192.168.226.50 flannel
 
 init-k8s-node-join-worker:
 	scripts/install-k8s-node-worker-join.sh 192.168.226.50
