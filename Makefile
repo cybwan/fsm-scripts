@@ -30,6 +30,9 @@ install-golang:
 kind-k8s-version:
 	scripts/kind-node-images.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
 
+install-k8s-local-registry:
+	scripts/install-k8s-local-registry.sh
+
 init-k8s-node:
 	scripts/install-k8s-node-init.sh ${BUILDARCH} ${BUILDOS}
 
@@ -46,7 +49,7 @@ init-k8s-node-worker2:
 	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
 init-k8s-node-local-registry:
-	scripts/install-k8s-node-init-local-registry.sh
+	scripts/install-k8s-node-init-local-registry.sh 192.168.226.101
 
 init-k8s-node-pull-images:
 	scripts/install-k8s-node-init-pull-images.sh
@@ -59,6 +62,17 @@ init-k8s-node-join-worker:
 
 init-k8s-node-stop:
 	scripts/install-k8s-node-master-stop.sh
+
+bpf-trace:
+	cat /sys/kernel/debug/tracing/trace_pipe|grep bpf_trace_printk
+
+bpf-deps:
+	apt -y update
+	apt -y install git cmake make gcc python3 libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
+	git clone -b v5.4 https://github.com/torvalds/linux.git --depth 1
+	cd linux/tools/bpf/bpftool
+	make
+	make install
 
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}

@@ -29,6 +29,8 @@ if [ ! -f $HOME/kube-flannel.yml ]; then
   curl -L https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml -o $HOME/kube-flannel.yml
 fi
 
+#sudo kubeadm init --control-plane-endpoint=192.168.226.50
+
 kubeadm init \
 --config $HOME/kubeadm.yaml \
 --ignore-preflight-errors=SystemVerification \
