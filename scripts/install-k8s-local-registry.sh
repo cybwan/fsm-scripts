@@ -65,42 +65,6 @@ services:
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
       - /opt/docker-registry/data:/data
-      - /opt/docker-registry/simple.yml:/etc/docker/registry/config.yml
-
-  ui:
-    image: joxit/docker-registry-ui:latest
-    ports:
-      - 5001:80
-    environment:
-      - REGISTRY_TITLE=My Private Docker Registry
-      - REGISTRY_URL=http://localhost:5000
-      - SINGLE_REGISTRY=true
-    depends_on:
-      - registry
-EOF
-
-sudo tee simple.yml <<EOF
-version: 0.1
-log:
-  fields:
-    service: registry
-storage:
-  delete:
-    enabled: true
-  cache:
-    blobdescriptor: inmemory
-  filesystem:
-    rootdirectory: /var/lib/registry
-http:
-  addr: :5000
-  headers:
-    X-Content-Type-Options: [nosniff]
-    Access-Control-Allow-Origin: ['http://localhost']
-    Access-Control-Allow-Methods: ['HEAD', 'GET', 'OPTIONS', 'DELETE']
-    Access-Control-Allow-Headers: ['Authorization', 'Accept']
-    Access-Control-Max-Age: [1728000]
-    Access-Control-Allow-Credentials: [true]
-    Access-Control-Expose-Headers: ['Docker-Content-Digest']
 EOF
 
 sudo docker compose -f /opt/docker-registry/docker-compose.yml up -d
