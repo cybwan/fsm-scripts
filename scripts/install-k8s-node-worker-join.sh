@@ -9,7 +9,9 @@ fi
 
 ADVERTISE_ADDRESS=$1
 
-rm -rf $HOME/join.sh
-scp $USER@ADVERTISE_ADDRESS:~/join.sh $HOME/join.sh
+if [ -f $HOME/join.sh ]; then
+  rm -rf $HOME/join.sh
+fi
+scp $USER@$ADVERTISE_ADDRESS:~/join.sh $HOME/join.sh
 chmod u+x $HOME/join.sh
 ./$HOME/join.sh
