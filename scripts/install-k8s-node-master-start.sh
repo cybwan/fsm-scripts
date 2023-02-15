@@ -10,14 +10,14 @@ fi
 ADVERTISE_ADDRESS=$1
 
 if [ ! -f $HOME/kubeadm.yaml ]; then
-  kubeadm config print init-defaults > kubeadm.yaml
-  sed -i "s/advertiseAddress: 1.2.3.4/advertiseAddress: ${ADVERTISE_ADDRESS}/g" kubeadm.yaml
-  sed -i "s/name: node/name: ${HOSTNAME}/g" kubeadm.yaml
-  sed -i "s/kubernetesVersion: 1.24.0/kubernetesVersion: 1.24.10/g" kubeadm.yaml
-  sed -i "s/imageRepository: registry.k8s.io/imageRepository: local.registry/g" kubeadm.yaml
-  sed -i "/kubernetesVersion: 1.24.10/acontrolPlaneEndpoint: '${ADVERTISE_ADDRESS}:6443'" kubeadm.yaml
-  sed -i "/dnsDomain: cluster.local/a\ \ podSubnet: 10.244.0.0/16" kubeadm.yaml
-  cat >> kubeadm.yaml <<EOF
+  kubeadm config print init-defaults > $HOME/kubeadm.yaml
+  sed -i "s/advertiseAddress: 1.2.3.4/advertiseAddress: ${ADVERTISE_ADDRESS}/g" $HOME/kubeadm.yaml
+  sed -i "s/name: node/name: ${HOSTNAME}/g" $HOME/kubeadm.yaml
+  sed -i "s/kubernetesVersion: 1.24.0/kubernetesVersion: 1.24.10/g" $HOME/kubeadm.yaml
+  sed -i "s/imageRepository: registry.k8s.io/imageRepository: local.registry/g" $HOME/kubeadm.yaml
+  sed -i "/kubernetesVersion: 1.24.10/acontrolPlaneEndpoint: '${ADVERTISE_ADDRESS}:6443'" $HOME/kubeadm.yaml
+  sed -i "/dnsDomain: cluster.local/a\ \ podSubnet: 10.244.0.0/16" $HOME/kubeadm.yaml
+  cat >> $HOME/kubeadm.yaml <<EOF
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
@@ -30,7 +30,7 @@ if [ ! -f $HOME/kube-flannel.yml ]; then
 fi
 
 kubeadm init \
---config kubeadm.yaml \
+--config $HOME/kubeadm.yaml \
 --ignore-preflight-errors=SystemVerification \
 --upload-certs
 
