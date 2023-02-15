@@ -69,10 +69,7 @@ bpf-trace:
 bpf-deps:
 	apt -y update
 	apt -y install git cmake make gcc python3 libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
-	git clone -b v5.4 https://github.com/torvalds/linux.git --depth 1
-	cd linux/tools/bpf/bpftool
-	make
-	make install
+	cd tmp;git clone -b v5.4 https://github.com/torvalds/linux.git --depth 1;cd linux/tools/bpf/bpftool; make && make install
 
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
