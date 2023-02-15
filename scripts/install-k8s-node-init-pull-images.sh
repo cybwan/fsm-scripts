@@ -61,19 +61,25 @@ docker rmi docker.io/calico/kube-controllers:v3.25.0
 
 docker pull docker.io/flannel/flannel:v0.21.2
 docker pull docker.io/flannel/flannel-cni-plugin:v1.1.2
-docker pull docker.io/flannel/flannel:v0.21.2
 docker tag docker.io/flannel/flannel:v0.21.2 ${LOCAL_REGISTRY}/flannel/flannel:v0.21.2
 docker tag docker.io/flannel/flannel-cni-plugin:v1.1.2 ${LOCAL_REGISTRY}/flannel/flannel-cni-plugin:v1.1.2
-docker tag docker.io/flannel/flannel:v0.21.2 ${LOCAL_REGISTRY}/flannel/flannel:v0.21.2
 docker push ${LOCAL_REGISTRY}/flannel/flannel:v0.21.2
 docker push ${LOCAL_REGISTRY}/flannel/flannel-cni-plugin:v1.1.2
-docker push ${LOCAL_REGISTRY}/flannel/flannel:v0.21.2
 docker rmi ${LOCAL_REGISTRY}/flannel/flannel:v0.21.2
 docker rmi ${LOCAL_REGISTRY}/flannel/flannel-cni-plugin:v1.1.2
-docker rmi ${LOCAL_REGISTRY}/flannel/flannel:v0.21.2
 docker rmi docker.io/flannel/flannel:v0.21.2
 docker rmi docker.io/flannel/flannel-cni-plugin:v1.1.2
-docker rmi docker.io/flannel/flannel:v0.21.2
+
+docker pull weaveworks/weave-kube:latest
+docker pull weaveworks/weave-npc:latest
+docker tag weaveworks/weave-kube:latest ${LOCAL_REGISTRY}/weaveworks/weave-kube:latest
+docker tag weaveworks/weave-npc:latest ${LOCAL_REGISTRY}/weaveworks/weave-npc:latest
+docker push ${LOCAL_REGISTRY}/weaveworks/weave-kube:latest
+docker push ${LOCAL_REGISTRY}/weaveworks/weave-npc:latest
+docker rmi ${LOCAL_REGISTRY}/weaveworks/weave-kube:latest
+docker rmi ${LOCAL_REGISTRY}/weaveworks/weave-npc:latest
+docker rmi weaveworks/weave-kube:latest
+docker rmi weaveworks/weave-npc:latest
 
 docker container prune -f
 docker volume prune -f

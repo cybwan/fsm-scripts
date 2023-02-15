@@ -7,7 +7,13 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
+if [ -z "$2" ]; then
+  echo "Error: expected one argument CNI.Plugin"
+  exit 1
+fi
+
 ADVERTISE_ADDRESS=$1
+CNI_PLUGIN=$2
 
 if [ ! -f $HOME/kubeadm.yaml ]; then
   kubeadm config print init-defaults > $HOME/kubeadm.yaml
@@ -49,19 +55,29 @@ fi
 kubectl taint nodes --all node-role.kubernetes.io/master-
 kubectl taint nodes --all node.kubernetes.io/not-ready:NoSchedule-
 
-if [ ! -f $HOME/kube-flannel.yml ]; then
-  curl -L https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml -o $HOME/kube-flannel.yml
+if [ "${CNI_PLUGIN}"z == "flannel"z ]; then
+  if [ ! -f $HOME/kube-flannel.yml ]; then
+    curl -L https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml -o $HOME/kube-flannel.yml
+  fi
+  sed -i 's#docker.io#local.registry#g' $HOME/kube-flannel.yml
+  kubectl apply -f $HOME/kube-flannel.yml
 fi
-sed -i 's#docker.io#local.registry#g' $HOME/kube-flannel.yml
-kubectl apply -f $HOME/kube-flannel.yml
 
-#curl https://projectcalico.docs.tigera.io/archive/v3.25/manifests/calico.yaml -o $HOME/kube-calico.yaml
-#sed -i 's#docker.io#local.registry#g' $HOME/kube-calico.yaml
-#kubectl apply -f $HOME/kube-calico.yaml
+if [ "${CNI_PLUGIN}"z == "calico"z ]; then
+  if [ ! -f $HOME/kube-calico.yml ]; then
+    curl -L https://projectcalico.docs.tigera.io/archive/v3.25/manifests/calico.yaml -o $HOME/kube-calico.yml
+  fi
+  sed -i 's#docker.io#local.registry#g' $HOME/kube-calico.yml
+  kubectl apply -f $HOME/kube-calico.yml
+fi
 
-
-#curl -L https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml -o $HOME/kube-weave.yaml
-#kubectl apply -f $HOME/kube-weave.yaml
+if [ "${CNI_PLUGIN}"z == "weave"z ]; then
+  if [ ! -f $HOME/kube-weave.yml ]; then
+    curl -L https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml -o $HOME/kube-weave.yml
+  fi
+  sed -i "s#image: 'weaveworks#image: 'local.registry/weaveworks#g" $HOME/kube-weave.yml
+  kubectl apply -f $HOME/kube-weave.yml
+fi
 
 TOKEN=`kubeadm token list | grep default | awk -F" " '{print $1}' |head -n 1`
 CAHASH=`openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex |  awk -F" " '{print $2}'`
