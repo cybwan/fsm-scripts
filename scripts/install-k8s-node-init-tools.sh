@@ -38,6 +38,10 @@ timeout: 10
 debug: false
 EOF
 
+if [ ! -f /opt/cni-plugins-${system}-${arch}-v1.2.0.tgz ]; then
+  curl -L https://github.com/containernetworking/plugins/releases/download/v1.2.0/cni-plugins-${system}-${arch}-v1.2.0.tgz -o /opt/cni-plugins-${system}-${arch}-v1.2.0.tgz
+fi
+
 cat >> ~/.bashrc <<EOF
 if [ -f /etc/bash_completion ]; then
   . /etc/bash_completion

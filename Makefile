@@ -51,6 +51,15 @@ init-k8s-node-local-registry:
 init-k8s-node-pull-images:
 	scripts/install-k8s-node-init-pull-images.sh
 
+init-k8s-node-master-start:
+	scripts/install-k8s-node-master-start.sh 192.168.226.51
+
+init-k8s-node-worker-join:
+	scripts/install-k8s-node-worker-join.sh 192.168.226.51
+
+init-k8s-node-stop:
+	scripts/install-k8s-node-master-stop.sh
+
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
 

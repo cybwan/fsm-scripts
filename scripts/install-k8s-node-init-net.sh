@@ -83,6 +83,7 @@ cat >> /etc/hosts <<EOF
 192.168.226.50 master
 192.168.226.51 worker1
 192.168.226.52 worker2
+192.168.226.151 worker3
 EOF
 
 netplan apply
