@@ -25,10 +25,6 @@ cgroupDriver: systemd
 EOF
 fi
 
-if [ ! -f $HOME/kube-flannel.yml ]; then
-  curl -L https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml -o $HOME/kube-flannel.yml
-fi
-
 #sudo kubeadm init --control-plane-endpoint=192.168.226.50
 
 kubeadm init \
@@ -53,6 +49,10 @@ fi
 kubectl taint nodes --all node-role.kubernetes.io/master-
 kubectl taint nodes --all node.kubernetes.io/not-ready:NoSchedule-
 
+if [ ! -f $HOME/kube-flannel.yml ]; then
+  curl -L https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml -o $HOME/kube-flannel.yml
+fi
+sed -i 's#docker.io#local.registry#g' $HOME/kube-flannel.yml
 kubectl apply -f $HOME/kube-flannel.yml
 
 #curl https://projectcalico.docs.tigera.io/archive/v3.25/manifests/calico.yaml -o $HOME/kube-calico.yaml

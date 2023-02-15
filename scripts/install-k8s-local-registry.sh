@@ -69,7 +69,6 @@ EOF
 
 sudo docker compose up -d
 
-
 sudo openssl req -x509 -newkey rsa:4096 -nodes -sha256 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -days 3650 -subj '/CN=local.registry' -addext 'subjectAltName=DNS:local.registry'
 
 sudo sed -i '/types_hash_max_size 2048;/a\\tclient_max_body_size 16384m;' /etc/nginx/nginx.conf
@@ -102,6 +101,25 @@ EOF
 sudo systemctl restart nginx
 
 curl -s http://local.registry/v2/_catalog | jq
+
+sudo apt -y install openconnect
+sudo tee /usr/local/bin/oc <<EOF
+#!/bin/bash
+sudo ip r add 0.0.0.0/0 via 192.168.127.1
+sleep 2
+echo ${OCPAWD} | openconnect ${SERVER_ADDR} --servercert ${SERVER_CERT} -u ${OCUSER} --passwd-on-stdin
+EOF
+sudo chmod a+x /usr/local/bin/oc
+
+sudo tee /usr/local/bin/nat <<EOF
+#!/bin/bash
+sudo iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+sudo iptables -A FORWARD -i ens33 -o tun0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i ens36 -o tun0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i ens33 -o tun0 -j ACCEPT
+sudo iptables -A FORWARD -i ens36 -o tun0 -j ACCEPT
+EOF
+sudo chmod a+x /usr/local/bin/nat
 
 sudo apt -y upgrade
 sudo apt -y autoclean
