@@ -194,6 +194,9 @@ pipy-reset:
 osm-up:
 	scripts/osm-up.sh
 
+osm-up-ebpf:
+	scripts/osm-up-ebpf.sh
+
 osm-pods:
 	scripts/osm-pod.curl.curl.sh
 	scripts/osm-pod.pipy-ok.pipy.sh
