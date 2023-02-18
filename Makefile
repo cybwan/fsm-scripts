@@ -131,7 +131,7 @@ osm-ebpf-demo-curl-helloworld-v1:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v1:5000/hello
 
 osm-ebpf-demo-curl-helloworld-v2:
-	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker3 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v2:5000/hello
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v2:5000/hello
 
 
 .env:
