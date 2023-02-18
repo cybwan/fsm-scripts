@@ -63,10 +63,10 @@ init-k8s-node-join-worker:
 init-k8s-node-stop:
 	scripts/install-k8s-node-master-stop.sh
 
-bpf-trace:
+ebpf-trace:
 	cat /sys/kernel/debug/tracing/trace_pipe|grep bpf_trace_printk
 
-bpf-deps:
+ebpf-deps:
 	apt -y update
 	apt -y install git cmake make gcc python3 libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
 	cd tmp;git clone -b v5.4 https://github.com/torvalds/linux.git --depth 1;cd linux/tools/bpf/bpftool; make && make install
@@ -81,13 +81,13 @@ restart-osm-interceptor:
 	kubectl rollout restart daemonset -n osm-system osm-interceptor
 
 logs-osm-interceptor-worker1:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}')
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -f
 
 logs-osm-interceptor-worker2:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker2 -o=jsonpath='{..metadata.name}')
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker2 -o=jsonpath='{..metadata.name}') -f
 
 logs-osm-interceptor-worker3:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker3 -o=jsonpath='{..metadata.name}')
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker3 -o=jsonpath='{..metadata.name}') -f
 
 shell-osm-interceptor-worker1:
 	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}')
@@ -104,22 +104,35 @@ osm-ebpf-demo-deploy:
 	osm namespace add ebpf
 	kubectl apply -n ebpf -f ${OMB}/samples/sleep/sleep.yaml
 	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld-v1.yaml
-	@#kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
+	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
 
 osm-ebpf-demo-undeploy:
 	kubectl delete -n ebpf -f ${OMB}/samples/sleep/sleep.yaml
 	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld-v1.yaml
-	@#kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
+	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
 	osm namespace remove ebpf
 	kubectl delete namespace ebpf
 
 osm-ebpf-demo-restart:
 	kubectl rollout restart deployment -n ebpf sleep
 	kubectl rollout restart deployment -n ebpf helloworld-v1
-	@#kubectl rollout restart deployment -n ebpf helloworld-v2
+	kubectl rollout restart deployment -n ebpf helloworld-v2
+
+osm-ebpf-demo-restart-sleep:
+	kubectl rollout restart deployment -n ebpf sleep
+
+osm-ebpf-demo-restart-helloworld-v1:
+	kubectl rollout restart deployment -n ebpf helloworld-v1
+
+osm-ebpf-demo-restart-helloworld-v2:
+	kubectl rollout restart deployment -n ebpf helloworld-v2
 
 osm-ebpf-demo-curl-helloworld-v1:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v1:5000/hello
+
+osm-ebpf-demo-curl-helloworld-v2:
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker3 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v2:5000/hello
+
 
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
