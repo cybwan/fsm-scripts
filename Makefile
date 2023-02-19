@@ -102,18 +102,24 @@ shell-osm-interceptor-worker2:
 shell-osm-interceptor-worker3:
 	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker3 -o=jsonpath='{..metadata.name}')
 
-
 osm-ebpf-demo-deploy:
 	kubectl create namespace ebpf
 	osm namespace add ebpf
 	kubectl apply -n ebpf -f ${OMB}/samples/sleep/sleep.yaml
+	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld.yaml
 	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld-v1.yaml
 	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
+
+osm-ebpf-demo-affinity:
+	kubectl patch deployments sleep -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker1"}}}}'
+	kubectl patch deployments helloworld-v1 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker1"}}}}'
+	kubectl patch deployments helloworld-v2 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker3"}}}}'
 
 osm-ebpf-demo-undeploy:
 	kubectl delete -n ebpf -f ${OMB}/samples/sleep/sleep.yaml
 	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld-v1.yaml
 	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
+	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld.yaml
 	osm namespace remove ebpf
 	kubectl delete namespace ebpf
 
