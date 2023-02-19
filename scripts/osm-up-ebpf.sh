@@ -14,6 +14,6 @@ osm install \
     --set=osm.image.pullPolicy=Always \
     --set=osm.sidecarLogLevel=debug \
     --set=osm.controllerLogLevel=warn \
-    --set=osm.sidecarClass=envoy \
+    --set=osm.sidecarClass=pipy \
     --set=osm.trafficInterceptionMode=ebpf \
     --timeout=900s

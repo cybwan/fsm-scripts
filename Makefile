@@ -75,7 +75,11 @@ osm-ebpf-up:
 	scripts/osm-up-ebpf.sh
 
 rebuild-osm-interceptor:
-	cd ${OMB};git pull;make -f Makefile.Dockerfiles docker-build-interceptor
+	cd ${OMB};git pull;
+	@#cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor-compiler
+	@#cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor-base
+	@#cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor-golang
+	cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor
 
 restart-osm-interceptor:
 	kubectl rollout restart daemonset -n osm-system osm-interceptor
@@ -133,6 +137,8 @@ osm-ebpf-demo-curl-helloworld-v1:
 osm-ebpf-demo-curl-helloworld-v2:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v2:5000/hello
 
+osm-ebpf-demo-curl-helloworld:
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld:5000/hello
 
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
