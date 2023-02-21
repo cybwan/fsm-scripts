@@ -20,6 +20,7 @@ if [ ! -f $HOME/kubeadm.yaml ]; then
   sed -i "s/advertiseAddress: 1.2.3.4/advertiseAddress: ${ADVERTISE_ADDRESS}/g" $HOME/kubeadm.yaml
   sed -i "s/name: node/name: ${HOSTNAME}/g" $HOME/kubeadm.yaml
   sed -i "s/kubernetesVersion: 1.24.0/kubernetesVersion: 1.24.10/g" $HOME/kubeadm.yaml
+  sed -i "s/imageRepository: registry.k8s.io/imageRepository: local.registry/g" $HOME/kubeadm.yaml
   sed -i "/kubernetesVersion: 1.24.10/acontrolPlaneEndpoint: '${ADVERTISE_ADDRESS}:6443'" $HOME/kubeadm.yaml
   sed -i "/dnsDomain: cluster.local/a\ \ podSubnet: 10.244.0.0/16" $HOME/kubeadm.yaml
   cat >> $HOME/kubeadm.yaml <<EOF
@@ -58,6 +59,7 @@ if [ "${CNI_PLUGIN}"z == "flannel"z ]; then
   if [ ! -f $HOME/kube-flannel.yml ]; then
     curl -L https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml -o $HOME/kube-flannel.yml
   fi
+  sed -i 's#docker.io#local.registry#g' $HOME/kube-flannel.yml
   kubectl apply -f $HOME/kube-flannel.yml
 fi
 
@@ -65,6 +67,7 @@ if [ "${CNI_PLUGIN}"z == "calico"z ]; then
   if [ ! -f $HOME/kube-calico.yml ]; then
     curl -L https://projectcalico.docs.tigera.io/archive/v3.25/manifests/calico.yaml -o $HOME/kube-calico.yml
   fi
+  sed -i 's#docker.io#local.registry#g' $HOME/kube-calico.yml
   kubectl apply -f $HOME/kube-calico.yml
 fi
 
@@ -72,6 +75,7 @@ if [ "${CNI_PLUGIN}"z == "weave"z ]; then
   if [ ! -f $HOME/kube-weave.yml ]; then
     curl -L https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml -o $HOME/kube-weave.yml
   fi
+  sed -i "s#image: 'weaveworks#image: 'local.registry/weaveworks#g" $HOME/kube-weave.yml
   kubectl apply -f $HOME/kube-weave.yml
 fi
 
