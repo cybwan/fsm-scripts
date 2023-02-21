@@ -75,11 +75,11 @@ osm-ebpf-up:
 	scripts/osm-up-ebpf.sh
 
 rebuild-osm-interceptor:
-	cd ${OMB};git pull;
-	@#cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor-compiler
-	@#cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor-base
-	@#cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor-golang
-	cd ${OMB};make -f Makefile.Dockerfiles docker-build-interceptor
+	@#cd ${OSM};git pull;
+	@#cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor-compiler
+	@#cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor-base
+	@#cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor-golang
+	cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor
 
 restart-osm-interceptor:
 	kubectl rollout restart daemonset -n osm-system osm-interceptor
