@@ -35,7 +35,8 @@ fi
 kubeadm init \
 --config $HOME/kubeadm.yaml \
 --ignore-preflight-errors=SystemVerification \
---upload-certs
+--upload-certs \
+-v 5
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
