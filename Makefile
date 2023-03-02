@@ -63,6 +63,9 @@ init-k8s-node-join-worker:
 init-k8s-node-stop:
 	scripts/install-k8s-node-master-stop.sh
 
+install-local-registry-crt-into-buildx:
+	scripts/install-local-registry-crt-into-buildx.sh
+
 ebpf-trace:
 	cat /sys/kernel/debug/tracing/trace_pipe|grep bpf_trace_printk
 
