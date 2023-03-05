@@ -28,6 +28,7 @@ else
 sudo curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo tee /etc/apt/sources.list.d/kubernetes.list <<-'EOF'
 deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
 fi
 
 sudo apt -y update
