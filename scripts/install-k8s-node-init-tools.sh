@@ -15,9 +15,20 @@ fi
 NODE_ARCH=$1
 NODE_OS=$2
 
+NODE_RELEASE=$(lsb_release -sr)
+if [ "${NODE_RELEASE}"z == "22.04"z ]; then
 sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+elif [ "${NODE_RELEASE}"z == "20.04"z ]; then
+sudo curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo tee /etc/apt/sources.list.d/kubernetes.list <<-'EOF'
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+else
+sudo curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo tee /etc/apt/sources.list.d/kubernetes.list <<-'EOF'
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+fi
 
 sudo apt -y update
 # 查看版本
