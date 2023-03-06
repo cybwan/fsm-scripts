@@ -69,12 +69,12 @@ if $(dpkg --compare-versions $kver  "lt" "5.7"); then
       sudo add-apt-repository -y ppa:cappelikan/ppa
       sudo apt -y update
       sudo apt -y install mainline
-      sudo mainline --install `mainline --list | grep ^5.15.0 | head -n 1`
+      sudo mainline --install `mainline --list | grep ^5.9. | head -n 1`
       sudo apt -y --fix-broken install
       sudo add-apt-repository -y --remove ppa:cappelikan/ppa
       sudo apt -y remove mainline
   else
-      sudo mainline --install `mainline --list | grep ^5.15.0 | head -n 1`
+      sudo mainline --install `mainline --list | grep ^5.9. | head -n 1`
       sudo apt -y --fix-broken install
   fi
 fi
