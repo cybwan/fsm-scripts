@@ -78,11 +78,12 @@ osm-ebpf-up:
 	scripts/osm-up-ebpf.sh
 
 rebuild-osm-interceptor:
-	@#cd ${OSM};git pull;
-	@#cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor-compiler
-	@#cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor-base
-	@#cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor-golang
-	cd ${OSM};make -f Makefile.Dockerfiles docker-build-interceptor
+	@#cd ${OSMIMG};git pull;
+	@#cd ${OSMIMG};make docker-build-interceptor-ubuntu
+	@#cd ${OSMIMG};make docker-build-interceptor-compiler
+	@#cd ${OSMIMG};make docker-build-interceptor-base
+	@#cd ${OSMIMG};make docker-build-interceptor-golang
+	@cd ${OSMIMG};make -f Makefile.Dockerfiles docker-build-interceptor
 
 restart-osm-interceptor:
 	kubectl rollout restart daemonset -n osm-system osm-interceptor
@@ -116,7 +117,7 @@ osm-ebpf-demo-deploy:
 osm-ebpf-demo-affinity:
 	kubectl patch deployments sleep -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker1"}}}}'
 	kubectl patch deployments helloworld-v1 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker1"}}}}'
-	kubectl patch deployments helloworld-v2 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker3"}}}}'
+	kubectl patch deployments helloworld-v2 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker2"}}}}'
 
 osm-ebpf-demo-undeploy:
 	kubectl delete -n ebpf -f ${OMB}/samples/sleep/sleep.yaml
