@@ -65,18 +65,9 @@ sudo apt -y upgrade
 
 kver=$(uname -r | cut -d"-" -f1)
 if $(dpkg --compare-versions $kver  "lt" "5.7"); then
-  if ! command -v mainline &> /dev/null; then
-      sudo add-apt-repository -y ppa:cappelikan/ppa
-      sudo apt -y update
-      sudo apt -y install mainline
-      sudo mainline --install `mainline --list | grep ^5.9. | head -n 1`
-      sudo apt -y --fix-broken install
-      sudo add-apt-repository -y --remove ppa:cappelikan/ppa
-      sudo apt -y remove mainline
-  else
-      sudo mainline --install `mainline --list | grep ^5.9. | head -n 1`
-      sudo apt -y --fix-broken install
-  fi
+  ukv=$(sudo apt list linux-image-5.*-generic 2>&1 | grep ^linux | cut -d '-' -f 3,4 | sort -rV | head -n1)
+  sudo apt install -y linux-modules-${ukv}-generic linux-headers-${ukv}-generic linux-image-${ukv}-generic
+  sudo apt -y --fix-broken install
 fi
 
 sudo systemctl reboot

@@ -36,6 +36,8 @@ sudo apt -y update
 #sudo apt-cache madison kubeadm|head
 sudo apt install -y kubelet=1.24.10-00 kubeadm=1.24.10-00 kubectl=1.24.10-00
 sudo apt-mark hold kubelet kubeadm kubectl
+sudo apt autoremove -y
+sudo apt autoclean -y
 
 system=$(uname -s | tr [:upper:] [:lower:])
 arch=$(dpkg --print-architecture)
