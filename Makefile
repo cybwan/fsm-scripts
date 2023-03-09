@@ -112,10 +112,10 @@ shell-osm-interceptor-worker3:
 osm-ebpf-demo-deploy:
 	kubectl create namespace ebpf
 	osm namespace add ebpf
-	kubectl apply -n ebpf -f ${OMB}/samples/sleep/sleep.yaml
-	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld.yaml
-	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld-v1.yaml
-	kubectl apply -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
+	kubectl apply -n ebpf -f demo/ebpf/sleep.yaml
+	kubectl apply -n ebpf -f demo/ebpf/helloworld.yaml
+	kubectl apply -n ebpf -f demo/ebpf/helloworld-v1.yaml
+	kubectl apply -n ebpf -f demo/ebpf/helloworld-v2.yaml
 
 osm-ebpf-demo-affinity:
 	kubectl patch deployments sleep -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker1"}}}}'
@@ -123,10 +123,10 @@ osm-ebpf-demo-affinity:
 	kubectl patch deployments helloworld-v2 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker2"}}}}'
 
 osm-ebpf-demo-undeploy:
-	kubectl delete -n ebpf -f ${OMB}/samples/sleep/sleep.yaml
-	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld-v1.yaml
-	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld-v2.yaml
-	kubectl delete -n ebpf -f ${OMB}/samples/helloworld/helloworld.yaml
+	kubectl delete -n ebpf -f demo/ebpf/sleep.yaml
+	kubectl delete -n ebpf -f demo/ebpf/helloworld-v1.yaml
+	kubectl delete -n ebpf -f demo/ebpf/helloworld-v2.yaml
+	kubectl delete -n ebpf -f demo/ebpf/helloworld.yaml
 	osm namespace remove ebpf
 	kubectl delete namespace ebpf
 
@@ -152,6 +152,22 @@ osm-ebpf-demo-curl-helloworld-v2:
 
 osm-ebpf-demo-curl-helloworld:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld:5000/hello
+
+osm-ebpf-demo-deploy-pipy-ok:
+	kubectl create namespace ebpf
+	osm namespace add ebpf
+	kubectl apply -n ebpf -f demo/ebpf/curl.yaml
+	kubectl apply -n ebpf -f demo/ebpf/pipy-ok.yaml
+
+osm-ebpf-demo-undeploy-pipy-ok:
+	kubectl delete -n ebpf -f demo/ebpf/curl.yaml
+	kubectl delete -n ebpf -f demo/ebpf/pipy-ok.yaml
+	osm namespace remove ebpf
+	kubectl delete namespace ebpf
+
+osm-ebpf-demo-curl-pipy-ok:
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=curl --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c curl -- curl -s pipy-ok:8080
+
 
 .env:
 	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}

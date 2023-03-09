@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-v2
+  labels:
+    app: helloworld-v2
+    service: helloworld-v2
+spec:
+  ports:
+    - port: 5000
+      name: http
+  selector:
+    app: helloworld
+    version: v2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-v2
+  labels:
+    app: helloworld
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: helloworld
+        version: v2
+    spec:
+      containers:
+      - name: helloworld
+        image: local.registry/istio/examples-helloworld-v2
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent #Always
+        ports:
+        - containerPort: 5000
+      nodeName: worker2
