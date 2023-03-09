@@ -41,4 +41,4 @@ spec:
         imagePullPolicy: IfNotPresent #Always
         ports:
         - containerPort: 5000
-      nodeName: worker1
+      nodeName: node1

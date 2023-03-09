@@ -40,12 +40,12 @@ init-k8s-node-master:
 	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} master  ens36 192.168.226.50/24 192.168.226.101 8.8.8.8 ens33 192.168.127.50/24
 	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
-init-k8s-node-worker1:
-	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} worker1 ens36 192.168.226.51/24 192.168.226.101 8.8.8.8 ens33 192.168.127.51/24
+init-k8s-node-node1:
+	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} node1 ens36 192.168.226.51/24 192.168.226.101 8.8.8.8 ens33 192.168.127.51/24
 	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
-init-k8s-node-worker2:
-	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} worker2 ens36 192.168.226.52/24 192.168.226.101 8.8.8.8 ens33 192.168.127.52/24
+init-k8s-node-node2:
+	scripts/install-k8s-node-init-net.sh ${BUILDARCH} ${BUILDOS} node2 ens36 192.168.226.52/24 192.168.226.101 8.8.8.8 ens33 192.168.127.52/24
 	scripts/install-k8s-node-init-tools.sh ${BUILDARCH} ${BUILDOS}
 
 init-k8s-node-local-registry:
@@ -91,23 +91,23 @@ rebuild-osm-interceptor:
 restart-osm-interceptor:
 	kubectl rollout restart daemonset -n osm-system osm-interceptor
 
-logs-osm-interceptor-worker1:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -f
+logs-osm-interceptor-node1:
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -f
 
-logs-osm-interceptor-worker2:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker2 -o=jsonpath='{..metadata.name}') -f
+logs-osm-interceptor-node2:
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -f
 
-logs-osm-interceptor-worker3:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker3 -o=jsonpath='{..metadata.name}') -f
+logs-osm-interceptor-node3:
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node3 -o=jsonpath='{..metadata.name}') -f
 
-shell-osm-interceptor-worker1:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}')
+shell-osm-interceptor-node1:
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}')
 
-shell-osm-interceptor-worker2:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker2 -o=jsonpath='{..metadata.name}')
+shell-osm-interceptor-node2:
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}')
 
-shell-osm-interceptor-worker3:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==worker3 -o=jsonpath='{..metadata.name}')
+shell-osm-interceptor-node3:
+	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node3 -o=jsonpath='{..metadata.name}')
 
 osm-ebpf-demo-deploy:
 	kubectl create namespace ebpf
@@ -118,9 +118,9 @@ osm-ebpf-demo-deploy:
 	kubectl apply -n ebpf -f demo/ebpf/helloworld-v2.yaml
 
 osm-ebpf-demo-affinity:
-	kubectl patch deployments sleep -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker1"}}}}'
-	kubectl patch deployments helloworld-v1 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker1"}}}}'
-	kubectl patch deployments helloworld-v2 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"worker2"}}}}'
+	kubectl patch deployments sleep -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"node1"}}}}'
+	kubectl patch deployments helloworld-v1 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"node1"}}}}'
+	kubectl patch deployments helloworld-v2 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"node2"}}}}'
 
 osm-ebpf-demo-undeploy:
 	kubectl delete -n ebpf -f demo/ebpf/sleep.yaml
@@ -145,13 +145,13 @@ osm-ebpf-demo-restart-helloworld-v2:
 	kubectl rollout restart deployment -n ebpf helloworld-v2
 
 osm-ebpf-demo-curl-helloworld-v1:
-	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v1:5000/hello
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v1:5000/hello
 
 osm-ebpf-demo-curl-helloworld-v2:
-	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v2:5000/hello
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v2:5000/hello
 
 osm-ebpf-demo-curl-helloworld:
-	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld:5000/hello
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld:5000/hello
 
 osm-ebpf-demo-deploy-pipy-ok:
 	kubectl create namespace ebpf
@@ -166,7 +166,7 @@ osm-ebpf-demo-undeploy-pipy-ok:
 	kubectl delete namespace ebpf
 
 osm-ebpf-demo-curl-pipy-ok:
-	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=curl --field-selector spec.nodeName==worker1 -o=jsonpath='{..metadata.name}') -c curl -- curl -s pipy-ok:8080
+	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=curl --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c curl -- curl -s pipy-ok:8080
 
 
 .env:

@@ -75,7 +75,7 @@ spec:
               pipy()
               .listen(8080)
               .serveHTTP(new Message('Hi, I am pipy ok v1 !'))
-      nodeName: worker1
+      nodeName: node1
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -110,4 +110,4 @@ spec:
               pipy()
               .listen(8080)
               .serveHTTP(new Message('Hi, I am pipy ok v2 !'))
-      nodeName: worker2
+      nodeName: node2

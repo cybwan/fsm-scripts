@@ -39,4 +39,4 @@ spec:
         imagePullPolicy: IfNotPresent
         name: curl
         command: ["sleep", "365d"]
-      nodeName: worker1
+      nodeName: node1

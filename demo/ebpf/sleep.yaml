@@ -63,5 +63,5 @@ spec:
         secret:
           secretName: sleep-secret
           optional: true
-      nodeName: worker1
+      nodeName: node1
 ---
