@@ -292,6 +292,9 @@ pipy-reset:
 osm-up:
 	scripts/osm-up.sh
 
+osm-k8s-up:
+	scripts/osm-up-k8s.sh
+
 osm-pods:
 	scripts/osm-pod.curl.curl.sh
 	scripts/osm-pod.pipy-ok.pipy.sh
