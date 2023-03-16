@@ -97,17 +97,11 @@ logs-osm-interceptor-node1:
 logs-osm-interceptor-node2:
 	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -f
 
-logs-osm-interceptor-node3:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node3 -o=jsonpath='{..metadata.name}') -f
-
 shell-osm-interceptor-node1:
 	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}')
 
 shell-osm-interceptor-node2:
 	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}')
-
-shell-osm-interceptor-node3:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node3 -o=jsonpath='{..metadata.name}')
 
 osm-ebpf-demo-deploy:
 	kubectl create namespace ebpf
