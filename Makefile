@@ -305,6 +305,12 @@ osm-demo-plugin:
 osm-reset:
 	scripts/clean-osm.sh
 
+ecnet-up:
+	scripts/ecnet-up.sh
+
+ecnet-reset:
+	scripts/clean-ecnet.sh
+
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
 
