@@ -3,7 +3,6 @@
 kubectl create namespace pipy
 kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/osm-edge-start-demo/main/demo/ec-bridge/pipy-ok.pipy.yaml
 
-kubectl create namespace pipy
 cat <<EOF | kubectl apply -f -
 apiVersion: flomesh.io/v1alpha1
 kind: ServiceImport
