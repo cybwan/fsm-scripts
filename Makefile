@@ -311,6 +311,12 @@ ecnet-up:
 ecnet-reset:
 	scripts/clean-ecnet.sh
 
+ecnet-pods:
+	scripts/ecnet-pods.sh
+
+port-forward-ecnet-repo:
+	cd ${OSM_HOME};./scripts/port-forward-ecnet-repo.sh
+
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
 
@@ -418,9 +424,6 @@ rebuild-osm-bootstrap:
 
 port-forward-osm-repo:
 	cd ${OSM_HOME};./scripts/port-forward-osm-repo.sh
-
-port-forward-ecnet-repo:
-	cd ${OSM_HOME};./scripts/port-forward-ecnet-repo.sh
 
 tail-osm-controller-logs:
 	cd ${OSM_HOME};./demo/tail-osm-controller-logs.sh
