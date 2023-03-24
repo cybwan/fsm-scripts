@@ -431,6 +431,9 @@ tail-osm-controller-logs:
 tail-osm-injector-logs:
 	cd ${OSM_HOME};./demo/tail-osm-injector-logs.sh
 
+demo-sleep-pod:
+	scripts/demo-sleep-pod.sh
+
 retag:
 	docker rmi "${IMAGE}" "${LOCAL_REGISTRY}/${IMAGE}" | true
 	docker pull ${IMAGE}
