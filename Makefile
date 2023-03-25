@@ -314,6 +314,9 @@ ecnet-reset:
 ecnet-pods:
 	scripts/ecnet-pods.sh
 
+ecnet-test:
+	scripts/ecnet-test.sh
+
 port-forward-ecnet-repo:
 	cd ${OSM_HOME};./scripts/port-forward-ecnet-repo.sh
 
@@ -433,6 +436,9 @@ tail-osm-injector-logs:
 
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh
+
+exec-node2-bridge:
+	scripts/exec-node2-bridge.sh
 
 retag:
 	docker rmi "${IMAGE}" "${LOCAL_REGISTRY}/${IMAGE}" | true

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 kubectl create namespace pipy
-kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/osm-edge-start-demo/main/demo/ec-bridge/pipy-ok.pipy.yaml
 
 cat <<EOF | kubectl apply -f -
 apiVersion: flomesh.io/v1alpha1
@@ -14,17 +13,10 @@ spec:
   - endpoints:
     - clusterKey: default/default/default/cluster3
       target:
-        host: 192.168.127.91
-        ip: 192.168.127.91
-        path: /c3/ok
-        port: 8093
-    - clusterKey: default/default/default/cluster1
-      target:
-        host: 192.168.127.91
-        ip: 192.168.127.91
-        path: /c1/ok
-        port: 8091
-    name: pipy
+        host: 3.226.203.163
+        ip: 3.226.203.163
+        path: /
+        port: 80
     port: 8080
     protocol: TCP
   serviceAccountName: '*'
@@ -41,4 +33,49 @@ spec:
   lbType: ActiveActive
 EOF
 
-kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok --timeout=180s
+kubectl create namespace demo
+cat <<EOF | kubectl apply -n demo -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sleep
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sleep
+  labels:
+    app: sleep
+    service: sleep
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: sleep
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sleep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sleep
+  template:
+    metadata:
+      labels:
+        app: sleep
+    spec:
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: sleep
+      containers:
+      - name: sleep
+        image: local.registry/ubuntu:20.04
+        imagePullPolicy: Always
+        command: ["/bin/sleep", "infinity"]
+      nodeName: node2
+EOF
+
+kubectl wait --for=condition=ready pod -n demo -l app=sleep --timeout=180s
