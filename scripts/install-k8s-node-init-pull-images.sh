@@ -4,6 +4,24 @@ set -uo pipefail
 
 LOCAL_REGISTRY="${LOCAL_REGISTRY:-local.registry}"
 
+docker pull busybox:1.36
+docker tag busybox:1.36 ${LOCAL_REGISTRY}/busybox:1.36
+docker push ${LOCAL_REGISTRY}/busybox:1.36
+docker rmi ${LOCAL_REGISTRY}/busybox:1.36
+docker rmi busybox:1.36
+
+docker pull golang:1.19
+docker tag golang:1.19 ${LOCAL_REGISTRY}/golang:1.19
+docker push ${LOCAL_REGISTRY}/golang:1.19
+docker rmi ${LOCAL_REGISTRY}/golang:1.19
+docker rmi golang:1.19
+
+docker pull gcr.io/distroless/static
+docker tag gcr.io/distroless/static ${LOCAL_REGISTRY}/distroless/static
+docker push ${LOCAL_REGISTRY}/distroless/static
+docker rmi ${LOCAL_REGISTRY}/distroless/static
+docker rmi gcr.io/distroless/static
+
 docker pull registry.k8s.io/kube-apiserver:v1.24.10
 docker pull registry.k8s.io/kube-controller-manager:v1.24.10
 docker pull registry.k8s.io/kube-scheduler:v1.24.10
