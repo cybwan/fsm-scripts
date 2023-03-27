@@ -64,7 +64,7 @@ init-k8s-node-join-worker:
 	scripts/install-k8s-node-worker-join.sh 192.168.226.50
 
 init-k8s-node-stop:
-	scripts/install-k8s-node-master-stop.sh
+	scripts/install-k8s-node-stop.sh
 
 install-local-registry-crt-into-buildx:
 	scripts/install-local-registry-crt-into-buildx.sh
