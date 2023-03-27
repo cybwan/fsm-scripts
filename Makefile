@@ -11,6 +11,7 @@ TARGETS := $(BUILDOS)/$(BUILDARCH)
 DOCKER_BUILDX_PLATFORM := $(BUILDOS)/$(BUILDARCH)
 
 OSM_HOME ?= $(abspath ../osm-edge)
+ECN_HOME ?= $(abspath ../ErieCanalNet)
 LOCAL_REGISTRY ?= localhost:5000
 
 default: build
@@ -232,6 +233,12 @@ cancel-cache-images:
 	scripts/cancel-cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-cert-manager-chart.sh ${OSM_HOME} ${BUILDARCH}
+
+cache-ecnet-images:
+	scripts/cache-ecnet-images.sh ${ECN_HOME} ${BUILDARCH}
+
+cancel-cache-ecnet-images:
+	scripts/cancel-cache-ecnet-images.sh ${ECN_HOME} ${BUILDARCH}
 
 switch-sidecar-to-pipy: disable-wasm-stats
 	scripts/switch-sidecar.sh ${OSM_HOME} ${BUILDARCH} pipy
