@@ -234,12 +234,6 @@ cancel-cache-images:
 	scripts/cancel-cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-cert-manager-chart.sh ${OSM_HOME} ${BUILDARCH}
 
-cache-ecnet-images:
-	scripts/cache-ecnet-images.sh ${ECN_HOME} ${BUILDARCH}
-
-cancel-cache-ecnet-images:
-	scripts/cancel-cache-ecnet-images.sh ${ECN_HOME} ${BUILDARCH}
-
 switch-sidecar-to-pipy: disable-wasm-stats
 	scripts/switch-sidecar.sh ${OSM_HOME} ${BUILDARCH} pipy
 
@@ -325,7 +319,13 @@ ecnet-test:
 	scripts/ecnet-test.sh
 
 port-forward-ecnet-repo:
-	cd ${OSM_HOME};./scripts/port-forward-ecnet-repo.sh
+	cd ${ECN_HOME};./scripts/port-forward-ecnet-repo.sh
+
+ecnet-dev:
+	scripts/cache-ecnet-images.sh ${ECN_HOME} ${BUILDARCH}
+
+ecnet-dev-reset:
+	scripts/cancel-cache-ecnet-images.sh ${ECN_HOME} ${BUILDARCH}
 
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
