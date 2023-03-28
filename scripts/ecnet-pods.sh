@@ -72,7 +72,7 @@ spec:
       serviceAccountName: sleep
       containers:
       - name: sleep
-        image: local.registry/ubuntu:20.04
+        image: local.registry/curlimages/curl
         imagePullPolicy: Always
         command: ["/bin/sleep", "infinity"]
       nodeName: node2
