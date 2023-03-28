@@ -29,6 +29,13 @@ docker push ${LOCAL_REGISTRY}/flomesh/pipy-repo-nightly:latest
 docker rmi ${LOCAL_REGISTRY}/flomesh/pipy-repo-nightly:latest
 docker rmi flomesh/pipy-repo-nightly:latest
 
+
+docker pull alpine:latest
+docker tag alpine:latest ${LOCAL_REGISTRY}/alpine:latest
+docker push ${LOCAL_REGISTRY}/alpine:latest
+docker rmi ${LOCAL_REGISTRY}/alpine:latest
+docker rmi alpine:latest
+
 docker pull busybox:1.36
 docker tag busybox:1.36 ${LOCAL_REGISTRY}/busybox:1.36
 docker push ${LOCAL_REGISTRY}/busybox:1.36

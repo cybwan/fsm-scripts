@@ -16,6 +16,7 @@ fi
 
 ECN_HOME=$1
 
+find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# alpine:# ${LOCAL_REGISTRY}/alpine:#g" {} +
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# busybox:# ${LOCAL_REGISTRY}/busybox:#g" {} +
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# golang:# ${LOCAL_REGISTRY}/golang:#g" {} +
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# flomesh/osm-edge-interceptor:# ${LOCAL_REGISTRY}/flomesh/osm-edge-interceptor:#g" {} +
