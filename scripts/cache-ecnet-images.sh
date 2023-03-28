@@ -22,5 +22,7 @@ find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# flomesh/osm-edge-interce
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# gcr.io/distroless/static# ${LOCAL_REGISTRY}/distroless/static#g" {} +
 
 sed -i "s# flomesh/pipy:# ${LOCAL_REGISTRY}/flomesh/pipy:#g" "${ECN_HOME}"/charts/ecnet/values.yaml
+sed -i "s# flomesh/pipy-nightly:# ${LOCAL_REGISTRY}/flomesh/pipy-nightly:#g" "${ECN_HOME}"/charts/ecnet/values.yaml
 sed -i "s# flomesh/pipy-repo:# ${LOCAL_REGISTRY}/flomesh/pipy-repo:#g" "${ECN_HOME}"/charts/ecnet/values.yaml
+sed -i "s# flomesh/pipy-repo-nightly:# ${LOCAL_REGISTRY}/flomesh/pipy-repo-nightly:#g" "${ECN_HOME}"/charts/ecnet/values.yaml
 sed -i "s#curlImage: curlimages/curl#curlImage: ${LOCAL_REGISTRY}/curlimages/curl#g" "${ECN_HOME}"/charts/ecnet/values.yaml

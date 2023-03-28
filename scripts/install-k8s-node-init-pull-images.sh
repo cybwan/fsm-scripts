@@ -4,6 +4,31 @@ set -uo pipefail
 
 LOCAL_REGISTRY="${LOCAL_REGISTRY:-local.registry}"
 
+
+docker pull flomesh/pipy:0.90.0-54
+docker tag flomesh/pipy:0.90.0-54 ${LOCAL_REGISTRY}/flomesh/pipy:0.90.0-54
+docker push ${LOCAL_REGISTRY}/flomesh/pipy:0.90.0-54
+docker rmi ${LOCAL_REGISTRY}/flomesh/pipy:0.90.0-54
+docker rmi flomesh/pipy:0.90.0-54
+
+docker pull flomesh/pipy-nightly:latest
+docker tag flomesh/pipy-nightly:latest ${LOCAL_REGISTRY}/flomesh/pipy-nightly:latest
+docker push ${LOCAL_REGISTRY}/flomesh/pipy-nightly:latest
+docker rmi ${LOCAL_REGISTRY}/flomesh/pipy-nightly:latest
+docker rmi flomesh/pipy-nightly:latest
+
+docker pull flomesh/pipy-repo:0.90.0-54
+docker tag flomesh/pipy-repo:0.90.0-54 ${LOCAL_REGISTRY}/flomesh/pipy-repo:0.90.0-54
+docker push ${LOCAL_REGISTRY}/flomesh/pipy-repo:0.90.0-54
+docker rmi ${LOCAL_REGISTRY}/flomesh/pipy-repo:0.90.0-54
+docker rmi flomesh/pipy-repo:0.90.0-54
+
+docker pull flomesh/pipy-repo-nightly:latest
+docker tag flomesh/pipy-repo-nightly:latest ${LOCAL_REGISTRY}/flomesh/pipy-repo-nightly:latest
+docker push ${LOCAL_REGISTRY}/flomesh/pipy-repo-nightly:latest
+docker rmi ${LOCAL_REGISTRY}/flomesh/pipy-repo-nightly:latest
+docker rmi flomesh/pipy-repo-nightly:latest
+
 docker pull busybox:1.36
 docker tag busybox:1.36 ${LOCAL_REGISTRY}/busybox:1.36
 docker push ${LOCAL_REGISTRY}/busybox:1.36
