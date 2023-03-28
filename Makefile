@@ -306,6 +306,9 @@ osm-demo-plugin:
 osm-reset:
 	scripts/clean-osm.sh
 
+ecnet-build:
+	cd ${ECN_HOME};make build-ecnet docker-build
+
 ecnet-up:
 	scripts/ecnet-up.sh
 
