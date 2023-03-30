@@ -16,16 +16,18 @@ fi
 
 OSM_HOME=$1
 
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/alpine:3$# alpine:3#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/flomesh/alpine:3$# flomesh/alpine:3#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/cybwan/alpine:3# cybwan/alpine:3#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/library/busybox:1.33# busybox:1.33#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# localhost:5000/library/golang:\$GO_VERSION # golang:\$GO_VERSION #g" {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/distroless/base# gcr.io/distroless/base#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/distroless/static# gcr.io/distroless/static#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/cybwan/gcr.io.distroless.base# cybwan/gcr.io.distroless.base#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/cybwan/gcr.io.distroless.static# cybwan/gcr.io.distroless.static#g' {} +
-find "${OSM_HOME}"/dockerfiles -type f -exec sed -i 's# localhost:5000/flomesh/proxy-wasm-cpp-sdk:v2 AS# flomesh/proxy-wasm-cpp-sdk:v2 AS#g' {} +
+if [ -f "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init ]; then
+  sed -i 's!cybwan/alpine:3-iptables!flomesh/alpine:3!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init
+  sed -i 's!^#RUN apk add --no-cache iptables!RUN apk add --no-cache iptables!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init
+fi
+
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/alpine:# alpine:#g" {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/alpine:# flomesh/alpine:#g" {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/ebpf:# flomesh/ebpf:#g" {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/busybox:# busybox:#g" {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/golang:# golang:#g" {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/distroless# gcr.io/distroless#g" {} +
+find "${OSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/proxy-wasm-cpp-sdk:# flomesh/proxy-wasm-cpp-sdk:#g" {} +
 
 sed -i "s#sidecarImage: ${LOCAL_REGISTRY}/envoyproxy/envoy#sidecarImage: envoyproxy/envoy#g" "${OSM_HOME}"/charts/osm/values.yaml
 sed -i "s#sidecarImage: ${LOCAL_REGISTRY}/flomesh/pipy-nightly#sidecarImage: flomesh/pipy-nightly#g" "${OSM_HOME}"/charts/osm/values.yaml
@@ -38,6 +40,3 @@ sed -i "s#image: ${LOCAL_REGISTRY}/jaegertracing/all-in-one#image: jaegertracing
 sed -i "s#${LOCAL_REGISTRY}\$#docker.io#g" "${OSM_HOME}"/charts/osm/values.yaml
 sed -i "s#image: ${LOCAL_REGISTRY}/flomesh/pipy-repo#image: flomesh/pipy-repo#g" "${OSM_HOME}"/charts/osm/values.yaml
 sed -i "s#registry: ${LOCAL_REGISTRY}/fluent#registry: fluent#g" "${OSM_HOME}"/charts/osm/values.yaml
-
-sed -i 's!cybwan/alpine:3-iptables!flomesh/alpine:3!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init
-sed -i 's!^#RUN apk add --no-cache iptables!RUN apk add --no-cache iptables!g' "${OSM_HOME}"/dockerfiles/Dockerfile.osm-edge-sidecar-init
