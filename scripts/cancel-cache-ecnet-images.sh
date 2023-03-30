@@ -19,7 +19,7 @@ ECN_HOME=$1
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/alpine:# alpine:#g" {} +
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/busybox:# busybox:#g" {} +
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/golang:# golang:#g" {} +
-find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/osm-edge-interceptor:# flomesh/osm-edge-interceptor:#g" {} +
+find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/ebpf:# flomesh/ebpf:#g" {} +
 find "${ECN_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/distroless/static# gcr.io/distroless/static#g" {} +
 
 sed -i "s# ${LOCAL_REGISTRY}/flomesh/pipy:# flomesh/pipy:#g" "${ECN_HOME}"/charts/ecnet/values.yaml

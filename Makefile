@@ -82,7 +82,7 @@ ebpf-trace:
 ebpf-deps:
 	apt -y update
 	apt -y install git cmake make gcc python3 libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
-	cd tmp;git clone -b v5.4 https://github.com/torvalds/linux.git --depth 1;cd linux/tools/bpf/bpftool; make && make install
+	cd /tmp;git clone -b v5.4 https://github.com/torvalds/linux.git --depth 1;cd linux/tools/bpf/bpftool; make && make install
 
 osm-ebpf-up:
 	scripts/osm-up-ebpf.sh

@@ -14,7 +14,4 @@ osm install \
     --set=osm.image.pullPolicy=Always \
     --set=osm.sidecarLogLevel=error \
     --set=osm.controllerLogLevel=warn \
-    --set=osm.repoServer.standalone=true \
-    --set=osm.repoServer.ipaddr=192.168.127.91 \
-    --set=osm.repoServer.codebase=v1.3.0 \
     --timeout=900s
