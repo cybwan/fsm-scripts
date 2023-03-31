@@ -11,7 +11,7 @@ ecnet install \
     --set=ecnet.image.registry=${LOCAL_REGISTRY}/flomesh \
     --set=ecnet.image.tag=latest \
     --set=ecnet.image.pullPolicy=Always \
-    --set=ecnet.proxyLogLevel=error \
+    --set=ecnet.proxyLogLevel=debug \
     --set=ecnet.controllerLogLevel=warn \
     --set=ecnet.localDNSProxy.enable=true \
     --set=ecnet.localDNSProxy.primaryUpstreamDNSServerIPAddr="${dns_svc_ip}" \
