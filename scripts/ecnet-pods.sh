@@ -78,7 +78,7 @@ spec:
               pipy()
               .listen(8080)
               .serveHTTP(new Message('Hi, I am pipy ok at node1 !'))
-      nodeName: node1
+      nodeName: node2
 EOF
 
 kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok --timeout=180s
@@ -125,7 +125,7 @@ spec:
         image: local.registry/curlimages/curl
         imagePullPolicy: Always
         command: ["/bin/sleep", "infinity"]
-      nodeName: node1
+      nodeName: node2
 EOF
 
 kubectl wait --for=condition=ready pod -n demo -l app=sleep --timeout=180s
