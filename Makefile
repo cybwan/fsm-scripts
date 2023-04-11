@@ -336,6 +336,9 @@ ecnet-pods:
 ecnet-test:
 	scripts/ecnet-test.sh
 
+ecnet-restart:
+	kubectl rollout restart daemonset -n ecnet-system ecnet-bridge
+
 port-forward-ecnet-repo:
 	cd ${ECN_HOME};./scripts/port-forward-ecnet-repo.sh
 
