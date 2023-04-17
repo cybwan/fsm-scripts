@@ -21,8 +21,9 @@ docker pull envoyproxy/envoy:v1.19.3
 docker pull grafana/grafana:8.2.2
 docker pull grafana/grafana-image-renderer:3.2.1
 docker pull jaegertracing/all-in-one
-docker pull library/busybox:1.33
-docker pull library/golang:1.19
+docker pull busybox:1.33
+docker pull busybox:1.36
+docker pull golang:1.19
 docker pull nginx:1.19-alpine
 docker pull projectcontour/contour:v1.18.0
 docker pull prom/prometheus:v2.18.1

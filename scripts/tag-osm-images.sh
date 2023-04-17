@@ -17,8 +17,9 @@ fi
 OSM_HOME=$1
 
 docker tag docker.io/alpine:3 ${LOCAL_REGISTRY}/alpine:3
-docker tag docker.io/library/busybox:1.33 ${LOCAL_REGISTRY}/library/busybox:1.33
-docker tag docker.io/library/golang:1.19 ${LOCAL_REGISTRY}/library/golang:1.19
+docker tag docker.io/library/busybox:1.33 ${LOCAL_REGISTRY}/busybox:1.33
+docker tag docker.io/library/busybox:1.36 ${LOCAL_REGISTRY}/busybox:1.36
+docker tag docker.io/library/golang:1.19  ${LOCAL_REGISTRY}/golang:1.19
 docker tag docker.io/envoyproxy/envoy:v1.19.3 ${LOCAL_REGISTRY}/envoyproxy/envoy:v1.19.3
 docker tag docker.io/projectcontour/contour:v1.18.0 ${LOCAL_REGISTRY}/projectcontour/contour:v1.18.0
 docker tag docker.io/flomesh/alpine:3 ${LOCAL_REGISTRY}/flomesh/alpine:3

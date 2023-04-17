@@ -17,8 +17,9 @@ fi
 OSM_HOME=$1
 
 docker push ${LOCAL_REGISTRY}/alpine:3
-docker push ${LOCAL_REGISTRY}/library/busybox:1.33
-docker push ${LOCAL_REGISTRY}/library/golang:1.19
+docker push ${LOCAL_REGISTRY}/busybox:1.33
+docker push ${LOCAL_REGISTRY}/busybox:1.36
+docker push ${LOCAL_REGISTRY}/golang:1.19
 docker push ${LOCAL_REGISTRY}/envoyproxy/envoy:v1.19.3
 docker push ${LOCAL_REGISTRY}/projectcontour/contour:v1.18.0
 docker push ${LOCAL_REGISTRY}/flomesh/alpine:3
