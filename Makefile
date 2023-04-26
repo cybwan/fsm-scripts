@@ -360,6 +360,10 @@ restart-ecnet-controller:
 restart-ecnet-bridge:
 	@kubectl rollout restart daemonset -n ecnet-system ecnet-bridge
 
+logs-ecnet-bridge-node2:
+	kubectl logs -n ecnet-system $$(kubectl get pod -n ecnet-system -l app=ecnet-bridge --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -c bridge -f
+
+
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
 
