@@ -348,6 +348,18 @@ ecnet-dev:
 ecnet-dev-reset:
 	scripts/cancel-cache-ecnet-images.sh ${ECN_HOME} ${BUILDARCH}
 
+rebuild-ecnet-controller:
+	@cd ${ECN};make docker-build-ecnet-controller
+
+rebuild-ecnet-bridge:
+	@cd ${ECN};make docker-build-ecnet-bridge
+
+restart-ecnet-controller:
+	@kubectl rollout restart deployment -n ecnet-system ecnet-controller
+
+restart-ecnet-bridge:
+	@kubectl rollout restart daemonset -n ecnet-system ecnet-bridge
+
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
 
