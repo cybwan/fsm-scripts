@@ -364,7 +364,7 @@ logs-ecnet-bridge-node2:
 	kubectl logs -n ecnet-system $$(kubectl get pod -n ecnet-system -l app=ecnet-bridge --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -c bridge -f
 
 shell-ecnet-bridge-node2:
-	@kubectl exec -it -n ecnet-system $$(kubectl get pod -n ecnet-system -l app=ecnet-bridge --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -c bridge -- sh
+	@kubectl exec -it -n ecnet-system $$(kubectl get pod -n ecnet-system -l app=ecnet-bridge --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -c bridge -- /usr/bin/bash
 
 test-e2e:
 	scripts/e2e.sh ${OSM_HOME}
