@@ -79,7 +79,7 @@ CNT=${#allCases[*]}
 No=1
 # shellcheck disable=SC2068
 for item in "${allCases[@]}"; do
-  echo -e "$(date '+%Y-%m-%d %H:%M:%S') Testing[${No}/${CNT}] $item ..."
+  echo -e "$(date '+%Y-%m-%d %H:%M:%S') Testing[${No}/${CNT}] [$item] ..."
   E2E_FLAGS="-ginkgo.focus='$item'" make test-e2e 2>/dev/null | grep 'Passed.*Failed.*Skipped'
   ((No=No+1))
 done
