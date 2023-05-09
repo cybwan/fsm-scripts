@@ -425,6 +425,10 @@ kind-up:
 kind-ingress-up:
 	export KIND_INGRESS_ENABLE=true;cd ${OSM_HOME};make kind-up
 
+.PHONY: kind-api-up
+kind-api-up:
+	scripts/kind-with-registry.sh
+
 .PHONY: kind-reset
 kind-reset:
 	cd ${OSM_HOME};make kind-reset
