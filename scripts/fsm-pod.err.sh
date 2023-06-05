@@ -1,5 +1,5 @@
 #!/bin/bash
 
 kubectl create namespace error
-osm namespace add error
+fsm namespace add error
 kubectl apply -n error -f yamls/error.yaml

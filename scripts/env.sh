@@ -5,7 +5,7 @@ set -euo pipefail
 LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
 
 if [ -z "$1" ]; then
-  echo "Error: expected one argument OSM_HOME"
+  echo "Error: expected one argument FSM_HOME"
   exit 1
 fi
 
@@ -19,13 +19,13 @@ if [ -z "$3" ]; then
   exit 1
 fi
 
-OSM_HOME=$1
+FSM_HOME=$1
 BUILD_ARCH=$2
 BUILD_OS=$3
 TARGETS=${BUILD_OS}/${BUILD_ARCH}
 DOCKER_BUILDX_PLATFORM=${BUILD_OS}/${BUILD_ARCH}
 
-cd "${OSM_HOME}"
+cd "${FSM_HOME}"
 make .env
 sed -i "s/localhost:5000$/${LOCAL_REGISTRY}\/flomesh/g" .env
 sed -i 's/^# export CTR_TAG=.*/export CTR_TAG=latest/g' .env

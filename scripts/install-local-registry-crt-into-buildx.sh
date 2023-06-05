@@ -13,7 +13,7 @@ if [ "${BUILDX}"z != ""z ]; then
   docker restart $BUILDX
 fi
 
-BUILDX=`docker ps | grep buildx_buildkit_osm0 | awk '{print $1}'`
+BUILDX=`docker ps | grep buildx_buildkit_fsm0 | awk '{print $1}'`
 if [ "${BUILDX}"z != ""z ]; then
   docker cp $BUILDX://etc/ssl/certs/ca-certificates.crt ca-certificates.crt
   cat local.registry.crt >> ca-certificates.crt

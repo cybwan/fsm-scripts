@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [ -z "$1" ]; then
-  echo "Error: expected one argument OSM_HOME"
+  echo "Error: expected one argument FSM_HOME"
   exit 1
 fi
 
@@ -12,8 +12,8 @@ if [ -z "$2" ]; then
   exit 1
 fi
 
-OSM_HOME=$1
+FSM_HOME=$1
 
-rm -rf "${OSM_HOME}"/tests/e2e/cert-manager-v1.3.1.tgz
+rm -rf "${FSM_HOME}"/tests/e2e/cert-manager-v1.3.1.tgz
 
-sed -i '/\tchartPath = \".\/cert-manager-v1.3.1.tgz\"/d' "${OSM_HOME}"/tests/framework/common.go
+sed -i '/\tchartPath = \".\/cert-manager-v1.3.1.tgz\"/d' "${FSM_HOME}"/tests/framework/common.go

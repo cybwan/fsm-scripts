@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [ -z "$1" ]; then
-  echo "Error: expected one argument OSM_HOME"
+  echo "Error: expected one argument FSM_HOME"
   exit 1
 fi
 
@@ -12,7 +12,7 @@ if [ -z "$2" ]; then
   exit 1
 fi
 
-OSM_HOME=$1
+FSM_HOME=$1
 
 docker pull flomesh/httpbin:latest
 docker pull flomesh/httpbin:ken

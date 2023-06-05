@@ -10,7 +10,7 @@ BUILDOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 TARGETS := $(BUILDOS)/$(BUILDARCH)
 DOCKER_BUILDX_PLATFORM := $(BUILDOS)/$(BUILDARCH)
 
-OSM_HOME ?= $(abspath ../osm-edge)
+FSM_HOME ?= $(abspath ../fsm-edge)
 ECN_HOME ?= $(abspath ../ErieCanalNet)
 LOCAL_REGISTRY ?= localhost:5000
 
@@ -29,7 +29,7 @@ install-golang:
 	make -f scripts/Makefile.golang
 
 kind-k8s-version:
-	scripts/kind-node-images.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
+	scripts/kind-node-images.sh ${FSM_HOME} ${BUILDARCH} ${BUILDOS}
 
 install-k8s-local-registry:
 	scripts/install-k8s-local-registry.sh
@@ -84,10 +84,10 @@ ebpf-deps:
 	apt -y install git cmake make gcc python3 libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
 	cd /tmp;git clone -b v5.4 https://github.com/torvalds/linux.git --depth 1;cd linux/tools/bpf/bpftool; make && make install
 
-osm-ebpf-up:
-	scripts/osm-up-ebpf.sh
+fsm-ebpf-up:
+	scripts/fsm-up-ebpf.sh
 
-rebuild-osm-interceptor:
+rebuild-fsm-interceptor:
 	@#cd ${BPFIMG};git pull;
 	@#cd ${BPFIMG};make docker-build-ubuntu
 	@#cd ${BPFIMG};make docker-build-compiler
@@ -95,136 +95,130 @@ rebuild-osm-interceptor:
 	@#cd ${BPFIMG};make docker-build-golang
 	@cd ${BPFIMG};make -f Makefile.Dockerfiles docker-build-interceptor
 
-restart-osm-interceptor:
-	kubectl rollout restart daemonset -n osm-system osm-interceptor
+restart-fsm-interceptor:
+	kubectl rollout restart daemonset -n fsm-system fsm-interceptor
 
-logs-osm-interceptor-node1:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -f
+logs-fsm-interceptor-node1:
+	kubectl logs -n fsm-system $$(kubectl get pod -n fsm-system -l app=fsm-interceptor --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -f
 
-logs-osm-interceptor-node2:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -f
+logs-fsm-interceptor-node2:
+	kubectl logs -n fsm-system $$(kubectl get pod -n fsm-system -l app=fsm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -f
 
-shell-osm-interceptor-node1:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}')
+shell-fsm-interceptor-node1:
+	kubectl logs -n fsm-system $$(kubectl get pod -n fsm-system -l app=fsm-interceptor --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}')
 
-shell-osm-interceptor-node2:
-	kubectl logs -n osm-system $$(kubectl get pod -n osm-system -l app=osm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}')
+shell-fsm-interceptor-node2:
+	kubectl logs -n fsm-system $$(kubectl get pod -n fsm-system -l app=fsm-interceptor --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}')
 
-osm-ebpf-demo-deploy:
+fsm-ebpf-demo-deploy:
 	kubectl create namespace ebpf
-	osm namespace add ebpf
+	fsm namespace add ebpf
 	kubectl apply -n ebpf -f demo/ebpf/sleep.yaml
 	kubectl apply -n ebpf -f demo/ebpf/helloworld.yaml
 	kubectl apply -n ebpf -f demo/ebpf/helloworld-v1.yaml
 	kubectl apply -n ebpf -f demo/ebpf/helloworld-v2.yaml
 
-osm-ebpf-demo-affinity:
+fsm-ebpf-demo-affinity:
 	kubectl patch deployments sleep -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"node1"}}}}'
 	kubectl patch deployments helloworld-v1 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"node1"}}}}'
 	kubectl patch deployments helloworld-v2 -n ebpf -p '{"spec":{"template":{"spec":{"nodeName":"node2"}}}}'
 
-osm-ebpf-demo-undeploy:
+fsm-ebpf-demo-undeploy:
 	kubectl delete -n ebpf -f demo/ebpf/sleep.yaml
 	kubectl delete -n ebpf -f demo/ebpf/helloworld-v1.yaml
 	kubectl delete -n ebpf -f demo/ebpf/helloworld-v2.yaml
 	kubectl delete -n ebpf -f demo/ebpf/helloworld.yaml
-	osm namespace remove ebpf
+	fsm namespace remove ebpf
 	kubectl delete namespace ebpf
 
-osm-ebpf-demo-restart:
+fsm-ebpf-demo-restart:
 	kubectl rollout restart deployment -n ebpf sleep
 	kubectl rollout restart deployment -n ebpf helloworld-v1
 	kubectl rollout restart deployment -n ebpf helloworld-v2
 
-osm-ebpf-demo-restart-sleep:
+fsm-ebpf-demo-restart-sleep:
 	kubectl rollout restart deployment -n ebpf sleep
 
-osm-ebpf-demo-restart-helloworld-v1:
+fsm-ebpf-demo-restart-helloworld-v1:
 	kubectl rollout restart deployment -n ebpf helloworld-v1
 
-osm-ebpf-demo-restart-helloworld-v2:
+fsm-ebpf-demo-restart-helloworld-v2:
 	kubectl rollout restart deployment -n ebpf helloworld-v2
 
-osm-ebpf-demo-curl-helloworld-v1:
+fsm-ebpf-demo-curl-helloworld-v1:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v1:5000/hello
 
-osm-ebpf-demo-curl-helloworld-v2:
+fsm-ebpf-demo-curl-helloworld-v2:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld-v2:5000/hello
 
-osm-ebpf-demo-curl-helloworld:
+fsm-ebpf-demo-curl-helloworld:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=sleep --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c sleep -- curl -s helloworld:5000/hello
 
-osm-ebpf-demo-deploy-pipy-ok:
+fsm-ebpf-demo-deploy-pipy-ok:
 	kubectl create namespace ebpf
-	osm namespace add ebpf
+	fsm namespace add ebpf
 	kubectl apply -n ebpf -f demo/ebpf/curl.yaml
 	kubectl apply -n ebpf -f demo/ebpf/pipy-ok.yaml
 
-osm-ebpf-demo-undeploy-pipy-ok:
+fsm-ebpf-demo-undeploy-pipy-ok:
 	kubectl delete -n ebpf -f demo/ebpf/curl.yaml
 	kubectl delete -n ebpf -f demo/ebpf/pipy-ok.yaml
-	osm namespace remove ebpf
+	fsm namespace remove ebpf
 	kubectl delete namespace ebpf
 
-osm-ebpf-demo-curl-pipy-ok:
+fsm-ebpf-demo-curl-pipy-ok:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=curl --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c curl -- curl -s pipy-ok:8080
 
 
 .env:
-	scripts/env.sh ${OSM_HOME} ${BUILDARCH} ${BUILDOS}
+	scripts/env.sh ${FSM_HOME} ${BUILDARCH} ${BUILDOS}
 
 secret:
-	scripts/secret.sh ${OSM_HOME}
+	scripts/secret.sh ${FSM_HOME}
 
 goproxy:
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.demo
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-bootstrap
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-controller
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-healthcheck
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-injector
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-interceptor
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-preinstall
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.demo
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-bootstrap
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-controller
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-healthcheck
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-injector
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-interceptor
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-preinstall
 
 goproxy-reset:
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.demo
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-bootstrap
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-controller
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-healthcheck
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-injector
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-interceptor
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${OSM_HOME}/dockerfiles/Dockerfile.osm-edge-preinstall
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.demo
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-bootstrap
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-controller
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-healthcheck
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-injector
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-interceptor
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-preinstall
 
 adapter-os-arch:
-	scripts/adapter-os-arch.sh ${OSM_HOME} ${BUILDARCH}
-
-disable-wasm-stats:
-	scripts/disable-wasm-stats.sh ${OSM_HOME} ${BUILDARCH}
-
-enable-wasm-stats:
-	scripts/enable-wasm-stats.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/adapter-os-arch.sh ${FSM_HOME} ${BUILDARCH}
 
 pull-images:
-	scripts/pull-images.sh ${OSM_HOME} ${BUILDARCH}
-	#scripts/pull-osm-images.sh ${OSM_HOME} ${BUILDARCH}
-	#scripts/pull-demo-images.sh ${OSM_HOME} ${BUILDARCH}
-	#scripts/pull-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/pull-images.sh ${FSM_HOME} ${BUILDARCH}
+	#scripts/pull-fsm-images.sh ${FSM_HOME} ${BUILDARCH}
+	#scripts/pull-demo-images.sh ${FSM_HOME} ${BUILDARCH}
+	#scripts/pull-test-e2e-images.sh ${FSM_HOME} ${BUILDARCH}
 
 tag-images:
-	scripts/tag-osm-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/tag-demo-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/tag-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/tag-fsm-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/tag-demo-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/tag-test-e2e-images.sh ${FSM_HOME} ${BUILDARCH}
 
 push-images:
-	scripts/push-osm-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/push-demo-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/push-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/push-fsm-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/push-demo-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/push-test-e2e-images.sh ${FSM_HOME} ${BUILDARCH}
 
 cache-images:
-	scripts/cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cache-cert-manager-chart.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/cache-fsm-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cache-demo-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cache-test-e2e-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cache-zookeeper-chart.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cache-cert-manager-chart.sh ${FSM_HOME} ${BUILDARCH}
 
 load-images-without-clean: pull-images tag-images push-images
 	scripts/clean-tag-docker.sh
@@ -240,43 +234,37 @@ reload-flomesh-fsm-images:
 	scripts/list-local-registry.sh
 
 cancel-cache-images:
-	scripts/cancel-cache-osm-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cancel-cache-demo-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cancel-cache-test-e2e-images.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cancel-cache-zookeeper-chart.sh ${OSM_HOME} ${BUILDARCH}
-	scripts/cancel-cache-cert-manager-chart.sh ${OSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-fsm-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-demo-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-test-e2e-images.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-zookeeper-chart.sh ${FSM_HOME} ${BUILDARCH}
+	scripts/cancel-cache-cert-manager-chart.sh ${FSM_HOME} ${BUILDARCH}
 
-switch-sidecar-to-pipy: disable-wasm-stats
-	scripts/switch-sidecar.sh ${OSM_HOME} ${BUILDARCH} pipy
+build-fsm-images:
+	scripts/build-fsm-images.sh ${FSM_HOME}
 
-switch-sidecar-to-envoy: enable-wasm-stats
-	scripts/switch-sidecar.sh ${OSM_HOME} ${BUILDARCH} envoy
+digest-charts-fsm-images:
+	scripts/digest-charts-fsm-images.sh ${FSM_HOME}
 
-build-osm-images:
-	scripts/build-osm-images.sh ${OSM_HOME}
-
-digest-charts-osm-images:
-	scripts/digest-charts-osm-images.sh ${OSM_HOME}
-
-build-osm-cli:
-	scripts/build-osm-cli.sh ${OSM_HOME}
+build-fsm-cli:
+	scripts/build-fsm-cli.sh ${FSM_HOME}
 
 enable-port-forward-addr:
-	scripts/enable-port-forward-addr.sh ${OSM_HOME}
+	scripts/enable-port-forward-addr.sh ${FSM_HOME}
 
 autobuild-disable:
-	scripts/disable-test-e2e-build.sh ${OSM_HOME}
-	scripts/disable-test-demo-build.sh ${OSM_HOME}
+	scripts/disable-test-e2e-build.sh ${FSM_HOME}
+	scripts/disable-test-demo-build.sh ${FSM_HOME}
 
 autobuild-reset:
-	scripts/enable-test-e2e-build.sh ${OSM_HOME}
-	scripts/enable-test-demo-build.sh ${OSM_HOME}
+	scripts/enable-test-e2e-build.sh ${FSM_HOME}
+	scripts/enable-test-demo-build.sh ${FSM_HOME}
 
 gcr-io:
-	scripts/gcr-io-images.sh ${OSM_HOME}
+	scripts/gcr-io-images.sh ${FSM_HOME}
 
 gcr-io-reset:
-	scripts/gcr-io-images-reset.sh ${OSM_HOME}
+	scripts/gcr-io-images-reset.sh ${FSM_HOME}
 
 clean-docker:
 	scripts/clean-docker.sh
@@ -296,30 +284,30 @@ pipy-up:
 pipy-reset:
 	scripts/pipy-reset.sh
 
-osm-up:
-	scripts/osm-up.sh
+fsm-up:
+	scripts/fsm-up.sh
 
-osm-up-osm:
-	scripts/osm-up-osm.sh
+fsm-up-fsm:
+	scripts/fsm-up-fsm.sh
 
-osm-k8s-up:
-	scripts/osm-up-k8s.sh
+fsm-k8s-up:
+	scripts/fsm-up-k8s.sh
 
-osm-pods:
-	scripts/osm-pod.curl.curl.sh
-	scripts/osm-pod.pipy-ok.pipy.sh
+fsm-pods:
+	scripts/fsm-pod.curl.curl.sh
+	scripts/fsm-pod.pipy-ok.pipy.sh
 
-osm-pods-test:
-	scripts/osm-pod.test.sh
+fsm-pods-test:
+	scripts/fsm-pod.test.sh
 
-osm-err-pods:
-	scripts/osm-pod.err.sh
+fsm-err-pods:
+	scripts/fsm-pod.err.sh
 
-osm-demo-plugin:
-	scripts/osm-demo-plugin.sh
+fsm-demo-plugin:
+	scripts/fsm-demo-plugin.sh
 
-osm-reset:
-	scripts/clean-osm.sh
+fsm-reset:
+	scripts/clean-fsm.sh
 
 ecnet-build:
 	cd ${ECN_HOME};make build-ecnet docker-build
@@ -367,7 +355,7 @@ shell-ecnet-bridge-node2:
 	@kubectl exec -it -n ecnet-system $$(kubectl get pod -n ecnet-system -l app=ecnet-bridge --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -c bridge -- /usr/bin/bash
 
 test-e2e:
-	scripts/e2e.sh ${OSM_HOME}
+	scripts/e2e.sh ${FSM_HOME}
 
 once: .env secret
 	@echo
@@ -376,15 +364,15 @@ once: .env secret
 
 .PHONY: go-checks
 go-checks:
-	cd ${OSM_HOME};make embed-files-test
-	cd ${OSM_HOME};make codegen
-	cd ${OSM_HOME};go run github.com/norwoodj/helm-docs/cmd/helm-docs -c charts -t charts/osm/README.md.gotmpl
-	cd ${OSM_HOME};go run ./mockspec/generate.go
-	cd ${OSM_HOME};make helm-lint
+	cd ${FSM_HOME};make embed-files-test
+	cd ${FSM_HOME};make codegen
+	cd ${FSM_HOME};go run github.com/norwoodj/helm-docs/cmd/helm-docs -c charts -t charts/fsm/README.md.gotmpl
+	cd ${FSM_HOME};go run ./mockspec/generate.go
+	cd ${FSM_HOME};make helm-lint
 
 .PHONY: go-lint
 go-lint: go-checks
-	docker run --rm -v ${OSM_HOME}:/app -w /app -e GOPROXY="https://goproxy.cn" -e GOSUMDB="sum.golang.google.cn" golangci/golangci-lint:latest golangci-lint run --timeout 1800s --config .golangci.yml
+	docker run --rm -v ${FSM_HOME}:/app -w /app -e GOPROXY="https://goproxy.cn" -e GOSUMDB="sum.golang.google.cn" golangci/golangci-lint:latest golangci-lint run --timeout 1800s --config .golangci.yml
 
 .PHONY: mcs-up
 mcs-up:
@@ -398,9 +386,9 @@ mcs-up:
 	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=fsm/fsm KIND_CLUSTER_NAME=cluster1 scripts/mcs-deploy-fsm-control-plane.sh
 	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=fsm/fsm KIND_CLUSTER_NAME=cluster2 scripts/mcs-deploy-fsm-control-plane.sh
 	FSM_NAMESPACE=flomesh FSM_VERSION=0.2.0-alpha.16 FSM_CHART=fsm/fsm KIND_CLUSTER_NAME=cluster3 scripts/mcs-deploy-fsm-control-plane.sh
-	BIZNESS_PLANE_CLUSTER=cluster1 scripts/mcs-deploy-osm-control-plane.sh
-	BIZNESS_PLANE_CLUSTER=cluster2 scripts/mcs-deploy-osm-control-plane.sh
-	BIZNESS_PLANE_CLUSTER=cluster3 scripts/mcs-deploy-osm-control-plane.sh
+	BIZNESS_PLANE_CLUSTER=cluster1 scripts/mcs-deploy-fsm-control-plane.sh
+	BIZNESS_PLANE_CLUSTER=cluster2 scripts/mcs-deploy-fsm-control-plane.sh
+	BIZNESS_PLANE_CLUSTER=cluster3 scripts/mcs-deploy-fsm-control-plane.sh
 	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster1 PORT=8091 scripts/mcs-join-fsm-control-plane.sh
 	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster2 PORT=8092 scripts/mcs-join-fsm-control-plane.sh
 	CONTROL_PLANE_CLUSTER=control-plane BIZNESS_PLANE_CLUSTER=cluster3 PORT=8093 scripts/mcs-join-fsm-control-plane.sh
@@ -408,7 +396,7 @@ mcs-up:
 
 .PHONY: mcs-pods
 mcs-pods:
-	scripts/mcs-deploy-osm-biz-pods.sh
+	scripts/mcs-deploy-fsm-biz-pods.sh
 
 .PHONY: mcs-reset
 mcs-reset:
@@ -419,11 +407,11 @@ mcs-reset:
 
 .PHONY: kind-up
 kind-up:
-	cd ${OSM_HOME};make kind-up
+	cd ${FSM_HOME};make kind-up
 
 .PHONY: kind-ingress-up
 kind-ingress-up:
-	export KIND_INGRESS_ENABLE=true;cd ${OSM_HOME};make kind-up
+	export KIND_INGRESS_ENABLE=true;cd ${FSM_HOME};make kind-up
 
 .PHONY: kind-api-up
 kind-api-up:
@@ -431,58 +419,54 @@ kind-api-up:
 
 .PHONY: kind-reset
 kind-reset:
-	cd ${OSM_HOME};make kind-reset
+	cd ${FSM_HOME};make kind-reset
 
 .PHONY: demo-up
 demo-up:
-	cd ${OSM_HOME};./demo/run-osm-demo.sh
+	cd ${FSM_HOME};./demo/run-fsm-demo.sh
 
 .PHONY: demo-reset
 demo-reset:
-	cd ${OSM_HOME};./demo/clean-kubernetes.sh
+	cd ${FSM_HOME};./demo/clean-kubernetes.sh
 
 cache: cache-images
 
 cache-reset: cancel-cache-images
 
-pipy: switch-sidecar-to-pipy
-
-envoy: switch-sidecar-to-envoy
-
 speed: goproxy autobuild-disable gcr-io
 
-dev: cache speed disable-wasm-stats
+dev: cache speed
 
-dev-reset: cache-reset goproxy-reset autobuild-reset gcr-io-reset enable-wasm-stats
+dev-reset: cache-reset goproxy-reset autobuild-reset gcr-io-reset
 
-build: build-osm-cli build-osm-images
+build: build-fsm-cli build-fsm-images
 
-restart-osm-bootstrap:
-	@kubectl rollout restart deployment -n osm-system osm-bootstrap
+restart-fsm-bootstrap:
+	@kubectl rollout restart deployment -n fsm-system fsm-bootstrap
 
-restart-osm-controller:
-	@kubectl rollout restart deployment -n osm-system osm-controller
+restart-fsm-controller:
+	@kubectl rollout restart deployment -n fsm-system fsm-controller
 
-restart-osm-injector:
-	@kubectl rollout restart deployment -n osm-system osm-injector
+restart-fsm-injector:
+	@kubectl rollout restart deployment -n fsm-system fsm-injector
 
-rebuild-osm-controller:
-	scripts/build-osm-image.sh ${OSM_HOME} controller
+rebuild-fsm-controller:
+	scripts/build-fsm-image.sh ${FSM_HOME} controller
 
-rebuild-osm-injector:
-	scripts/build-osm-image.sh ${OSM_HOME} injector
+rebuild-fsm-injector:
+	scripts/build-fsm-image.sh ${FSM_HOME} injector
 
-rebuild-osm-bootstrap:
-	scripts/build-osm-image.sh ${OSM_HOME} bootstrap
+rebuild-fsm-bootstrap:
+	scripts/build-fsm-image.sh ${FSM_HOME} bootstrap
 
-port-forward-osm-repo:
-	cd ${OSM_HOME};./scripts/port-forward-osm-repo.sh
+port-forward-fsm-repo:
+	cd ${FSM_HOME};./scripts/port-forward-fsm-repo.sh
 
-tail-osm-controller-logs:
-	cd ${OSM_HOME};./demo/tail-osm-controller-logs.sh
+tail-fsm-controller-logs:
+	cd ${FSM_HOME};./demo/tail-fsm-controller-logs.sh
 
-tail-osm-injector-logs:
-	cd ${OSM_HOME};./demo/tail-osm-injector-logs.sh
+tail-fsm-injector-logs:
+	cd ${FSM_HOME};./demo/tail-fsm-injector-logs.sh
 
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh

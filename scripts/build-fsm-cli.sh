@@ -9,4 +9,7 @@ fi
 
 FSM_HOME=$1
 
-sed -i 's/^test-e2e:$/test-e2e: docker-build-fsm build-fsm docker-build-tcp-echo-server/g' "${FSM_HOME}"/Makefile
+cd "${FSM_HOME}"
+rm -rf bin/fsm
+rm -rf cmd/cli/chart.tgz
+make build-fsm

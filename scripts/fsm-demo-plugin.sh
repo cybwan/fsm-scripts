@@ -1,12 +1,12 @@
 #!/bin/bash
 
 kubectl create namespace curl
-osm namespace add curl
-kubectl apply -n curl -f https://raw.githubusercontent.com/cybwan/osm-edge-start-demo/main/demo/plugin/curl.curl.yaml
+fsm namespace add curl
+kubectl apply -n curl -f https://raw.githubusercontent.com/cybwan/fsm-edge-start-demo/main/demo/plugin/curl.curl.yaml
 
 kubectl create namespace pipy
-osm namespace add pipy
-kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/osm-edge-start-demo/main/demo/plugin/pipy-ok.pipy.yaml
+fsm namespace add pipy
+kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/fsm-edge-start-demo/main/demo/plugin/pipy-ok.pipy.yaml
 
 #等待依赖的 POD 正常启动
 sleep 2
@@ -14,8 +14,8 @@ kubectl wait --for=condition=ready pod -n curl -l app=curl --timeout=180s
 kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok -l version=v1 --timeout=180s
 kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok -l version=v2 --timeout=180s
 
-export osm_namespace=osm-system
-kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"featureFlags":{"enablePluginPolicy":true}}}' --type=merge
+export fsm_namespace=fsm-system
+kubectl patch meshconfig fsm-mesh-config -n "$fsm_namespace" -p '{"spec":{"featureFlags":{"enablePluginPolicy":true}}}' --type=merge
 
 kubectl apply -f - <<EOF
 kind: Plugin
@@ -114,7 +114,7 @@ spec:
       matchExpressions:
         - key: openservicemesh.io/monitored-by
           operator: In
-          values: ["osm"]
+          values: ["fsm"]
 EOF
 
 kubectl apply -n pipy -f - <<EOF
@@ -139,7 +139,7 @@ spec:
       matchExpressions:
         - key: openservicemesh.io/monitored-by
           operator: In
-          values: ["osm"]
+          values: ["fsm"]
 EOF
 
 kubectl apply -n curl -f - <<EOF

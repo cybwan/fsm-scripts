@@ -3,13 +3,13 @@
 set -euo pipefail
 
 if [ -z "$1" ]; then
-  echo "Error: expected one argument OSM_HOME"
+  echo "Error: expected one argument FSM_HOME"
   exit 1
 fi
 
-OSM_HOME=$1
+FSM_HOME=$1
 
 make .env
-sed -i 's/^make build-osm/#make build-osm/g' "${OSM_HOME}"/demo/run-osm-demo.sh
-sed -i 's/^kind-demo: .env kind-up clean-osm/kind-demo: .env kind-up/g' "${OSM_HOME}"/Makefile
-sed -i 's/#export PUBLISH_IMAGES=true/export PUBLISH_IMAGES=false/g' "${OSM_HOME}"/.env
+sed -i 's/^make build-fsm/#make build-fsm/g' "${FSM_HOME}"/demo/run-fsm-demo.sh
+sed -i 's/^kind-demo: .env kind-up clean-fsm/kind-demo: .env kind-up/g' "${FSM_HOME}"/Makefile
+sed -i 's/#export PUBLISH_IMAGES=true/export PUBLISH_IMAGES=false/g' "${FSM_HOME}"/.env

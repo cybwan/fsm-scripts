@@ -7,7 +7,7 @@ set -o nounset
 set -o pipefail
 
 # desired cluster name; default is "kind"
-KIND_CLUSTER_NAME="${KIND_CLUSTER_NAME:-osm}"
+KIND_CLUSTER_NAME="${KIND_CLUSTER_NAME:-fsm}"
 API_SERVER_ADDRESS="${API_SERVER_ADDRESS:-127.0.0.1}"
 
 # shellcheck disable=SC2086

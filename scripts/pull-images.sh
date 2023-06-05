@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [ -z "$1" ]; then
-  echo "Error: expected one argument OSM_HOME"
+  echo "Error: expected one argument FSM_HOME"
   exit 1
 fi
 
@@ -17,7 +17,6 @@ docker pull busybox:latest
 docker pull fortio/fortio:latest
 docker pull curlimages/curl:latest
 docker pull devilbox/mysql:mysql-8.0
-docker pull envoyproxy/envoy:v1.19.3
 docker pull grafana/grafana:8.2.2
 docker pull grafana/grafana-image-renderer:3.2.1
 docker pull jaegertracing/all-in-one
@@ -35,7 +34,6 @@ docker pull flomesh/httpbin:latest
 docker pull flomesh/httpbin:ken
 docker pull flomesh/alpine-debug:latest
 docker pull flomesh/alpine:3
-docker pull flomesh/proxy-wasm-cpp-sdk:v2
 docker pull bitnami/zookeeper:3.8.0-debian-10-r11
 docker pull bitnami/bitnami-shell:10-debian-10-r378
 

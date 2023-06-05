@@ -3,13 +3,13 @@
 set -uo pipefail
 
 if [ -z "$1" ]; then
-  echo "Error: expected one argument OSM_HOME"
+  echo "Error: expected one argument FSM_HOME"
   exit 1
 fi
 
-OSM_HOME=$1
+FSM_HOME=$1
 
-cd "${OSM_HOME}" || exit 1
+cd "${FSM_HOME}" || exit 1
 
 kubectl cluster-info >> /dev/null
 if [[ $? == 1 ]]
@@ -23,7 +23,7 @@ allCases=(
 "Test traffic flowing from client to a server with a podIP bind"
 "Test traffic flowing from client to server with a Kubernetes Service for the Source: HTTP"
 "Test traffic flowing from client to server without a Kubernetes Service for the Source: HTTP"
-"SimpleClientServer traffic test involving osm-controller restart: HTTP"
+"SimpleClientServer traffic test involving fsm-controller restart: HTTP"
 "DebugServer"
 "DeploymentsClientServer"
 "HTTP egress policy without route matches"
@@ -40,12 +40,12 @@ allCases=(
 "Test health probes can succeed"
 "Helm install using default values"
 "Ignore Label"
-"When OSM is Installed"
+"When FSM is Installed"
 "Test IP range exclusion"
 "HTTP request rate limiting"
 "Multiple service ports"
 "Multiple services matching same pod"
-"Test reinstalling OSM in the same namespace with the same mesh name"
+"Test reinstalling FSM in the same namespace with the same mesh name"
 "PermissiveToSmiSwitching"
 "Permissive mode HTTP test with a Kubernetes Service for the Source"
 "Permissive mode HTTP test without a Kubernetes Service for the Source"
@@ -72,7 +72,6 @@ allCases=(
 "With SMI validation disabled"
 #"HTTP ingress with IngressBackend"
 #"Upgrade from latest"
-#"Custom WASM metrics between one client pod and one server"
 )
 
 CNT=${#allCases[*]}
