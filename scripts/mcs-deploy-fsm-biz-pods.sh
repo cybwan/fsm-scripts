@@ -7,7 +7,7 @@ set -o pipefail
 #集群 cluster1 部署不被 fsm edge 纳管的业务服务
 kubecm switch kind-cluster1
 kubectl create namespace pipy
-kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/fsme-start-demo/main/demo/multi-cluster/pipy-ok-c1.pipy.yaml
+kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/fsm-start-demo/main/demo/multi-cluster/pipy-ok-c1.pipy.yaml
 #等待依赖的 POD 正常启动
 sleep 10
 kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok-c1 --timeout=180s
@@ -16,7 +16,7 @@ kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok-c1 --timeout=180s
 kubecm switch kind-cluster1
 kubectl create namespace pipy-fsm
 fsm namespace add pipy-fsm
-kubectl apply -n pipy-fsm -f https://raw.githubusercontent.com/cybwan/fsme-start-demo/main/demo/multi-cluster/pipy-ok-c1.pipy-fsm.yaml
+kubectl apply -n pipy-fsm -f https://raw.githubusercontent.com/cybwan/fsm-start-demo/main/demo/multi-cluster/pipy-ok-c1.pipy-fsm.yaml
 #等待依赖的 POD 正常启动
 sleep 10
 kubectl wait --for=condition=ready pod -n pipy-fsm -l app=pipy-ok-c1 --timeout=180s
@@ -83,7 +83,7 @@ curl -s http://$API_SERVER_ADDR:8091/c1/ok-fsm-c1
 #集群 cluster3 部署不被 fsm edge 纳管的业务服务
 kubecm switch kind-cluster3
 #kubectl create namespace pipy
-kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/fsme-start-demo/main/demo/multi-cluster/pipy-ok-c3.pipy.yaml
+kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/fsm-start-demo/main/demo/multi-cluster/pipy-ok-c3.pipy.yaml
 #等待依赖的 POD 正常启动
 sleep 10
 kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok-c3 --timeout=180s
@@ -92,7 +92,7 @@ kubectl wait --for=condition=ready pod -n pipy -l app=pipy-ok-c3 --timeout=180s
 kubecm switch kind-cluster3
 #kubectl create namespace pipy-fsm
 fsm namespace add pipy-fsm
-kubectl apply -n pipy-fsm -f https://raw.githubusercontent.com/cybwan/fsme-start-demo/main/demo/multi-cluster/pipy-ok-c3.pipy-fsm.yaml
+kubectl apply -n pipy-fsm -f https://raw.githubusercontent.com/cybwan/fsm-start-demo/main/demo/multi-cluster/pipy-ok-c3.pipy-fsm.yaml
 #等待依赖的 POD 正常启动
 sleep 10
 kubectl wait --for=condition=ready pod -n pipy-fsm -l app=pipy-ok-c3 --timeout=180s
@@ -175,7 +175,7 @@ kubectl get serviceimports.flomesh.io -n pipy-fsm pipy-ok-c3 -o yaml
 kubecm switch kind-cluster2
 kubectl create namespace curl
 fsm namespace add curl
-kubectl apply -n curl -f https://raw.githubusercontent.com/cybwan/fsme-start-demo/main/demo/multi-cluster/curl.curl.yaml
+kubectl apply -n curl -f https://raw.githubusercontent.com/cybwan/fsm-start-demo/main/demo/multi-cluster/curl.curl.yaml
 #等待依赖的 POD 正常启动
 sleep 10
 kubectl wait --for=condition=ready pod -n curl -l app=curl --timeout=180s

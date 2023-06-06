@@ -4,14 +4,14 @@ set -uo pipefail
 
 LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
 
-IMG="flomesh/fsme-demo-tcp-echo-server"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsme-healthcheck"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsme-preinstall"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsme-bootstrap"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsme-injector"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsme-controller"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsme-crds"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsme-sidecar-init"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-demo-tcp-echo-server"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-healthcheck"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-preinstall"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-bootstrap"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-injector"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-controller"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-crds"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsm-sidecar-init"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
 
 IMG="alpine:3"; docker rmi "${LOCAL_REGISTRY}/${IMG}"
 IMG="busybox:latest"; docker rmi "${LOCAL_REGISTRY}/${IMG}"

@@ -16,9 +16,9 @@ fi
 
 FSM_HOME=$1
 
-if [ -f "${FSM_HOME}"/dockerfiles/Dockerfile.fsme-sidecar-init ]; then
-  sed -i 's!cybwan/alpine:3-iptables!flomesh/alpine:3!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsme-sidecar-init
-  sed -i 's!^#RUN apk add --no-cache iptables!RUN apk add --no-cache iptables!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsme-sidecar-init
+if [ -f "${FSM_HOME}"/dockerfiles/Dockerfile.fsm-sidecar-init ]; then
+  sed -i 's!cybwan/alpine:3-iptables!flomesh/alpine:3!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsm-sidecar-init
+  sed -i 's!^#RUN apk add --no-cache iptables!RUN apk add --no-cache iptables!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsm-sidecar-init
 fi
 
 find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/alpine:# alpine:#g" {} +
