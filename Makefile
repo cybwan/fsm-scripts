@@ -10,7 +10,7 @@ BUILDOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 TARGETS := $(BUILDOS)/$(BUILDARCH)
 DOCKER_BUILDX_PLATFORM := $(BUILDOS)/$(BUILDARCH)
 
-FSM_HOME ?= $(abspath ../fsm-edge)
+FSM_HOME ?= $(abspath ../fsme)
 ECN_HOME ?= $(abspath ../ErieCanalNet)
 LOCAL_REGISTRY ?= localhost:5000
 
@@ -178,21 +178,21 @@ secret:
 
 goproxy:
 	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.demo
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-bootstrap
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-controller
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-healthcheck
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-injector
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-interceptor
-	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-preinstall
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-bootstrap
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-controller
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-healthcheck
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-injector
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-interceptor
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-preinstall
 
 goproxy-reset:
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.demo
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-bootstrap
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-controller
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-healthcheck
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-injector
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-interceptor
-	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-edge-preinstall
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-bootstrap
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-controller
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-healthcheck
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-injector
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-interceptor
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsme-preinstall
 
 adapter-os-arch:
 	scripts/adapter-os-arch.sh ${FSM_HOME} ${BUILDARCH}

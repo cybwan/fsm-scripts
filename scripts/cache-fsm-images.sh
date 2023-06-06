@@ -34,7 +34,7 @@ sed -i "s#image: jaegertracing/all-in-one#image: ${LOCAL_REGISTRY}/jaegertracing
 sed -i "s#image: flomesh/pipy-repo#image: ${LOCAL_REGISTRY}/flomesh/pipy-repo#g" "${FSM_HOME}"/charts/fsm/values.yaml
 sed -i "s#registry: fluent#registry: ${LOCAL_REGISTRY}/fluent#g" "${FSM_HOME}"/charts/fsm/values.yaml
 
-if [ -f "${FSM_HOME}"/dockerfiles/Dockerfile.fsm-edge-sidecar-init ]; then
-  sed -i 's!flomesh/alpine:3!cybwan/alpine:3-iptables!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsm-edge-sidecar-init
-  sed -i 's!^RUN apk add --no-cache iptables!#RUN apk add --no-cache iptables!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsm-edge-sidecar-init
+if [ -f "${FSM_HOME}"/dockerfiles/Dockerfile.fsme-sidecar-init ]; then
+  sed -i 's!flomesh/alpine:3!cybwan/alpine:3-iptables!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsme-sidecar-init
+  sed -i 's!^RUN apk add --no-cache iptables!#RUN apk add --no-cache iptables!g' "${FSM_HOME}"/dockerfiles/Dockerfile.fsme-sidecar-init
 fi

@@ -2,11 +2,11 @@
 
 kubectl create namespace curl
 fsm namespace add curl
-kubectl apply -n curl -f https://raw.githubusercontent.com/cybwan/fsm-edge-start-demo/main/demo/plugin/curl.curl.yaml
+kubectl apply -n curl -f https://raw.githubusercontent.com/cybwan/fsme-start-demo/main/demo/plugin/curl.curl.yaml
 
 kubectl create namespace pipy
 fsm namespace add pipy
-kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/fsm-edge-start-demo/main/demo/plugin/pipy-ok.pipy.yaml
+kubectl apply -n pipy -f https://raw.githubusercontent.com/cybwan/fsme-start-demo/main/demo/plugin/pipy-ok.pipy.yaml
 
 #等待依赖的 POD 正常启动
 sleep 2

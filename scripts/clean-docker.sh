@@ -4,14 +4,14 @@ set -uo pipefail
 
 LOCAL_REGISTRY="${LOCAL_REGISTRY:-localhost:5000}"
 
-IMG="flomesh/fsm-edge-demo-tcp-echo-server"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsm-edge-healthcheck"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsm-edge-preinstall"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsm-edge-bootstrap"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsm-edge-injector"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsm-edge-controller"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsm-edge-crds"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
-IMG="flomesh/fsm-edge-sidecar-init"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-demo-tcp-echo-server"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-healthcheck"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-preinstall"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-bootstrap"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-injector"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-controller"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-crds"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
+IMG="flomesh/fsme-sidecar-init"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
 
 IMG="alpine:3"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"
 IMG="busybox:latest"; docker rmi "${IMG}" "${LOCAL_REGISTRY}/${IMG}"

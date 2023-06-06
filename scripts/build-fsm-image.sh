@@ -11,4 +11,4 @@ FSM_HOME=$1
 
 cd "${FSM_HOME}"
 source .env
-make docker-build-fsm-edge-"$2"
+make docker-build-fsme-"$2"

@@ -1,13 +1,13 @@
-# fsm-edge-scripts
+# fsme-scripts
 
-Set of helper scripts and `Makefile` targets to make life of [fsm-edge](https://github.com/flomesh-io/fsm-edge) developer easier. Bundled with dozens of shell scripts and Makefile targets.
+Set of helper scripts and `Makefile` targets to make life of [fsme](https://github.com/flomesh-io/fsme) developer easier. Bundled with dozens of shell scripts and Makefile targets.
 
 ## Usage Guide
 
-> Assume you already have [fsm-edge](https://github.com/flomesh-io/fsm-edge) repository cloned or downloaded
+> Assume you already have [fsme](https://github.com/flomesh-io/fsme) repository cloned or downloaded
 
 1. Clone or zip download this repository
-2. Place this repo at same level with [fsm-edge](https://github.com/flomesh-io/fsm-edge) cloned repository or set `FSM_HOME` environment variable to point to the location of `fsm-edge` folder.
+2. Place this repo at same level with [fsme](https://github.com/flomesh-io/fsme) cloned repository or set `FSM_HOME` environment variable to point to the location of `fsme` folder.
 3. Run `make .env` to create `dot env` file and configure the contents to your specific needs
 4. Run required `make target` (refer to below guide for make `targets` and description)
 5. Sit back and relax 
@@ -31,13 +31,13 @@ Below is a non-exhaustive list of Makefile targets which can be used to automate
 
 ## FSM_HOME
 
-Environment variable to represent the location of [fsm-edge](https://github.com/flomesh-io/fsm-edge). When unset, scripts will try to find the `fsm-edge` at same folder level with this repository folder.
+Environment variable to represent the location of [fsme](https://github.com/flomesh-io/fsme). When unset, scripts will try to find the `fsme` at same folder level with this repository folder.
 
 ## make load-images
 
 Target to automatic download of
-* [fsm-edge](https://github.com/flomesh-io/fsm-edge)
-* [fsm-edge demos](https://github.com/flomesh-io/fsm-edge-demo)
+* [fsme](https://github.com/flomesh-io/fsme)
+* [fsme demos](https://github.com/flomesh-io/fsme-demo)
 * Docker images used for runing **e2e** test suits
 
 Build containers (when required) and load them to local **kind-registry** running/listenong on `http://localhost:5000`
@@ -48,7 +48,7 @@ Target to automatic download `flomesh/pipy` image from [https://hub.docker.com/u
 
 ## make cache/cache-reset
 
-Target to replace/reset [fsm-edge](https://github.com/flomesh-io/fsm-edge)  dependency docker images to point to local **kind-registry** registry for quicker compilation and initialization.
+Target to replace/reset [fsme](https://github.com/flomesh-io/fsme)  dependency docker images to point to local **kind-registry** registry for quicker compilation and initialization.
 
 ## make goproxy/goproxy-reset
 
@@ -65,7 +65,7 @@ Compositse target and combines **cache**、**goproxy**、**disable-autobuild** t
 
 ## make build
 
-Target to build **fsm-edge** CLI and required docker images.
+Target to build **fsme** CLI and required docker images.
 
 ## make install-docker
 
