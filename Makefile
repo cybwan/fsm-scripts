@@ -184,6 +184,7 @@ goproxy:
 	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-injector
 	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-interceptor
 	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-preinstall
+	@sed -i 's/CH go/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-consul-connector
 
 goproxy-reset:
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.demo
@@ -193,6 +194,7 @@ goproxy-reset:
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-injector
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-interceptor
 	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-preinstall
+	@sed -i 's/CH GO111MODULE=on GOPROXY=https:\/\/goproxy.cn go/CH go/g' ${FSM_HOME}/dockerfiles/Dockerfile.fsm-consul-connector
 
 adapter-os-arch:
 	scripts/adapter-os-arch.sh ${FSM_HOME} ${BUILDARCH}
