@@ -452,11 +452,17 @@ restart-fsm-controller:
 restart-fsm-injector:
 	@kubectl rollout restart deployment -n fsm-system fsm-injector
 
+restart-fsm-consul-connector:
+	@kubectl rollout restart deployment -n fsm-system fsm-consul-connector
+
 rebuild-fsm-controller:
 	scripts/build-fsm-image.sh ${FSM_HOME} controller
 
 rebuild-fsm-injector:
 	scripts/build-fsm-image.sh ${FSM_HOME} injector
+
+rebuild-fsm-consul-connector:
+	scripts/build-fsm-image.sh ${FSM_HOME} consul-connector
 
 rebuild-fsm-bootstrap:
 	scripts/build-fsm-image.sh ${FSM_HOME} bootstrap
@@ -469,6 +475,9 @@ tail-fsm-controller-logs:
 
 tail-fsm-injector-logs:
 	cd ${FSM_HOME};./demo/tail-fsm-injector-logs.sh
+
+tail-fsm-consul-connector-logs:
+	cd ${FSM_HOME};./demo/tail-fsm-consul-connector-logs.sh
 
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh
