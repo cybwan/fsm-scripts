@@ -22,7 +22,6 @@ kubectl wait --for=condition=ready pod -l app=consul --timeout=180s
 
 kubectl port-forward consul-0 8500:8500 >> /dev/nul 2>&1 &
 
-
 export fsm_namespace=fsm-system
 export fsm_mesh_name=fsm
 export consul_svc_addr="$(kubectl get svc -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
