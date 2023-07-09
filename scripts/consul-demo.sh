@@ -20,7 +20,7 @@ kubectl apply -f $DEMO_HOME/demo/cloud/consul/kubernetes-vault/consul/statefulse
 
 kubectl wait --for=condition=ready pod -l app=consul --timeout=180s
 
-kubectl port-forward consul-0 8500:8500
+kubectl port-forward consul-0 8500:8500 >> /dev/nul 2>&1 &
 
 
 export fsm_namespace=fsm-system
