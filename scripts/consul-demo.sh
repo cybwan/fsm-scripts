@@ -20,8 +20,6 @@ kubectl apply -f $DEMO_HOME/demo/cloud/consul/kubernetes-vault/consul/statefulse
 
 kubectl wait --for=condition=ready pod -l app=consul --timeout=180s
 
-kubectl port-forward consul-0 8500:8500 >> /dev/nul 2>&1 &
-
 export fsm_namespace=fsm-system
 export fsm_mesh_name=fsm
 export consul_svc_addr="$(kubectl get svc -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
@@ -75,21 +73,25 @@ kubectl create namespace consul-demo
 fsm namespace add consul-demo
 
 kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/tiny/tiny-deploy.yaml
+sleep 5
 kubectl wait --for=condition=ready pod -n consul-demo -l app=sc-tiny --timeout=180s
 tiny=$(kubectl get pod -n consul-demo -l app=sc-tiny -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $tiny
 
 kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/server/server-props.yaml
 kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/server/server-deploy.yaml
+sleep 5
 kubectl wait --for=condition=ready pod -n consul-demo -l app=server-demo --timeout=180s
 serverDemo=$(kubectl get pod -n consul-demo -l app=server-demo -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $serverDemo
 
 kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/client/client-props.yaml
 kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/client/client-deploy.yaml
+sleep 5
 kubectl wait --for=condition=ready pod -n consul-demo -l app=client-demo --timeout=180s
 clientDemo=$(kubectl get pod -n consul-demo -l app=client-demo -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $clientDemo
 
+kubectl port-forward consul-0 8500:8500 1>/dev/null 2>&1 &
 
-
+cd ${FSM_HOME};./scripts/port-forward-fsm-repo.sh &
