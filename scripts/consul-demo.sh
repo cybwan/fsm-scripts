@@ -22,6 +22,7 @@ kubectl wait --for=condition=ready pod -l app=consul --timeout=180s
 
 export fsm_namespace=fsm-system
 export fsm_mesh_name=fsm
+export dns_svc_ip="$(kubectl get svc -n kube-system -l k8s-app=kube-dns -o jsonpath='{.items[0].spec.clusterIP}')"
 export consul_svc_addr="$(kubectl get svc -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
 fsm install \
     --mesh-name "$fsm_mesh_name" \
@@ -38,6 +39,8 @@ fsm install \
     --set=fsm.cloudConnector.consul.httpAddr=$consul_svc_addr:8500 \
     --set=fsm.cloudConnector.consul.passingOnly=false \
     --set=fsm.cloudConnector.consul.suffixTag=version \
+    --set=fsm.localDNSProxy.enable=true \
+    --set=fsm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${dns_svc_ip}" \
     --timeout=900s
 
 kubectl create namespace consul-derive
@@ -91,6 +94,33 @@ sleep 5
 kubectl wait --for=condition=ready pod -n consul-demo -l app=client-demo --timeout=180s
 clientDemo=$(kubectl get pod -n consul-demo -l app=client-demo -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $clientDemo
+
+kubectl apply -n consul-derive -f - <<EOF
+apiVersion: specs.smi-spec.io/v1alpha4
+kind: HTTPRouteGroup
+metadata:
+  name: grpc-server-v1
+spec:
+  matches:
+  - name: tag
+    headers:
+    - "version": "v1"
+EOF
+
+kubectl apply -n consul-derive -f - <<EOF
+apiVersion: split.smi-spec.io/v1alpha4
+kind: TrafficSplit
+metadata:
+  name: grpc-server-split
+spec:
+  service: grpc-server
+  matches:
+  - kind: HTTPRouteGroup
+    name: grpc-server-v1
+  backends:
+  - service: grpc-server-v1
+    weight: 50
+EOF
 
 kubectl port-forward consul-0 8500:8500 1>/dev/null 2>&1 &
 
