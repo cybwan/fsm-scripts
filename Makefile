@@ -417,6 +417,10 @@ demo-up:
 demo-reset:
 	cd ${FSM_HOME};./demo/clean-kubernetes.sh
 
+.PHONY: consul-demo
+consul-demo:
+	cd ${FSM_HOME};./demo/consul-demo.sh
+
 cache: cache-images
 
 cache-reset: cancel-cache-images
