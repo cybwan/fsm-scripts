@@ -419,7 +419,7 @@ demo-reset:
 
 .PHONY: consul-demo
 consul-demo:
-	cd ${FSM_HOME};./demo/consul-demo.sh
+	scripts/consul-demo.sh
 
 cache: cache-images
 
