@@ -31,7 +31,7 @@ fsm install \
     --set=fsm.image.registry=localhost:5000/flomesh \
     --set=fsm.image.tag=latest \
     --set=fsm.image.pullPolicy=Always \
-    --set=fsm.sidecarLogLevel=error \
+    --set=fsm.sidecarLogLevel=debug \
     --set=fsm.controllerLogLevel=warn \
     --set=fsm.serviceAccessMode=mixed \
     --set=fsm.deployConsulConnector=true \
@@ -75,52 +75,62 @@ export BIZ_HOME=https://raw.githubusercontent.com/cybwan/fsm-start-demo/main
 kubectl create namespace consul-demo
 fsm namespace add consul-demo
 
-kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/tiny/tiny-deploy.yaml
+curl $BIZ_HOME/demo/cloud/demo/tiny/tiny-deploy.yaml -o /tmp/tiny-deploy.yaml
+kubectl apply -n consul-demo -f /tmp/tiny-deploy.yaml
 sleep 5
 kubectl wait --for=condition=ready pod -n consul-demo -l app=sc-tiny --timeout=180s
 tiny=$(kubectl get pod -n consul-demo -l app=sc-tiny -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $tiny
 
-kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/server/server-props.yaml
-kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/server/server-deploy.yaml
+export consul_svc_cluster_ip="$(kubectl get svc -n default -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
+export tiny_svc_cluster_ip="$(kubectl get svc -n consul-demo -l app=tiny -o jsonpath='{.items[0].spec.clusterIP}')"
+
+curl $BIZ_HOME/demo/cloud/demo/server/server-props.yaml -o /tmp/server-props.yaml
+cat /tmp/server-props.yaml | envsubst | kubectl apply -n consul-demo -f -
+curl $BIZ_HOME/demo/cloud/demo/server/server-deploy.yaml -o /tmp/server-deploy.yaml
+kubectl apply -n consul-demo -f /tmp/server-deploy.yaml
 sleep 5
 kubectl wait --for=condition=ready pod -n consul-demo -l app=server-demo --timeout=180s
 serverDemo=$(kubectl get pod -n consul-demo -l app=server-demo -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $serverDemo
 
-kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/client/client-props.yaml
-kubectl apply -n consul-demo -f $BIZ_HOME/demo/cloud/demo/client/client-deploy.yaml
+export server_demo_pod_ip=$(kubectl get pod -n consul-demo -l app=server-demo -o jsonpath='{.items[0].status.podIP}')
+
+curl $BIZ_HOME/demo/cloud/demo/client/client-props.yaml -o /tmp/client-props.yaml
+cat /tmp/client-props.yaml | envsubst | kubectl apply -n consul-demo -f -
+curl $BIZ_HOME/demo/cloud/demo/client/client-deploy.yaml -o /tmp/client-deploy.yaml
+cat /tmp/client-deploy.yaml | envsubst | kubectl apply -n consul-demo -f -
 sleep 5
 kubectl wait --for=condition=ready pod -n consul-demo -l app=client-demo --timeout=180s
 clientDemo=$(kubectl get pod -n consul-demo -l app=client-demo -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $clientDemo
 
-kubectl apply -n consul-derive -f - <<EOF
-apiVersion: specs.smi-spec.io/v1alpha4
-kind: HTTPRouteGroup
-metadata:
-  name: grpc-server-v1
-spec:
-  matches:
-  - name: tag
-    headers:
-    - "version": "v1"
-EOF
-
-kubectl apply -n consul-derive -f - <<EOF
-apiVersion: split.smi-spec.io/v1alpha4
-kind: TrafficSplit
-metadata:
-  name: grpc-server-split
-spec:
-  service: grpc-server
-  matches:
-  - kind: HTTPRouteGroup
-    name: grpc-server-v1
-  backends:
-  - service: grpc-server-v1
-    weight: 50
-EOF
+#kubectl apply -n consul-derive -f - <<EOF
+#apiVersion: specs.smi-spec.io/v1alpha4
+#kind: HTTPRouteGroup
+#metadata:
+#  name: grpc-server-v1
+#spec:
+#  matches:
+#  - name: tag
+#    headers:
+#    - "version": "v1"
+#EOF
+#
+#kubectl apply -n consul-derive -f - <<EOF
+#apiVersion: split.smi-spec.io/v1alpha4
+#kind: TrafficSplit
+#metadata:
+#  name: grpc-server-split
+#spec:
+#  service: grpc-server
+#  matches:
+#  - kind: HTTPRouteGroup
+#    name: grpc-server-v1
+#  backends:
+#  - service: grpc-server-v1
+#    weight: 50
+#EOF
 
 kubectl port-forward consul-0 8500:8500 1>/dev/null 2>&1 &
 
