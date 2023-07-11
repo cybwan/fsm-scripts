@@ -39,8 +39,6 @@ fsm install \
     --set=fsm.cloudConnector.consul.httpAddr=$consul_svc_addr:8500 \
     --set=fsm.cloudConnector.consul.passingOnly=false \
     --set=fsm.cloudConnector.consul.suffixTag=version \
-    --set=fsm.localDNSProxy.enable=true \
-    --set=fsm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${dns_svc_ip}" \
     --timeout=900s
 
 kubectl create namespace consul-derive
@@ -82,10 +80,10 @@ kubectl wait --for=condition=ready pod -n consul-demo -l app=sc-tiny --timeout=1
 tiny=$(kubectl get pod -n consul-demo -l app=sc-tiny -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $tiny
 
-export consul_svc_cluster_ip="$(kubectl get svc -n default -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
-#export consul_svc_cluster_ip=consul.default.svc.cluster.local
-export tiny_svc_cluster_ip="$(kubectl get svc -n consul-demo -l app=tiny -o jsonpath='{.items[0].spec.clusterIP}')"
-#export tiny_svc_cluster_ip=tiny.consul-demo.svc.cluster.local
+#export consul_svc_cluster_ip="$(kubectl get svc -n default -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
+export consul_svc_cluster_ip=consul.default.svc.cluster.local
+#export tiny_svc_cluster_ip="$(kubectl get svc -n consul-demo -l app=tiny -o jsonpath='{.items[0].spec.clusterIP}')"
+export tiny_svc_cluster_ip=tiny.consul-demo.svc.cluster.local
 
 curl $BIZ_HOME/demo/cloud/demo/server/server-props.yaml -o /tmp/server-props.yaml
 cat /tmp/server-props.yaml | envsubst | kubectl apply -n consul-demo -f -

@@ -421,6 +421,14 @@ demo-reset:
 consul-demo:
 	scripts/consul-demo.sh
 
+.PHONY: consul-test-http
+consul-test-http:
+	@scripts/consul-test-http.sh
+
+.PHONY: consul-test-grpc
+consul-test-grpc:
+	@scripts/consul-test-grpc.sh
+
 cache: cache-images
 
 cache-reset: cancel-cache-images
