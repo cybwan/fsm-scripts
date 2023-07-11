@@ -22,7 +22,6 @@ kubectl wait --for=condition=ready pod -l app=consul --timeout=180s
 
 export fsm_namespace=fsm-system
 export fsm_mesh_name=fsm
-export dns_svc_ip="$(kubectl get svc -n kube-system -l k8s-app=kube-dns -o jsonpath='{.items[0].spec.clusterIP}')"
 export consul_svc_addr="$(kubectl get svc -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
 fsm install \
     --mesh-name "$fsm_mesh_name" \
@@ -83,7 +82,7 @@ kubectl logs -n consul-demo $tiny
 #export consul_svc_cluster_ip="$(kubectl get svc -n default -l name=consul -o jsonpath='{.items[0].spec.clusterIP}')"
 export consul_svc_cluster_ip=consul.default.svc.cluster.local
 #export tiny_svc_cluster_ip="$(kubectl get svc -n consul-demo -l app=tiny -o jsonpath='{.items[0].spec.clusterIP}')"
-export tiny_svc_cluster_ip=tiny.consul-demo.svc.cluster.local
+export tiny_svc_cluster_ip=sc-tiny.consul-demo.svc.cluster.local
 
 curl $BIZ_HOME/demo/cloud/demo/server/server-props.yaml -o /tmp/server-props.yaml
 cat /tmp/server-props.yaml | envsubst | kubectl apply -n consul-demo -f -
