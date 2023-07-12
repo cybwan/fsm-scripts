@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt -y update
-sudo apt -y remove docker docker-engine docker.io containerd runc
+sudo apt -y remove docker.io docker docker-engine docker-doc docker-compose podman-docker containerd runc
 sudo apt -y install ca-certificates curl gnupg lsb-release
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
