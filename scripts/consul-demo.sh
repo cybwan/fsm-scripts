@@ -84,14 +84,23 @@ export consul_svc_cluster_ip=consul.default.svc.cluster.local
 #export tiny_svc_cluster_ip="$(kubectl get svc -n consul-demo -l app=tiny -o jsonpath='{.items[0].spec.clusterIP}')"
 export tiny_svc_cluster_ip=sc-tiny.consul-demo.svc.cluster.local
 
-curl $BIZ_HOME/demo/cloud/demo/server/server-props.yaml -o /tmp/server-props.yaml
-cat /tmp/server-props.yaml | envsubst | kubectl apply -n consul-demo -f -
-curl $BIZ_HOME/demo/cloud/demo/server/server-deploy.yaml -o /tmp/server-deploy.yaml
-kubectl apply -n consul-demo -f /tmp/server-deploy.yaml
+curl $BIZ_HOME/demo/cloud/demo/server/server-props-v1.yaml -o /tmp/server-props-v1.yaml
+cat /tmp/server-props-v1.yaml | envsubst | kubectl apply -n consul-demo -f -
+curl $BIZ_HOME/demo/cloud/demo/server/server-deploy-v1.yaml -o /tmp/server-deploy-v1.yaml
+kubectl apply -n consul-demo -f /tmp/server-deploy-v1.yaml
 sleep 5
-kubectl wait --for=condition=ready pod -n consul-demo -l app=server-demo --timeout=180s
-serverDemo=$(kubectl get pod -n consul-demo -l app=server-demo -o jsonpath='{.items..metadata.name}')
-kubectl logs -n consul-demo $serverDemo
+kubectl wait --for=condition=ready pod -n consul-demo -l app=server-demo -l version=v1 --timeout=180s
+serverDemoV1=$(kubectl get pod -n consul-demo -l app=server-demo -l version=v1 -o jsonpath='{.items..metadata.name}')
+kubectl logs -n consul-demo $serverDemoV1
+
+curl $BIZ_HOME/demo/cloud/demo/server/server-props-v2.yaml -o /tmp/server-props-v2.yaml
+cat /tmp/server-props-v2.yaml | envsubst | kubectl apply -n consul-demo -f -
+curl $BIZ_HOME/demo/cloud/demo/server/server-deploy-v2.yaml -o /tmp/server-deploy-v2.yaml
+kubectl apply -n consul-demo -f /tmp/server-deploy-v2.yaml
+sleep 5
+kubectl wait --for=condition=ready pod -n consul-demo -l app=server-demo -l version=v2 --timeout=180s
+serverDemoV2=$(kubectl get pod -n consul-demo -l app=server-demo -l version=v2 -o jsonpath='{.items..metadata.name}')
+kubectl logs -n consul-demo $serverDemoV2
 
 export server_demo_pod_ip=$(kubectl get pod -n consul-demo -l app=server-demo -o jsonpath='{.items[0].status.podIP}')
 
