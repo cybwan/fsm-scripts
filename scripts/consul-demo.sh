@@ -113,32 +113,59 @@ kubectl wait --for=condition=ready pod -n consul-demo -l app=client-demo --timeo
 clientDemo=$(kubectl get pod -n consul-demo -l app=client-demo -o jsonpath='{.items..metadata.name}')
 kubectl logs -n consul-demo $clientDemo
 
-#kubectl apply -n consul-derive -f - <<EOF
-#apiVersion: specs.smi-spec.io/v1alpha4
-#kind: HTTPRouteGroup
-#metadata:
-#  name: grpc-server-v1
-#spec:
-#  matches:
-#  - name: tag
-#    headers:
-#    - "version": "v1"
-#EOF
-#
-#kubectl apply -n consul-derive -f - <<EOF
-#apiVersion: split.smi-spec.io/v1alpha4
-#kind: TrafficSplit
-#metadata:
-#  name: grpc-server-split
-#spec:
-#  service: grpc-server
-#  matches:
-#  - kind: HTTPRouteGroup
-#    name: grpc-server-v1
-#  backends:
-#  - service: grpc-server-v1
-#    weight: 50
-#EOF
+kubectl apply -n consul-derive -f - <<EOF
+apiVersion: specs.smi-spec.io/v1alpha4
+kind: HTTPRouteGroup
+metadata:
+  name: server-v1
+spec:
+  matches:
+  - name: tag
+    headers:
+    - "versiontag": "v1"
+EOF
+
+kubectl apply -n consul-derive -f - <<EOF
+apiVersion: specs.smi-spec.io/v1alpha4
+kind: HTTPRouteGroup
+metadata:
+  name: server-v2
+spec:
+  matches:
+  - name: tag
+    headers:
+    - "versiontag": "v2"
+EOF
+
+kubectl apply -n consul-derive -f - <<EOF
+apiVersion: split.smi-spec.io/v1alpha4
+kind: TrafficSplit
+metadata:
+  name: grpc-server-split-v1
+spec:
+  service: grpc-server
+  matches:
+  - kind: HTTPRouteGroup
+    name: server-v1
+  backends:
+  - service: grpc-server-v1
+    weight: 100
+EOF
+
+kubectl apply -n consul-derive -f - <<EOF
+apiVersion: split.smi-spec.io/v1alpha4
+kind: TrafficSplit
+metadata:
+  name: grpc-server-split-v2
+spec:
+  service: grpc-server
+  matches:
+  - kind: HTTPRouteGroup
+    name: server-v2
+  backends:
+  - service: grpc-server-v2
+    weight: 100
+EOF
 
 kubectl port-forward consul-0 8500:8500 1>/dev/null 2>&1 &
 
