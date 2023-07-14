@@ -27,8 +27,8 @@ fsm install \
     --mesh-name "$fsm_mesh_name" \
     --fsm-namespace "$fsm_namespace" \
     --set=fsm.certificateProvider.kind=tresor \
-    --set=fsm.image.registry=localhost:5000/flomesh \
-    --set=fsm.image.tag=latest \
+    --set=fsm.image.registry=flomesh \
+    --set=fsm.image.tag=1.0.1 \
     --set=fsm.image.pullPolicy=Always \
     --set=fsm.sidecarLogLevel=debug \
     --set=fsm.controllerLogLevel=warn \
