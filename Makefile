@@ -494,7 +494,7 @@ bpf_trace_printk:
 	scripts/bpf_trace_printk.sh
 
 os-init:
-	scripts/os-init.sh
+	scripts/os-init.sh ${BUILDARCH} ${BUILDOS}
 
 github-ssh-key-generate:
 	@ssh-keygen -t ed25519 -C "baili@flomesh.io"
