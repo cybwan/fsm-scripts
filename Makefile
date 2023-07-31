@@ -494,17 +494,17 @@ bpf_trace_printk:
 	scripts/bpf_trace_printk.sh
 
 github-ssh-key-generate:
-	ssh-keygen -t ed25519 -C "baili@flomesh.io"
+	@ssh-keygen -t ed25519 -C "baili@flomesh.io"
 
 github-ssh-key-test:
-	ifconfig ens33 mtu 1436
-	ssh -T git@github.com || true
+	@ifconfig ens33 mtu 1436
+	@ssh -T git@github.com || true
 
 github-gpg-key-generate:
-	gpg --full-generate-key
+	@gpg --full-generate-key
 
 github-gpg-key-list:
-	gpg --list-secret-keys --keyid-format=long
+	@gpg --list-secret-keys --keyid-format=long
 
 github-gpg-key-export:
-	gpg --armor --export $(gpg --list-secret-keys --keyid-format=long | grep sec | cut -d'/'  -f2 | cut -d' ' -f1)
+	@gpg --armor --export $(gpg --list-secret-keys --keyid-format=long | grep sec | cut -d'/'  -f2 | cut -d' ' -f1)
