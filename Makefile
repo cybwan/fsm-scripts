@@ -498,7 +498,7 @@ github-ssh-key-generate:
 
 github-ssh-key-test:
 	ifconfig ens33 mtu 1436
-	ssh -T git@github.com
+	ssh -T git@github.com || true
 
 github-gpg-key-generate:
 	gpg --full-generate-key
