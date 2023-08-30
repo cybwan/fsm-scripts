@@ -221,6 +221,10 @@ reload-flomesh-fsm-images:
 	scripts/reload-flomesh-fsm-images.sh
 	scripts/list-local-registry.sh
 
+reload-flomesh-ebpf-images:
+	scripts/reload-flomesh-ebpf-images.sh
+	scripts/list-local-registry.sh
+
 cancel-cache-images:
 	scripts/cancel-cache-fsm-images.sh ${FSM_HOME} ${BUILDARCH}
 	scripts/cancel-cache-demo-images.sh ${FSM_HOME} ${BUILDARCH}
