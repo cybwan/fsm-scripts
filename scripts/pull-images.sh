@@ -23,6 +23,7 @@ docker pull jaegertracing/all-in-one
 docker pull busybox:1.33
 docker pull busybox:1.36
 docker pull golang:1.19
+docker pull golang:1.20
 docker pull nginx:1.19-alpine
 docker pull projectcontour/contour:v1.18.0
 docker pull prom/prometheus:v2.18.1

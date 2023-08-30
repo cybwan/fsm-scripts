@@ -20,6 +20,7 @@ docker push ${LOCAL_REGISTRY}/alpine:3
 docker push ${LOCAL_REGISTRY}/busybox:1.33
 docker push ${LOCAL_REGISTRY}/busybox:1.36
 docker push ${LOCAL_REGISTRY}/golang:1.19
+docker push ${LOCAL_REGISTRY}/golang:1.20
 docker push ${LOCAL_REGISTRY}/flomesh/alpine:3
 docker push ${LOCAL_REGISTRY}/prom/prometheus:v2.18.1
 docker push ${LOCAL_REGISTRY}/grafana/grafana:8.2.2
