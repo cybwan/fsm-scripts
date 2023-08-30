@@ -24,6 +24,7 @@ fi
 find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/alpine:# alpine:#g" {} +
 find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/alpine:# flomesh/alpine:#g" {} +
 find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/ebpf:# flomesh/ebpf:#g" {} +
+find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/flomesh/pipy:# flomesh/pipy:#g" {} +
 find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/busybox:# busybox:#g" {} +
 find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/golang:# golang:#g" {} +
 find "${FSM_HOME}"/dockerfiles -type f -exec sed -i "s# ${LOCAL_REGISTRY}/distroless# gcr.io/distroless#g" {} +

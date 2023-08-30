@@ -433,11 +433,11 @@ cache: cache-images
 
 cache-reset: cancel-cache-images
 
-speed: goproxy autobuild-disable gcr-io
+speed: autobuild-disable gcr-io
 
 dev: cache speed
 
-dev-reset: cache-reset goproxy-reset autobuild-reset gcr-io-reset
+dev-reset: cache-reset autobuild-reset gcr-io-reset
 
 build: build-fsm-cli build-fsm-images
 
