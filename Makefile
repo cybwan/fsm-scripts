@@ -457,6 +457,9 @@ restart-fsm-injector:
 restart-fsm-consul-connector:
 	@kubectl rollout restart deployment -n fsm-system fsm-consul-connector
 
+restart-fsm-eureka-connector:
+	@kubectl rollout restart deployment -n fsm-system fsm-eureka-connector
+
 rebuild-fsm-controller:
 	scripts/build-fsm-image.sh ${FSM_HOME} controller
 
@@ -465,6 +468,9 @@ rebuild-fsm-injector:
 
 rebuild-fsm-consul-connector:
 	scripts/build-fsm-image.sh ${FSM_HOME} consul-connector
+
+rebuild-fsm-eureka-connector:
+	scripts/build-fsm-image.sh ${FSM_HOME} eureka-connector
 
 rebuild-fsm-bootstrap:
 	scripts/build-fsm-image.sh ${FSM_HOME} bootstrap
