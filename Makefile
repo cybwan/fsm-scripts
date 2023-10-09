@@ -10,6 +10,7 @@ BUILDOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 TARGETS := $(BUILDOS)/$(BUILDARCH)
 DOCKER_BUILDX_PLATFORM := $(BUILDOS)/$(BUILDARCH)
 
+OSM_HOME ?= $(abspath ../osm-edge)
 FSM_HOME ?= $(abspath ../fsm)
 ECN_HOME ?= $(abspath ../ErieCanalNet)
 LOCAL_REGISTRY ?= localhost:5000
@@ -347,7 +348,7 @@ shell-ecnet-bridge-node2:
 	@kubectl exec -it -n ecnet-system $$(kubectl get pod -n ecnet-system -l app=ecnet-bridge --field-selector spec.nodeName==node2 -o=jsonpath='{..metadata.name}') -c bridge -- /usr/bin/bash
 
 test-e2e:
-	scripts/e2e.sh ${FSM_HOME}
+	scripts/e2e.sh ${OSM_HOME}
 
 once: .env secret
 	@echo

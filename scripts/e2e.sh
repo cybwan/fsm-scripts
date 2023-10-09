@@ -3,13 +3,13 @@
 set -uo pipefail
 
 if [ -z "$1" ]; then
-  echo "Error: expected one argument FSM_HOME"
+  echo "Error: expected one argument OSM_HOME"
   exit 1
 fi
 
-FSM_HOME=$1
+OSM_HOME=$1
 
-cd "${FSM_HOME}" || exit 1
+cd "${OSM_HOME}" || exit 1
 
 kubectl cluster-info >> /dev/null
 if [[ $? == 1 ]]
