@@ -169,6 +169,11 @@ fsm-ebpf-demo-undeploy-pipy-ok:
 fsm-ebpf-demo-curl-pipy-ok:
 	kubectl exec -n ebpf $$(kubectl get po -n ebpf -l app=curl --field-selector spec.nodeName==node1 -o=jsonpath='{..metadata.name}') -c curl -- curl -s pipy-ok:8080
 
+.PHONY: buildx-context
+buildx-context:
+	docker buildx rm fsm
+	docker buildx create --name fsm --driver-opt network=host --driver-opt env.http_proxy=http://192.168.226.1:7890 --driver-opt env.https_proxy=http://192.168.226.1:7890 --driver-opt env.all_proxy=socks5://192.168.226.1:7890 --driver-opt '"env.no_proxy='127.0.0.0/8,localhost'"'
+
 
 .env:
 	scripts/env.sh ${FSM_HOME} ${BUILDARCH} ${BUILDOS}
