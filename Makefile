@@ -174,6 +174,11 @@ fsm-ebpf-demo-curl-pipy-ok:
 .env:
 	scripts/env.sh ${FSM_HOME} ${BUILDARCH} ${BUILDOS}
 
+.PHONY: buildx-context
+buildx-context:
+	docker buildx rm fsm
+	docker buildx create --name fsm --driver-opt network=host --driver-opt env.http_proxy=http://192.168.226.1:7890 --driver-opt env.https_proxy=http://192.168.226.1:7890 --driver-opt env.all_proxy=socks5://192.168.226.1:7890 --driver-opt '"env.no_proxy='127.0.0.0/8,localhost'"'
+
 secret:
 	scripts/secret.sh ${FSM_HOME}
 
