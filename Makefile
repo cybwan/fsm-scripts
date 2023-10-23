@@ -402,8 +402,8 @@ mcs-reset:
 k3d-setup:
 	cd ${FSM_HOME};./scripts/k3d-with-registry.sh
 
-.PHONY: k3d-up
-k3d-up:
+.PHONY: k3d-start
+k3d-start:
 	k3d cluster start
 
 .PHONY: k3d-stop
