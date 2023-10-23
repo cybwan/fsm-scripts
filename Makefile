@@ -404,11 +404,11 @@ k3d-setup:
 
 .PHONY: k3d-start
 k3d-start:
-	k3d cluster start
+	k3d cluster start fsm
 
 .PHONY: k3d-stop
 k3d-stop:
-	k3d cluster stop
+	k3d cluster stop fsm
 
 .PHONY: kind-up
 kind-up:
