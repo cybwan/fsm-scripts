@@ -398,6 +398,18 @@ mcs-reset:
 	kind delete cluster --name cluster2
 	kind delete cluster --name cluster3
 
+.PHONY: k3d-setup
+k3d-setup:
+	cd ${FSM_HOME};./scripts/k3d-with-registry.sh
+
+.PHONY: k3d-up
+k3d-up:
+	k3d cluster start
+
+.PHONY: k3d-stop
+k3d-stop:
+	k3d cluster stop
+
 .PHONY: kind-up
 kind-up:
 	cd ${FSM_HOME};make kind-up
