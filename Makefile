@@ -426,6 +426,10 @@ kind-api-up:
 kind-reset:
 	cd ${FSM_HOME};make kind-reset
 
+.PHONY: metallb-up
+metallb-up:
+	scripts/metallb-up.sh
+
 .PHONY: demo-up
 demo-up:
 	cd ${FSM_HOME};./demo/run-fsm-demo.sh
