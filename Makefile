@@ -212,7 +212,7 @@ cache-images:
 load-images-without-clean: pull-images tag-images push-images
 	scripts/clean-tag-docker.sh
 
-load-images: clean-tag-docker clean-local-registry load-images-without-clean
+load-images: clean-tag-docker clean-local-registry load-images-without-clean reload-flomesh-fsm-images reload-flomesh-pipy-images reload-flomesh-ebpf-images list-local-registry
 
 reload-flomesh-pipy-images:
 	scripts/reload-flomesh-pipy-images.sh
