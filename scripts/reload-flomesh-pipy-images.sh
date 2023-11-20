@@ -12,6 +12,9 @@ images=(
 "flomesh/pipy:0.90.3-38"
 "flomesh/pipy:0.90.3-38-nonroot"
 "flomesh/pipy-repo:0.90.3-38"
+"flomesh/pipy:0.99.0-2"
+"flomesh/pipy:0.99.0-2-nonroot"
+"flomesh/pipy-repo:0.99.0-2"
 )
 
 docker_io_images_to_local_registry "${images[@]}"
