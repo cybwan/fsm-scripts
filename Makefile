@@ -483,11 +483,8 @@ rebuild-fsm-controller:
 rebuild-fsm-injector:
 	scripts/build-fsm-image.sh ${FSM_HOME} injector
 
-rebuild-fsm-consul-connector:
-	scripts/build-fsm-image.sh ${FSM_HOME} consul-connector
-
-rebuild-fsm-eureka-connector:
-	scripts/build-fsm-image.sh ${FSM_HOME} eureka-connector
+rebuild-fsm-connector:
+	scripts/build-fsm-image.sh ${FSM_HOME} connector
 
 rebuild-fsm-bootstrap:
 	scripts/build-fsm-image.sh ${FSM_HOME} bootstrap
@@ -503,6 +500,9 @@ tail-fsm-injector-logs:
 
 tail-fsm-consul-connector-logs:
 	cd ${FSM_HOME};./demo/tail-fsm-consul-connector-logs.sh
+
+tail-fsm-eureka-connector-logs:
+	cd ${FSM_HOME};./demo/tail-fsm-eureka-connector-logs.sh
 
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh
