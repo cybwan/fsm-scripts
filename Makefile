@@ -477,6 +477,9 @@ restart-fsm-consul-connector:
 restart-fsm-eureka-connector:
 	@kubectl rollout restart deployment -n fsm-system fsm-eureka-connector
 
+restart-fsm-gateway-connector:
+	@kubectl rollout restart deployment -n fsm-system fsm-gateway-connector
+
 rebuild-fsm-controller:
 	scripts/build-fsm-image.sh ${FSM_HOME} controller
 
