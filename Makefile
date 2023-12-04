@@ -513,6 +513,9 @@ tail-fsm-eureka-connector-logs:
 tail-fsm-gateway-connector-logs:
 	cd ${FSM_HOME};./demo/tail-fsm-gateway-connector-logs.sh
 
+tail-fsm-machine-connector-logs:
+	cd ${FSM_HOME};./demo/tail-fsm-machine-connector-logs.sh
+
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh
 
