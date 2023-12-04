@@ -507,6 +507,9 @@ tail-fsm-consul-connector-logs:
 tail-fsm-eureka-connector-logs:
 	cd ${FSM_HOME};./demo/tail-fsm-eureka-connector-logs.sh
 
+tail-fsm-gateway-connector-logs:
+	cd ${FSM_HOME};./demo/tail-fsm-gateway-connector-logs.sh
+
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh
 
