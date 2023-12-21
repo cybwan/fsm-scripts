@@ -12,6 +12,6 @@ fsm install \
     --set=fsm.image.registry=${LOCAL_REGISTRY}/flomesh \
     --set=fsm.image.tag=latest \
     --set=fsm.image.pullPolicy=Always \
-    --set=fsm.sidecarLogLevel=error \
+    --set=fsm.sidecar.sidecarLogLevel=error \
     --set=fsm.controllerLogLevel=warn \
     --timeout=900s
