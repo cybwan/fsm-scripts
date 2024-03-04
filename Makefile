@@ -472,19 +472,19 @@ restart-fsm-injector:
 	@kubectl rollout restart deployment -n fsm-system fsm-injector
 
 restart-fsm-consul-connector:
-	@kubectl rollout restart deployment -n fsm-system fsm-consul-connector
+	@kubectl rollout restart deployment -n fsm-system $$(kubectl get deployments -n fsm-system --selector flomesh.io/fsm-connector=consul --no-headers | awk '{print $$1}' | head -n1)
 
 restart-fsm-eureka-connector:
-	@kubectl rollout restart deployment -n fsm-system fsm-eureka-connector
+	@kubectl rollout restart deployment -n fsm-system $$(kubectl get deployments -n fsm-system --selector flomesh.io/fsm-connector=eureka --no-headers | awk '{print $$1}' | head -n1)
 
 restart-fsm-nacos-connector:
-	@kubectl rollout restart deployment -n fsm-system fsm-nacos-connector
+	@kubectl rollout restart deployment -n fsm-system $$(kubectl get deployments -n fsm-system --selector flomesh.io/fsm-connector=nacos --no-headers | awk '{print $$1}' | head -n1)
 
 restart-fsm-gateway-connector:
-	@kubectl rollout restart deployment -n fsm-system fsm-gateway-connector
+	@kubectl rollout restart deployment -n fsm-system $$(kubectl get deployments -n fsm-system --selector flomesh.io/fsm-connector=gateway --no-headers | awk '{print $$1}' | head -n1)
 
 restart-fsm-machine-connector:
-	@kubectl rollout restart deployment -n fsm-system fsm-machine-connector
+	@kubectl rollout restart deployment -n fsm-system $$(kubectl get deployments -n fsm-system --selector flomesh.io/fsm-connector=machine --no-headers | awk '{print $$1}' | head -n1)
 
 rebuild-fsm-controller:
 	scripts/build-fsm-image.sh ${FSM_HOME} controller
