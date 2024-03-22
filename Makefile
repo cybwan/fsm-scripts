@@ -222,6 +222,10 @@ reload-flomesh-fsm-images:
 	scripts/reload-flomesh-fsm-images.sh
 	scripts/list-local-registry.sh
 
+reload-flomesh-fsm-connector-images:
+	scripts/reload-flomesh-fsm-connector-images.sh
+	scripts/list-local-registry.sh
+
 reload-flomesh-ebpf-images:
 	scripts/reload-flomesh-ebpf-images.sh
 	scripts/list-local-registry.sh
@@ -409,6 +413,15 @@ k3d-start:
 .PHONY: k3d-stop
 k3d-stop:
 	k3d cluster stop fsm
+
+.PHONY: k3d-up
+k3d-up:
+	./scripts/k3d-with-registry-multicluster.sh
+	kubecm list
+
+.PHONY: k3d-reset
+k3d-reset:
+	./scripts/k3d-multicluster-cleanup.sh
 
 .PHONY: kind-up
 kind-up:
