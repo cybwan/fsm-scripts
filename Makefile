@@ -535,6 +535,50 @@ tail-fsm-gateway-connector-logs:
 tail-fsm-machine-connector-logs:
 	cd ${FSM_HOME};./demo/tail-fsm-machine-connector-logs.sh
 
+CONSUL_VERSION      ?= 1.5.3
+
+.PHONY: consul-deploy
+consul-deploy:
+	kubectl apply -n default -f ./manifests/consul.$(CONSUL_VERSION).yaml
+	kubectl wait --all --for=condition=ready pod -n default -l app=consul --timeout=180s
+
+.PHONY: consul-reboot
+consul-reboot:
+	kubectl rollout restart deployment -n default consul
+
+.PHONY: eureka-deploy
+eureka-deploy:
+	kubectl apply -n default -f ./manifests/eureka.yaml
+	kubectl wait --all --for=condition=ready pod -n default -l app=eureka --timeout=180s
+
+.PHONY: eureka-reboot
+eureka-reboot:
+	kubectl rollout restart deployment -n default eureka
+
+.PHONY: nacos-deploy
+nacos-deploy:
+	kubectl apply -n default -f ./manifests/nacos.yaml
+	kubectl wait --all --for=condition=ready pod -n default -l app=nacos --timeout=180s
+
+.PHONY: nacos-reboot
+nacos-reboot:
+	kubectl rollout restart deployment -n default nacos
+
+.PHONY: consul-port-forward
+consul-port-forward:
+	export POD=$$(kubectl get pods --selector app=consul -n default --no-headers | grep 'Running' | awk 'NR==1{print $$1}');\
+	kubectl port-forward "$$POD" -n default 8500:8500 --address 0.0.0.0 &
+
+.PHONY: eureka-port-forward
+eureka-port-forward:
+	export POD=$$(kubectl get pods --selector app=eureka -n default --no-headers | grep 'Running' | awk 'NR==1{print $$1}');\
+	kubectl port-forward "$$POD" -n default 8761:8761 --address 0.0.0.0 &
+
+.PHONY: nacos-port-forward
+nacos-port-forward:
+	export POD=$$(kubectl get pods --selector app=nacos -n default --no-headers | grep 'Running' | awk 'NR==1{print $$1}');\
+	kubectl port-forward "$$POD" -n default 8848:8848 --address 0.0.0.0 &
+
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh
 
