@@ -499,6 +499,9 @@ restart-fsm-gateway-connector:
 restart-fsm-machine-connector:
 	@kubectl rollout restart deployment -n fsm-system $$(kubectl get deployments -n fsm-system --selector flomesh.io/fsm-connector=machine --no-headers | awk '{print $$1}' | head -n1)
 
+restart-fsm-ztm-agent:
+	@kubectl rollout restart deployment -n fsm-system $$(kubectl get deployments -n fsm-system --selector flomesh.io/ztm=agent --no-headers | awk '{print $$1}' | head -n1)
+
 rebuild-fsm-controller:
 	scripts/build-fsm-image.sh ${FSM_HOME} controller
 
@@ -507,6 +510,9 @@ rebuild-fsm-injector:
 
 rebuild-fsm-connector:
 	scripts/build-fsm-image.sh ${FSM_HOME} connector
+
+rebuild-fsm-ztm-agent:
+	scripts/build-fsm-image.sh ${FSM_HOME} ztm-agent
 
 rebuild-fsm-bootstrap:
 	scripts/build-fsm-image.sh ${FSM_HOME} bootstrap
@@ -578,6 +584,99 @@ eureka-port-forward:
 nacos-port-forward:
 	export POD=$$(kubectl get pods --selector app=nacos -n default --no-headers | grep 'Running' | awk 'NR==1{print $$1}');\
 	kubectl port-forward "$$POD" -n default 8848:8848 --address 0.0.0.0 &
+
+.PHONY: deploy-consul-bookwarehouse
+deploy-consul-bookwarehouse:
+	#fsm namespace add bookwarehouse
+	kubectl delete namespace bookwarehouse --ignore-not-found
+	kubectl create namespace bookwarehouse
+	kubectl apply -n bookwarehouse -f ./manifests/consul/bookwarehouse.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookwarehouse -l app=bookwarehouse --timeout=180s
+
+.PHONY: deploy-consul-bookstore
+deploy-consul-bookstore:
+	#fsm namespace add bookstore
+	kubectl delete namespace bookstore --ignore-not-found
+	kubectl create namespace bookstore
+	kubectl apply -n bookstore -f ./manifests/consul/bookstore.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookstore -l app=bookstore --timeout=180s
+
+.PHONY: deploy-consul-bookbuyer
+deploy-consul-bookbuyer:
+	#fsm namespace add bookbuyer
+	kubectl delete namespace bookbuyer --ignore-not-found
+	kubectl create namespace bookbuyer
+	kubectl apply -n bookbuyer -f ./manifests/consul/bookbuyer.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookbuyer -l app=bookbuyer --timeout=180s
+
+.PHONY: deploy-fsm.consul
+deploy-fsm.consul:
+	scripts/deploy-fsm.consul.sh
+
+.PHONY: deploy-eureka-bookwarehouse
+deploy-eureka-bookwarehouse:
+	#fsm namespace add bookwarehouse
+	kubectl delete namespace bookwarehouse --ignore-not-found
+	kubectl create namespace bookwarehouse
+	kubectl apply -n bookwarehouse -f ./manifests/eureka/bookwarehouse.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookwarehouse -l app=bookwarehouse --timeout=180s
+
+.PHONY: deploy-eureka-bookstore
+deploy-eureka-bookstore:
+	#fsm namespace add bookstore
+	kubectl delete namespace bookstore --ignore-not-found
+	kubectl create namespace bookstore
+	kubectl apply -n bookstore -f ./manifests/eureka/bookstore.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookstore -l app=bookstore --timeout=180s
+
+.PHONY: deploy-eureka-bookbuyer
+deploy-eureka-bookbuyer:
+	#fsm namespace add bookbuyer
+	kubectl delete namespace bookbuyer --ignore-not-found
+	kubectl create namespace bookbuyer
+	kubectl apply -n bookbuyer -f ./manifests/eureka/bookbuyer.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookbuyer -l app=bookbuyer --timeout=180s
+
+.PHONY: deploy-fsm.eureka
+deploy-fsm.eureka:
+	scripts/deploy-fsm.eureka.sh
+
+.PHONY: deploy-nacos-bookwarehouse
+deploy-nacos-bookwarehouse:
+	#fsm namespace add bookwarehouse
+	kubectl delete namespace bookwarehouse --ignore-not-found
+	kubectl create namespace bookwarehouse
+	kubectl apply -n bookwarehouse -f ./manifests/nacos/bookwarehouse.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookwarehouse -l app=bookwarehouse --timeout=180s
+
+.PHONY: deploy-nacos-bookstore
+deploy-nacos-bookstore:
+	#fsm namespace add bookstore
+	kubectl delete namespace bookstore --ignore-not-found
+	kubectl create namespace bookstore
+	kubectl apply -n bookstore -f ./manifests/nacos/bookstore.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookstore -l app=bookstore --timeout=180s
+
+.PHONY: deploy-nacos-bookbuyer
+deploy-nacos-bookbuyer:
+	#fsm namespace add bookbuyer
+	kubectl delete namespace bookbuyer --ignore-not-found
+	kubectl create namespace bookbuyer
+	kubectl apply -n bookbuyer -f ./manifests/nacos/bookbuyer.yaml
+	sleep 2
+	kubectl wait --all --for=condition=ready pod -n bookbuyer -l app=bookbuyer --timeout=180s
+
+.PHONY: deploy-fsm.nacos
+deploy-fsm.nacos:
+	scripts/deploy-fsm.nacos.sh
 
 demo-sleep-pod:
 	scripts/demo-sleep-pod.sh
