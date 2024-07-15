@@ -420,7 +420,7 @@ k3d-up:
 	kubecm list
 
 .PHONY: k3d-up-with-proxy
-k3d-up:
+k3d-up-with-proxy:
 	./scripts/k3d-with-registry-multicluster-with-proxy.sh
 	kubecm list
 
