@@ -419,6 +419,11 @@ k3d-up:
 	./scripts/k3d-with-registry-multicluster.sh
 	kubecm list
 
+.PHONY: k3d-up-with-proxy
+k3d-up:
+	./scripts/k3d-with-registry-multicluster-with-proxy.sh
+	kubecm list
+
 .PHONY: k3d-reset
 k3d-reset:
 	./scripts/k3d-multicluster-cleanup.sh
