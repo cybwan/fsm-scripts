@@ -419,8 +419,8 @@ k3d-up:
 	./scripts/k3d-with-registry-multicluster.sh
 	kubecm list
 
-.PHONY: k3d-up-with-proxy
-k3d-up-with-proxy:
+.PHONY: k3d-proxy-up
+k3d-proxy-up:
 	./scripts/k3d-with-registry-multicluster-with-proxy.sh
 	kubecm list
 
