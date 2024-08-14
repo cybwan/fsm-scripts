@@ -531,6 +531,11 @@ tail-fsm-controller-logs:
 tail-fsm-injector-logs:
 	cd ${FSM_HOME};./demo/tail-fsm-injector-logs.sh
 
+.PHONY: tail-fgw-sidecar
+tail-fgw-sidecar:
+	export POD=$$(kubectl get pods --selector app=fsm-gateway -n fsm-system --no-headers | grep 'Running' | awk 'NR==1{print $$1}');\
+	kubectl logs "$$POD" -n fsm-system -c gateway -f
+
 tail-fsm-consul-connector-logs:
 	cd ${FSM_HOME};./demo/tail-fsm-consul-connector-logs.sh
 
