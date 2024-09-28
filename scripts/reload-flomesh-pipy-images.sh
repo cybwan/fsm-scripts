@@ -4,7 +4,7 @@ set -uo pipefail
 
 source ./scripts/funcs.sh
 
-PIPY_TAG="1.4.2"
+PIPY_TAG="1.5.0"
 
 images=(
 "flomesh/pipy:latest"
