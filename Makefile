@@ -90,7 +90,7 @@ ebpf-deps:
 fsm-ebpf-up:
 	scripts/fsm-up-ebpf.sh
 
-rebuild-fsm-interceptor:
+build-fsm-interceptor:
 	@#cd ${BPFIMG};git pull;
 	@#cd ${BPFIMG};make docker-build-ubuntu
 	@#cd ${BPFIMG};make docker-build-compiler
@@ -524,6 +524,9 @@ rebuild-fsm-ztm-agent:
 
 rebuild-fsm-bootstrap:
 	scripts/build-fsm-image.sh ${FSM_HOME} bootstrap
+
+rebuild-fsm-interceptor:
+	scripts/build-fsm-image.sh ${FSM_HOME} interceptor
 
 port-forward-fsm-repo:
 	cd ${FSM_HOME};./scripts/port-forward-fsm-repo.sh
