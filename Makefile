@@ -14,6 +14,9 @@ FSM_HOME ?= $(abspath ../fsm)
 ECN_HOME ?= $(abspath ../ErieCanalNet)
 LOCAL_REGISTRY ?= localhost:5000
 
+WITH_CLOUD ?= yes
+WITH_EBPF ?= no
+
 default: build
 
 install-k3s:
@@ -238,7 +241,7 @@ cancel-cache-images:
 	scripts/cancel-cache-cert-manager-chart.sh ${FSM_HOME} ${BUILDARCH}
 
 build-fsm-images:
-	scripts/build-fsm-images.sh ${FSM_HOME}
+	WITH_CLOUD=$(WITH_CLOUD) WITH_EBPF=$(WITH_EBPF) scripts/build-fsm-images.sh ${FSM_HOME}
 
 digest-charts-fsm-images:
 	scripts/digest-charts-fsm-images.sh ${FSM_HOME}
